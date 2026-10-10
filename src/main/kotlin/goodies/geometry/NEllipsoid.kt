@@ -4,7 +4,11 @@ import goodies.geometry.interfaces.ClosedShape
 import goodies.geometry.interfaces.EllipsoidLike
 import goodies.geometry.interfaces.ParametricShape
 import goodies.geometry.interfaces.Shape
-import kotlin.math.*
+import kotlin.math.PI
+import kotlin.math.acos
+import kotlin.math.cos
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 open class NEllipsoid(
     private val centerPoint: Point,

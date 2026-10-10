@@ -19,6 +19,8 @@ object Conversions {
     @JvmStatic
     fun floatToDouble(floatValue: Float): Double = floatValue.toDouble()
 
+    // DESIGN: NUM-5 renamed to a toX() extension when moved to draw/Conversions.kt
+    @Suppress("ktlint:standard:function-naming")
     @JvmStatic
     fun PVectorToDoubleArray(
         pvector: PVector,
@@ -40,10 +42,14 @@ object Conversions {
         }
     }
 
+    // DESIGN: NUM-5 renamed to a toX() extension when moved to draw/Conversions.kt
+    @Suppress("ktlint:standard:function-naming")
     @JvmStatic
     fun PVector2DToRealVector(pVector: PVector): RealVector =
         MatrixUtils.createRealVector(doubleArrayOf(pVector.x.toDouble(), pVector.y.toDouble()))
 
+    // DESIGN: NUM-5 renamed to a toX() extension when moved to draw/Conversions.kt
+    @Suppress("ktlint:standard:function-naming")
     @JvmStatic
     fun PVector3DToRealVector(pVector: PVector): RealVector =
         MatrixUtils.createRealVector(doubleArrayOf(pVector.x.toDouble(), pVector.y.toDouble(), pVector.z.toDouble()))

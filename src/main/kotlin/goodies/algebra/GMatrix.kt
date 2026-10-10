@@ -1,7 +1,11 @@
 package goodies.algebra
 
 import goodies.geometry.Point
-import org.apache.commons.math3.linear.*
+import org.apache.commons.math3.linear.EigenDecomposition
+import org.apache.commons.math3.linear.LUDecomposition
+import org.apache.commons.math3.linear.MatrixUtils
+import org.apache.commons.math3.linear.RealMatrix
+import org.apache.commons.math3.linear.SingularValueDecomposition
 
 open class GMatrix(
     private val matrix: RealMatrix,

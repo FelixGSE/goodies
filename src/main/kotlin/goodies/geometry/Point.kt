@@ -10,7 +10,7 @@ import org.apache.commons.math3.linear.RealMatrix
 import org.apache.commons.math3.linear.RealVector
 import processing.core.PApplet
 import processing.core.PVector
-import java.util.*
+import java.util.Collections
 import kotlin.math.acos
 import kotlin.math.pow
 

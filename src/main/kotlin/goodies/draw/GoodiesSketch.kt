@@ -3,7 +3,7 @@ package goodies.draw
 import goodies.geometry.Point
 import processing.core.PApplet
 import java.io.File
-import java.util.*
+import java.util.Locale
 import kotlin.random.Random
 
 abstract class GoodiesSketch : PApplet() {

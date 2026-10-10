@@ -58,11 +58,11 @@ class Grid2D(
         for (i in 0 until nRows - 1) {
             val row = mutableListOf<Quadrilateral>()
             for (j in 0 until nCols - 1) {
-                val A = gridPoints[i][j].toPVector()
-                val B = gridPoints[i][j + 1].toPVector()
-                val C = gridPoints[i + 1][j + 1].toPVector()
-                val D = gridPoints[i + 1][j].toPVector()
-                row.add(Quadrilateral(A, B, C, D))
+                val a = gridPoints[i][j].toPVector()
+                val b = gridPoints[i][j + 1].toPVector()
+                val c = gridPoints[i + 1][j + 1].toPVector()
+                val d = gridPoints[i + 1][j].toPVector()
+                row.add(Quadrilateral(a, b, c, d))
             }
             cellGrid.add(row.toList())
         }

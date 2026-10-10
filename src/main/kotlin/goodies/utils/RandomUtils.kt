@@ -1,6 +1,10 @@
 package goodies.utils
 
-import org.apache.commons.math3.distribution.*
+import org.apache.commons.math3.distribution.ChiSquaredDistribution
+import org.apache.commons.math3.distribution.LogNormalDistribution
+import org.apache.commons.math3.distribution.MultivariateNormalDistribution
+import org.apache.commons.math3.distribution.NormalDistribution
+import org.apache.commons.math3.distribution.ParetoDistribution
 import kotlin.math.abs
 import kotlin.random.Random
 

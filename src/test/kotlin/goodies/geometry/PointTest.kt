@@ -404,7 +404,7 @@ internal class PointTest {
         }
 
         @Test
-        fun `translate should throw IllegalArgumentException when input doesn't match dimensions and is not a single number`() {
+        fun `translate should throw IllegalArgumentException when dimensions differ and input is not a scalar`() {
             // Given
             val point = Point(10, 10, 10)
 
@@ -649,7 +649,7 @@ internal class PointTest {
         }
 
         @Test
-        fun `limit should return a copy ot the original vector when limit is larger than the magnitude of the vector`() {
+        fun `limit should return a copy of the original vector when limit exceeds its magnitude`() {
             // Given
             val point = Point(1, 1)
             val expectedLimit = 99
