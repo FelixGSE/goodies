@@ -23,11 +23,11 @@ dependencies {
 
     api("org.apache.commons:commons-math3:3.6.1")
     api("com.github.haifengl:smile-plot:2.6.0")
-    implementation("com.google.guava:guava:31.1-jre")
-    implementation("org.jetbrains:annotations:24.1.0")
+    implementation("com.google.guava:guava:33.7.2-jre")
+    implementation("org.jetbrains:annotations:26.1.0")
 
-    compileOnly("org.projectlombok:lombok:1.18.24")
-    annotationProcessor("org.projectlombok:lombok:1.18.24")
+    compileOnly("org.projectlombok:lombok:1.18.48")
+    annotationProcessor("org.projectlombok:lombok:1.18.48")
 
     testImplementation(platform("org.junit:junit-bom:6.1.3"))
     testImplementation(kotlin("test"))
@@ -61,7 +61,7 @@ tasks.test {
 // when line coverage drops below -PcoverageMinimum (a ratio, 0.0-1.0).
 // ---------------------------------------------------------------------------
 jacoco {
-    toolVersion = "0.8.12"
+    toolVersion = "0.8.15"
 }
 
 val coverageMinimum: String = (findProperty("coverageMinimum") as String?) ?: "0.0"
