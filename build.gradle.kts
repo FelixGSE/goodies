@@ -1,8 +1,8 @@
 plugins {
-    kotlin("jvm") version "1.9.25"
+    kotlin("jvm") version "2.4.21"
     `java-library`
     jacoco
-    id("com.gradleup.shadow") version "8.3.5"
+    id("com.gradleup.shadow") version "9.6.1"
 }
 
 group = "org.felixgse"
@@ -19,7 +19,7 @@ dependencyLocking {
     lockAllConfigurations()
 }
 
-val resolveAndLockAll by tasks.registering {
+tasks.register("resolveAndLockAll") {
     description = "Resolves every resolvable configuration; with --write-locks it rewrites gradle.lockfile."
     notCompatibleWithConfigurationCache("resolves configurations at execution time")
     doLast {
@@ -27,26 +27,27 @@ val resolveAndLockAll by tasks.registering {
     }
 }
 
-val processingCore = "org.processing:core:4.5.6"
+val processingCore = "org.processing:core:4.5.7"
 
 dependencies {
-    // core 4.5.6 declares kotlin-stdlib 2.3, which this 1.9 compiler cannot read; core itself has no Kotlin.
-    compileOnly(processingCore) { exclude(group = "org.jetbrains.kotlin") }
-    testImplementation(processingCore) { exclude(group = "org.jetbrains.kotlin") }
+    compileOnly(processingCore)
+    testImplementation(processingCore)
 
     api("org.apache.commons:commons-math3:3.6.1")
     api("com.github.haifengl:smile-plot:2.6.0")
-    implementation("com.google.guava:guava:31.1-jre")
-    implementation("org.jetbrains:annotations:24.1.0")
+    implementation("com.google.guava:guava:33.7.2-jre")
+    implementation("org.jetbrains:annotations:26.1.0")
 
-    compileOnly("org.projectlombok:lombok:1.18.24")
-    annotationProcessor("org.projectlombok:lombok:1.18.24")
+    compileOnly("org.projectlombok:lombok:1.18.48")
+    annotationProcessor("org.projectlombok:lombok:1.18.48")
 
+    testImplementation(platform("org.junit:junit-bom:6.1.3"))
     testImplementation(kotlin("test"))
     testImplementation("org.assertj:assertj-core:3.27.7")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testImplementation("org.junit.jupiter:junit-jupiter-params")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 kotlin {
@@ -72,7 +73,7 @@ tasks.test {
 // when line coverage drops below -PcoverageMinimum (a ratio, 0.0-1.0).
 // ---------------------------------------------------------------------------
 jacoco {
-    toolVersion = "0.8.12"
+    toolVersion = "0.8.15"
 }
 
 val coverageMinimum: String = (findProperty("coverageMinimum") as String?) ?: "0.0"
@@ -111,10 +112,16 @@ tasks.shadowJar {
     archiveBaseName.set(libraryName)
     archiveClassifier.set("")
     archiveVersion.set("")
+    // shadow 9 drops duplicates before its transformers run: service files stay
+    // INCLUDE so mergeServiceFiles sees every copy, the rest keeps the first one
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
     mergeServiceFiles()
+    filesNotMatching("META-INF/services/**") {
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    }
 }
 
-val libraryProperties by tasks.registering {
+val libraryProperties = tasks.register("libraryProperties") {
     description = "Generates library.properties for the Processing Contribution Manager."
     val output = layout.buildDirectory.file("processing/library.properties")
     outputs.file(output)
@@ -140,7 +147,7 @@ val libraryProperties by tasks.registering {
     }
 }
 
-val processingLibrary by tasks.registering(Sync::class) {
+val processingLibrary = tasks.register<Sync>("processingLibrary") {
     group = "processing"
     description = "Assembles the installable Processing library folder in build/processing/$libraryName."
 
@@ -151,7 +158,7 @@ val processingLibrary by tasks.registering(Sync::class) {
     from("data") { into("data") }
 }
 
-val processingLibraryZip by tasks.registering(Zip::class) {
+tasks.register<Zip>("processingLibraryZip") {
     group = "processing"
     description = "Zips the Processing library folder for distribution."
 
@@ -164,7 +171,7 @@ val sketchbookDir: String = (findProperty("sketchbookDir") as String?)
     ?: System.getenv("PROCESSING_SKETCHBOOK")
     ?: "${System.getProperty("user.home")}/Documents/Processing"
 
-val installLibrary by tasks.registering(Sync::class) {
+tasks.register<Sync>("installLibrary") {
     group = "processing"
     description = "Installs the library into the Processing sketchbook at $sketchbookDir/libraries/$libraryName."
 

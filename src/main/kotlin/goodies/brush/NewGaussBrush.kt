@@ -36,8 +36,8 @@ class NewGaussBrush(
             opacityStd: Number = 1.0,
             color: Int = 0,
         ): NewGaussBrush {
-            val mean = Point.zeros(dimension.toInt()).toDoubleArray()
-            val covariance = DiagonalMatrix(List(dimension.toInt()) { variance }).toArrayOfDoubleArray()
+            val mean = Point.zeros(dimension).toDoubleArray()
+            val covariance = DiagonalMatrix(List(dimension) { variance }).toArrayOfDoubleArray()
 
             val brushPins = List(numberOfPoints) {
                 MultivariateNormalDistribution(mean, covariance).sample().toTypedArray()

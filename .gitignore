@@ -10,3 +10,4 @@ build/
 
 # IDE build output (VS Code Java extension)
 bin/
+.kotlin/
