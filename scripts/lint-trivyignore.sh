@@ -2,7 +2,7 @@
 # Ignore-file check for the pre-commit hook: every entry in .trivyignore.yaml
 # names an id, a statement (the reason) and an expired_at date between today
 # and 30 days out, so an accepted finding comes back for review.
-# Usage: lint-trivyignore.sh <file>...
+# Usage: lint-trivyignore.sh <file>...  (GNU date: the dev container and CI)
 set -euo pipefail
 
 horizon_days=30
@@ -16,9 +16,13 @@ fail() {
 }
 
 for f in "$@"; do
-  while IFS=$'\x1f' read -r id statement expired_at; do
+  while IFS=$'\x1f' read -r kind id statement expired_at; do
+    case "$kind" in
+      flow) fail "$f" "flow-style entry ({...}); write one key per line, block style"; continue ;;
+      empty) fail "$f" "entry under a [] list; replace [] with the entries"; continue ;;
+    esac
     entry="$f: ${id:-<no id>}"
-    [[ -n "$id" ]] || fail "$entry" "id is empty"
+    [[ -n "$id" ]] || fail "$entry" "id is missing"
     [[ -n "$statement" ]] || fail "$entry" "statement is missing (why the finding is acceptable)"
     if [[ -z "$expired_at" ]]; then
       fail "$entry" "expired_at is missing (YYYY-MM-DD)"
@@ -32,16 +36,30 @@ for f in "$@"; do
     fi
   done < <(awk '
     function value(line) {
-      sub(/^[^:]*:[ \t]*/, "", line)
+      sub(/^[ \t]*(- )?[A-Za-z_]+:[ \t]*/, "", line)
       sub(/[ \t]+#.*$/, "", line)
       gsub(/^["\x27]|["\x27]$/, "", line)
       return line
     }
-    function flush() { if (open) printf "%s\x1f%s\x1f%s\n", id, statement, expired; open = 0 }
-    /^[ \t]*- id:/ { flush(); open = 1; id = value($0); statement = ""; expired = ""; next }
-    open && /^[ \t]+statement:/ { statement = value($0); next }
-    open && /^[ \t]+expired_at:/ { expired = value($0); next }
-    /^[^ \t#-]/ { flush() }
+    function indent(line) { match(line, /^[ \t]*/); return RLENGTH }
+    function key(line) {
+      if (line ~ /^[ \t]*(- )?id:/) id = value(line)
+      else if (line ~ /^[ \t]*(- )?statement:/) statement = value(line)
+      else if (line ~ /^[ \t]*(- )?expired_at:/) expired = value(line)
+    }
+    function flush() { if (open) printf "entry\x1f%s\x1f%s\x1f%s\n", id, statement, expired; open = 0 }
+    /^[ \t]*(#|$)/ { next }
+    /^[^ \t-]/ { flush(); empty = ($0 ~ /:[ \t]*\[[ \t]*\][ \t]*(#.*)?$/); item = -1; next }
+    /^[ \t]*-([ \t]|$)/ && (item < 0 || indent($0) == item) {
+      flush()
+      item = indent($0)
+      if (empty) { print "empty\x1f\x1f\x1f"; next }
+      if ($0 ~ /^[ \t]*-[ \t]*\{/) { print "flow\x1f\x1f\x1f"; next }
+      open = 1; id = ""; statement = ""; expired = ""
+      key($0)
+      next
+    }
+    open && indent($0) > item { key($0) }
     END { flush() }
   ' "$f")
 done
