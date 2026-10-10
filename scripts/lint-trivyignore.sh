@@ -4,6 +4,7 @@
 # and 30 days out, so an accepted finding comes back for review.
 # Usage: lint-trivyignore.sh <file>...  (GNU date: the dev container and CI)
 set -euo pipefail
+[[ $# -gt 0 ]] || { echo "usage: $0 <file>..." >&2; exit 2; }
 
 horizon_days=30
 today="$(date -u +%F)"
@@ -36,16 +37,16 @@ for f in "$@"; do
     fi
   done < <(awk '
     function value(line) {
-      sub(/^[ \t]*(- )?[A-Za-z_]+:[ \t]*/, "", line)
+      sub(/^[ \t]*(-[ \t]+)?[A-Za-z_]+:[ \t]*/, "", line)
       sub(/[ \t]+#.*$/, "", line)
       gsub(/^["\x27]|["\x27]$/, "", line)
       return line
     }
     function indent(line) { match(line, /^[ \t]*/); return RLENGTH }
     function key(line) {
-      if (line ~ /^[ \t]*(- )?id:/) id = value(line)
-      else if (line ~ /^[ \t]*(- )?statement:/) statement = value(line)
-      else if (line ~ /^[ \t]*(- )?expired_at:/) expired = value(line)
+      if (line ~ /^[ \t]*(-[ \t]+)?id:/) id = value(line)
+      else if (line ~ /^[ \t]*(-[ \t]+)?statement:/) statement = value(line)
+      else if (line ~ /^[ \t]*(-[ \t]+)?expired_at:/) expired = value(line)
     }
     function flush() { if (open) printf "entry\x1f%s\x1f%s\x1f%s\n", id, statement, expired; open = 0 }
     /^[ \t]*(#|$)/ { next }
