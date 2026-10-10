@@ -42,8 +42,9 @@ fmt: ## Format every Kotlin file with ktlint
 	$(GRADLE) ktlintFormat
 
 .PHONY: lint
-lint: ## Check formatting with ktlint and lint with detekt
+lint: ## Check formatting with ktlint, lint with detekt, test the baseline check
 	$(GRADLE) ktlintCheck detektMain detektTest
+	scripts/lint-detekt-baseline-test.sh
 
 .PHONY: baseline
 baseline: ## Rewrite the detekt baselines after fixing legacy findings; they may only shrink
