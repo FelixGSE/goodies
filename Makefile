@@ -13,8 +13,8 @@ TEST_FILTER := $(if $(T),--tests "*$(T)*",)
 MIN ?= 0.0
 
 # `make scan TRIVY_ARGS="--format sarif --output trivy.sarif"` for CI reports.
+# Trivy reads TRIVY_CACHE_DIR itself: point it at a cached vulnerability DB.
 TRIVY_ARGS ?=
-TRIVY_CACHE_DIR ?= $(HOME)/.cache/trivy
 
 ##@ Build
 
@@ -54,11 +54,12 @@ hygiene: ## Run every hook on every file, as CI does
 .PHONY: scan
 scan: ## Scan dependencies and secrets, fail on HIGH/CRITICAL (config: trivy.yaml)
 	@command -v trivy > /dev/null || { echo "trivy not found: use the dev container or https://trivy.dev/latest/getting-started/installation/" >&2; exit 1; }
-	trivy fs --cache-dir "$(TRIVY_CACHE_DIR)" $(TRIVY_ARGS) .
+	trivy fs $(TRIVY_ARGS) .
 
 .PHONY: lock
 lock: ## Refresh gradle.lockfile after a dependency or plugin change
 	$(GRADLE) dependencies --write-locks --quiet > /dev/null
+	@git diff --quiet -- gradle.lockfile && echo "gradle.lockfile unchanged" || echo "gradle.lockfile changed: commit it"
 
 ##@ Processing library
 
