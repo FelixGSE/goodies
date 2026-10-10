@@ -15,6 +15,18 @@ repositories {
     mavenCentral()
 }
 
+dependencyLocking {
+    lockAllConfigurations()
+}
+
+tasks.register("resolveAndLockAll") {
+    description = "Resolves every resolvable configuration; with --write-locks it rewrites gradle.lockfile."
+    notCompatibleWithConfigurationCache("resolves configurations at execution time")
+    doLast {
+        configurations.filter { it.isCanBeResolved }.forEach { it.resolve() }
+    }
+}
+
 val processingCore = "org.processing:core:4.5.7"
 
 dependencies {

@@ -1,0 +1,16 @@
+# Findings `make scan` accepts for now: id, statement (why) and expired_at
+# (YYYY-MM-DD, about a month out). After that date the finding fails again.
+vulnerabilities: []
+licenses:
+  - id: LGPL-3.0-only
+    statement: Smile (nearest neighbour in FlowField); removed before the first release
+    expired_at: 2026-11-10
+  - id: LGPL-2.1-or-later
+    statement: swingx and swing-worker, pulled in by smile-plot; go with Smile
+    expired_at: 2026-11-10
+  - id: LGPL-2.0-or-later
+    statement: Processing core, compileOnly; Processing supplies it at runtime, never shipped
+    expired_at: 2026-11-10
+  - id: LGPL-2.1-only
+    statement: trove4j, Kotlin compiler classpath only, never shipped
+    expired_at: 2026-11-10
