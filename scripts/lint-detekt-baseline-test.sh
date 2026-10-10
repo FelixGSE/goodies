@@ -10,6 +10,7 @@ test_file=config/detekt/baseline-test.xml
 file="$main_file"
 failures=0
 name=""
+absent=""
 dirs=()
 
 cleanup() {
@@ -41,6 +42,7 @@ baseline() {
 start() {
   name="$1"
   file="$main_file"
+  absent=""
   local dir
   dir="$(mktemp -d)"
   dirs+=("$dir")
@@ -68,7 +70,8 @@ expect() {
   output="$("$script" "$@" 2>&1)" || status=$?
   if [[ "$status" != "$want_status" ]] \
     || { [[ -z "$want_output" ]] && [[ -n "$output" ]]; } \
-    || ! grep -qF -- "$want_output" <<< "$output"; then
+    || ! grep -qF -- "$want_output" <<< "$output" \
+    || { [[ -n "$absent" ]] && grep -qF -- "$absent" <<< "$output"; }; then
     echo "FAIL $name: exit $status, want $want_status; output: $output" >&2
     failures=$((failures + 1))
   else
@@ -96,12 +99,14 @@ start "one ID added fails and names it"
 baseline 'MagicNumber:A.kt:a'
 commit_base
 baseline 'MagicNumber:A.kt:a' 'LongMethod:B.kt:b'
+absent='MagicNumber:A.kt:a'
 expect 1 "LongMethod:B.kt:b"
 
 start "swap fails"
 baseline 'MagicNumber:A.kt:a'
 commit_base
 baseline 'LongMethod:B.kt:b'
+absent='MagicNumber:A.kt:a'
 expect 1 "LongMethod:B.kt:b"
 
 start "empty vs empty passes"
@@ -131,6 +136,15 @@ file="$test_file"
 baseline 'MagicNumber:ATest.kt:a'
 commit_base
 baseline 'MagicNumber:ATest.kt:a' 'LongMethod:BTest.kt:b'
+expect 1 "LongMethod:BTest.kt:b"
+
+start "both default baselines, only the test one grown, fails and names it"
+baseline 'MagicNumber:A.kt:a'
+file="$test_file"
+baseline 'MagicNumber:ATest.kt:a'
+commit_base
+baseline 'MagicNumber:ATest.kt:a' 'LongMethod:BTest.kt:b'
+absent='MagicNumber:A.kt:a'
 expect 1 "LongMethod:BTest.kt:b"
 
 start "baseline deleted in the working tree passes"
