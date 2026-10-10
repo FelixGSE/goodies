@@ -45,6 +45,12 @@ hooks: ## Install the git hooks (prek) into this clone or worktree
 hygiene: ## Run every hook on every file, as CI does
 	prek run --all-files
 
+##@ Security
+
+.PHONY: lock
+lock: ## Refresh gradle.lockfile after a dependency or plugin change
+	$(GRADLE) dependencies --write-locks --quiet > /dev/null
+
 ##@ Processing library
 
 .PHONY: lib

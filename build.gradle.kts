@@ -15,6 +15,10 @@ repositories {
     mavenCentral()
 }
 
+dependencyLocking {
+    lockAllConfigurations()
+}
+
 val processingCore = "org.processing:core:4.5.6"
 
 dependencies {
