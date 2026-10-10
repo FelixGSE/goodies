@@ -2,7 +2,7 @@ plugins {
     kotlin("jvm") version "1.9.25"
     `java-library`
     jacoco
-    id("com.gradleup.shadow") version "8.3.5"
+    id("com.gradleup.shadow") version "9.6.1"
 }
 
 group = "org.felixgse"
@@ -35,6 +35,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.1")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.9.1")
 }
 
 kotlin {
@@ -99,10 +100,15 @@ tasks.shadowJar {
     archiveBaseName.set(libraryName)
     archiveClassifier.set("")
     archiveVersion.set("")
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
     mergeServiceFiles()
+    filesNotMatching(listOf("META-INF/services/**", "META-INF/*.kotlin_module")) {
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    }
+    failOnDuplicateEntries = true
 }
 
-val libraryProperties by tasks.registering {
+val libraryProperties = tasks.register("libraryProperties") {
     description = "Generates library.properties for the Processing Contribution Manager."
     val output = layout.buildDirectory.file("processing/library.properties")
     outputs.file(output)
@@ -128,7 +134,7 @@ val libraryProperties by tasks.registering {
     }
 }
 
-val processingLibrary by tasks.registering(Sync::class) {
+val processingLibrary = tasks.register<Sync>("processingLibrary") {
     group = "processing"
     description = "Assembles the installable Processing library folder in build/processing/$libraryName."
 
@@ -139,7 +145,7 @@ val processingLibrary by tasks.registering(Sync::class) {
     from("data") { into("data") }
 }
 
-val processingLibraryZip by tasks.registering(Zip::class) {
+tasks.register<Zip>("processingLibraryZip") {
     group = "processing"
     description = "Zips the Processing library folder for distribution."
 
@@ -152,7 +158,7 @@ val sketchbookDir: String = (findProperty("sketchbookDir") as String?)
     ?: System.getenv("PROCESSING_SKETCHBOOK")
     ?: "${System.getProperty("user.home")}/Documents/Processing"
 
-val installLibrary by tasks.registering(Sync::class) {
+tasks.register<Sync>("installLibrary") {
     group = "processing"
     description = "Installs the library into the Processing sketchbook at $sketchbookDir/libraries/$libraryName."
 
