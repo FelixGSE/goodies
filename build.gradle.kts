@@ -15,7 +15,7 @@ repositories {
     mavenCentral()
 }
 
-val processingCore = "org.processing:core:4.5.6"
+val processingCore = "org.processing:core:4.5.7"
 
 dependencies {
     compileOnly(processingCore)
