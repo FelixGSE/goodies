@@ -6,10 +6,8 @@ import processing.core.PApplet
 import processing.core.PVector
 
 object Conversions {
-
     @JvmStatic
-    fun realVectorToListOfFloats(realVector: RealVector): List<Float> =
-        realVector.toArray().map { it.toFloat() }
+    fun realVectorToListOfFloats(realVector: RealVector): List<Float> = realVector.toArray().map { it.toFloat() }
 
     @JvmStatic
     fun listOfFloatsToRealArray(listOfFloats: List<Float>): RealVector =
@@ -22,11 +20,15 @@ object Conversions {
     fun floatToDouble(floatValue: Float): Double = floatValue.toDouble()
 
     @JvmStatic
-    fun PVectorToDoubleArray(pvector: PVector, dimensions: Int): DoubleArray = when (dimensions) {
-        2 -> doubleArrayOf(pvector.x.toDouble(), pvector.y.toDouble())
-        3 -> doubleArrayOf(pvector.x.toDouble(), pvector.y.toDouble(), pvector.z.toDouble())
-        else -> throw IllegalArgumentException("Invalid number of dimensions")
-    }
+    fun PVectorToDoubleArray(
+        pvector: PVector,
+        dimensions: Int,
+    ): DoubleArray =
+        when (dimensions) {
+            2 -> doubleArrayOf(pvector.x.toDouble(), pvector.y.toDouble())
+            3 -> doubleArrayOf(pvector.x.toDouble(), pvector.y.toDouble(), pvector.z.toDouble())
+            else -> throw IllegalArgumentException("Invalid number of dimensions")
+        }
 
     @JvmStatic
     fun realVectorToPVector(realVector: RealVector): PVector {
@@ -50,11 +52,12 @@ object Conversions {
     fun hexColorToInteger(hexString: String): Int = PApplet.unhex(hexString)
 
     @JvmStatic
-    fun listOfFloatsToPVector(listOfFloats: List<Float>): PVector = when (listOfFloats.size) {
-        2 -> PVector(listOfFloats[0], listOfFloats[1])
-        3 -> PVector(listOfFloats[0], listOfFloats[1], listOfFloats[2])
-        else -> throw IllegalArgumentException()
-    }
+    fun listOfFloatsToPVector(listOfFloats: List<Float>): PVector =
+        when (listOfFloats.size) {
+            2 -> PVector(listOfFloats[0], listOfFloats[1])
+            3 -> PVector(listOfFloats[0], listOfFloats[1], listOfFloats[2])
+            else -> throw IllegalArgumentException()
+        }
 
     @JvmStatic
     fun listOfFloatsToDoubleArray(listOfFloats: List<Float>): DoubleArray =
@@ -65,13 +68,13 @@ object Conversions {
         listOfFloats.map { listOfFloatsToDoubleArray(it) }.toTypedArray()
 
     @JvmStatic
-    fun doubleArrayToPVector(value: DoubleArray): PVector = when (value.size) {
-        2 -> PVector(value[0].toFloat(), value[1].toFloat())
-        3 -> PVector(value[0].toFloat(), value[1].toFloat(), value[2].toFloat())
-        else -> throw IllegalArgumentException("Can only convert 2 and three dimensional Arrays to PVector")
-    }
+    fun doubleArrayToPVector(value: DoubleArray): PVector =
+        when (value.size) {
+            2 -> PVector(value[0].toFloat(), value[1].toFloat())
+            3 -> PVector(value[0].toFloat(), value[1].toFloat(), value[2].toFloat())
+            else -> throw IllegalArgumentException("Can only convert 2 and three dimensional Arrays to PVector")
+        }
 
     @JvmStatic
-    fun doubleArrayToListOfFloats(listOfDoubles: DoubleArray): List<Float> =
-        listOfDoubles.map { it.toFloat() }
+    fun doubleArrayToListOfFloats(listOfDoubles: DoubleArray): List<Float> = listOfDoubles.map { it.toFloat() }
 }

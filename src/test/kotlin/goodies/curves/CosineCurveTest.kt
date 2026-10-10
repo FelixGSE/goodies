@@ -4,9 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
-
 class CosineCurveTest {
-
     @Test
     fun `cosineCurve should create a cosine curve when input is within valid range`() {
         // Given
@@ -23,7 +21,6 @@ class CosineCurveTest {
 
         // Then
         assertThat(result).hasSize(40)
-
     }
 
     @Test

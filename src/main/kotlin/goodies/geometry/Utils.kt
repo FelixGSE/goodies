@@ -5,12 +5,14 @@ fun isPerfectSquare(number: Int): Boolean {
     return sqrt * sqrt == number
 }
 
-fun isFibonacciNumber(number: Int): Boolean {
-    return isPerfectSquare(5 * number * number + 4) ||
+fun isFibonacciNumber(number: Int): Boolean =
+    isPerfectSquare(5 * number * number + 4) ||
         isPerfectSquare(5 * number * number - 4)
-}
 
-fun generateFibonacciInRange(a: Long, b: Long): List<Long> {
+fun generateFibonacciInRange(
+    a: Long,
+    b: Long,
+): List<Long> {
     val fibonacciNumbers = mutableListOf<Long>()
     var prev = 0L
     var current = 1L
@@ -28,9 +30,7 @@ fun generateFibonacciInRange(a: Long, b: Long): List<Long> {
     return fibonacciNumbers
 }
 
-fun sumOfSquares(input: Iterable<Number>): Float {
-    return input.map { it.toFloat() * it.toFloat() }.sum()
-}
+fun sumOfSquares(input: Iterable<Number>): Float = input.map { it.toFloat() * it.toFloat() }.sum()
 
 fun isPrime(input: Int): Boolean {
     if (input <= 1) {
@@ -44,9 +44,7 @@ fun isPrime(input: Int): Boolean {
     return true
 }
 
-fun isEven(n: Int): Boolean {
-    return n % 2 == 0
-}
+fun isEven(n: Int): Boolean = n % 2 == 0
 
 fun getBoundingBoxHeightAndWidth(points: List<Point>): List<Float> {
     if (points.size < 3) {
@@ -75,14 +73,18 @@ fun getBoundingBoxHeightAndWidth(points: List<Point>): List<Float> {
     return listOf(maxX - minX, maxY - minY)
 }
 
-val unitVertices = listOf(
-    Point(0, 0),
-    Point(1, 0),
-    Point(1, 1),
-    Point(0, 1),
-)
+val unitVertices =
+    listOf(
+        Point(0, 0),
+        Point(1, 0),
+        Point(1, 1),
+        Point(0, 1),
+    )
 
-fun listOfPointsToListOfLines(points: List<Point>, closed: Boolean = false): List<Line> {
+fun listOfPointsToListOfLines(
+    points: List<Point>,
+    closed: Boolean = false,
+): List<Line> {
     val lines = mutableListOf<Line>()
     for (i in 0 until points.size - 1) {
         val currentPoint = points[i]

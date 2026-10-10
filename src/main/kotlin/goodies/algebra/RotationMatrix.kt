@@ -5,11 +5,14 @@ import org.apache.commons.math3.linear.RealMatrix
 import kotlin.math.cos
 import kotlin.math.sin
 
-class RotationMatrix(i: Int, j: Int, dimensions: Int, angle: Number) :
-    GMatrix(
+class RotationMatrix(
+    i: Int,
+    j: Int,
+    dimensions: Int,
+    angle: Number,
+) : GMatrix(
         getRotationMatrixForAxis(i, j, dimensions, angle),
     ) {
-
     constructor(index: Int, dimensions: Int, angle: Number) : this(
         getCoordinates(dimensions, index).first,
         getCoordinates(dimensions, index).second,
@@ -18,7 +21,12 @@ class RotationMatrix(i: Int, j: Int, dimensions: Int, angle: Number) :
     )
 
     companion object {
-        fun getRotationMatrixForAxis(i: Int, j: Int, dimensions: Int, angle: Number): RealMatrix {
+        fun getRotationMatrixForAxis(
+            i: Int,
+            j: Int,
+            dimensions: Int,
+            angle: Number,
+        ): RealMatrix {
             require(!((i > dimensions) or (j > dimensions)))
             require(i < j) { "Dimension j must be greater than i" }
             val rotationMatrix = MatrixUtils.createRealIdentityMatrix(dimensions)
@@ -33,7 +41,10 @@ class RotationMatrix(i: Int, j: Int, dimensions: Int, angle: Number) :
             return rotationMatrix
         }
 
-        fun getCoordinates(dimensions: Int, index: Int): Pair<Int, Int> {
+        fun getCoordinates(
+            dimensions: Int,
+            index: Int,
+        ): Pair<Int, Int> {
             // TODO: -1 correct?
             require(index > 0 || index < getNumberOfRotations(dimensions) - 1) { "Invalid got $dimensions and $index" }
             var currentIndex = 0
@@ -50,9 +61,7 @@ class RotationMatrix(i: Int, j: Int, dimensions: Int, angle: Number) :
             throw Exception("This should never happen")
         }
 
-        fun getNumberOfRotations(dimensions: Int): Int {
-            return (0 until dimensions).sum()
-        }
+        fun getNumberOfRotations(dimensions: Int): Int = (0 until dimensions).sum()
 
         /*
         2 -  1 -  i-1
@@ -67,7 +76,5 @@ class RotationMatrix(i: Int, j: Int, dimensions: Int, angle: Number) :
          */
     }
 
-    fun toGMatrix(): GMatrix {
-        return GMatrix(toRealMatrix().copy())
-    }
+    fun toGMatrix(): GMatrix = GMatrix(toRealMatrix().copy())
 }

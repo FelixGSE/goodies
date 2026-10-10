@@ -109,42 +109,44 @@ tasks.shadowJar {
     }
 }
 
-val libraryProperties = tasks.register("libraryProperties") {
-    description = "Generates library.properties for the Processing Contribution Manager."
-    val output = layout.buildDirectory.file("processing/library.properties")
-    outputs.file(output)
-    val libVersion = project.version.toString()
-    // Processing wants a monotonically increasing integer here; bump on each release.
-    val libRevision = (findProperty("libraryRevision") as String?) ?: "1"
-    doLast {
-        output.get().asFile.writeText(
-            """
-            name=${libraryName}
-            category=Other
-            authors=[FelixGSE](https://github.com/FelixGSE)
-            url=https://github.com/FelixGSE/goodies
-            sentence=Utilities and extensions for creative coding with Processing.
-            paragraph=Mathematical and geometric helpers for generative art: flow fields, curves, brush rendering, watercolor effects, agent simulations and more.
-            version=${libRevision}
-            prettyVersion=${libVersion}
-            minRevision=1293
-            maxRevision=0
+val libraryProperties =
+    tasks.register("libraryProperties") {
+        description = "Generates library.properties for the Processing Contribution Manager."
+        val output = layout.buildDirectory.file("processing/library.properties")
+        outputs.file(output)
+        val libVersion = project.version.toString()
+        // Processing wants a monotonically increasing integer here; bump on each release.
+        val libRevision = (findProperty("libraryRevision") as String?) ?: "1"
+        doLast {
+            output.get().asFile.writeText(
+                """
+                name=$libraryName
+                category=Other
+                authors=[FelixGSE](https://github.com/FelixGSE)
+                url=https://github.com/FelixGSE/goodies
+                sentence=Utilities and extensions for creative coding with Processing.
+                paragraph=Mathematical and geometric helpers for generative art: flow fields, curves, brush rendering, watercolor effects, agent simulations and more.
+                version=$libRevision
+                prettyVersion=$libVersion
+                minRevision=1293
+                maxRevision=0
 
-            """.trimIndent()
-        )
+                """.trimIndent(),
+            )
+        }
     }
-}
 
-val processingLibrary = tasks.register<Sync>("processingLibrary") {
-    group = "processing"
-    description = "Assembles the installable Processing library folder in build/processing/$libraryName."
+val processingLibrary =
+    tasks.register<Sync>("processingLibrary") {
+        group = "processing"
+        description = "Assembles the installable Processing library folder in build/processing/$libraryName."
 
-    into(layout.buildDirectory.dir("processing/$libraryName"))
-    from(tasks.shadowJar) { into("library") }
-    from(libraryProperties)
-    from("examples") { into("examples") }
-    from("data") { into("data") }
-}
+        into(layout.buildDirectory.dir("processing/$libraryName"))
+        from(tasks.shadowJar) { into("library") }
+        from(libraryProperties)
+        from("examples") { into("examples") }
+        from("data") { into("data") }
+    }
 
 tasks.register<Zip>("processingLibraryZip") {
     group = "processing"
@@ -155,9 +157,10 @@ tasks.register<Zip>("processingLibraryZip") {
     destinationDirectory.set(layout.buildDirectory.dir("distributions"))
 }
 
-val sketchbookDir: String = (findProperty("sketchbookDir") as String?)
-    ?: System.getenv("PROCESSING_SKETCHBOOK")
-    ?: "${System.getProperty("user.home")}/Documents/Processing"
+val sketchbookDir: String =
+    (findProperty("sketchbookDir") as String?)
+        ?: System.getenv("PROCESSING_SKETCHBOOK")
+        ?: "${System.getProperty("user.home")}/Documents/Processing"
 
 tasks.register<Sync>("installLibrary") {
     group = "processing"

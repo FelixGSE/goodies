@@ -1,4 +1,3 @@
 package goodies.algebra
 
-class GVector {
-}
+class GVector

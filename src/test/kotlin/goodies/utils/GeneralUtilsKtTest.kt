@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class GeneralUtilsKtTest {
-
     @Test
     fun sha512_string() {
         // Given

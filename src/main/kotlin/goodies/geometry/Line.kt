@@ -11,7 +11,13 @@ import goodies.utils.randomFloats
 import processing.core.PApplet
 import processing.core.PVector
 
-class Line(private val a: Point, private val b: Point) : DiscreteShape, OpenShape, Geom, Drawable {
+class Line(
+    private val a: Point,
+    private val b: Point,
+) : DiscreteShape,
+    OpenShape,
+    Geom,
+    Drawable {
     constructor(points: Iterable<Point>) : this(points.first(), points.last()) {
         require(points.count() == 2) { "Iterable must contain exactly two points" }
     }
@@ -34,13 +40,9 @@ class Line(private val a: Point, private val b: Point) : DiscreteShape, OpenShap
         return result
     }
 
-    override fun toString(): String {
-        return "Line(a=$a, b=$b)"
-    }
+    override fun toString(): String = "Line(a=$a, b=$b)"
 
-    fun copy(): Line {
-        return Line(start, end)
-    }
+    fun copy(): Line = Line(start, end)
 
     val dimensions: Int
         get() {
@@ -77,69 +79,52 @@ class Line(private val a: Point, private val b: Point) : DiscreteShape, OpenShap
             return a.distance(b)
         }
 
-    override fun addDimensions(vararg dimension: Number): Line {
-        return Line(a.extend(*dimension), b.extend(*dimension))
-    }
+    override fun addDimensions(vararg dimension: Number): Line = Line(a.extend(*dimension), b.extend(*dimension))
 
     override fun center(): Line {
         val centered = GMatrix(vertices).center().rows
         return Line(centered.first(), centered.last())
     }
 
-    override fun centerAt(point: Point): Shape {
-        return center().translate(point.toList())
-    }
+    override fun centerAt(point: Point): Shape = center().translate(point.toList())
 
     override fun normalize(): Line {
         val normalized = GMatrix(vertices).normalize().rows
         return Line(normalized.first(), normalized.last())
     }
 
-    override fun translate(vararg translation: Number): Line {
-        return Line(
+    override fun translate(vararg translation: Number): Line =
+        Line(
             a.translate(*translation),
             b.translate(*translation),
         )
-    }
 
-    fun translate(translation: List<Number>): Line {
-        return Line(
+    fun translate(translation: List<Number>): Line =
+        Line(
             a.translate(*translation.toTypedArray()),
             b.translate(*translation.toTypedArray()),
         )
-    }
 
-    override fun translate(translation: Number): Line {
-        return Line(
+    override fun translate(translation: Number): Line =
+        Line(
             a.translate(translation),
             b.translate(translation),
         )
-    }
 
-    override fun scale(factor: Number): Line {
-        return Line(a.scale(factor), b.scale(factor))
-    }
+    override fun scale(factor: Number): Line = Line(a.scale(factor), b.scale(factor))
 
     val midpoint: Point
         get() {
             return scaleFromStart(0.5).end
         }
 
-    fun scaleFromStart(factor: Number): Line {
-        return Line(start, start + factor * (end - start))
-    }
+    fun scaleFromStart(factor: Number): Line = Line(start, start + factor * (end - start))
 
-    fun scaleFromEnd(factor: Number): Line {
-        return reversed.scaleFromStart(factor).reversed
-    }
+    fun scaleFromEnd(factor: Number): Line = reversed.scaleFromStart(factor).reversed
 
-    fun scaleFromBothSides(factor: Number): Line {
-        return center().scale(factor).translate(midpoint.x, midpoint.y)
-    }
+    fun scaleFromBothSides(factor: Number): Line = center().scale(factor).translate(midpoint.x, midpoint.y)
 
-    fun randomPointOn(): Point {
-        return scaleFromStart(Math.random()).end
-    }
+    fun randomPointOn(): Point = scaleFromStart(Math.random()).end
 
     fun goldenRatioSplit(): List<Line> {
         val split = length / GOLDEN_RATIO
@@ -164,11 +149,10 @@ class Line(private val a: Point, private val b: Point) : DiscreteShape, OpenShap
         return outputs
     }
 
-    fun divideLineInRandomParts(n: Int): List<Line> {
-        return randomFloats(n - 1)
+    fun divideLineInRandomParts(n: Int): List<Line> =
+        randomFloats(n - 1)
             .sorted()
             .map { scaleFromStart(it) }
-    }
 
     fun increaseByLength(addOn: Number): Line {
         val scalingFactor = 1 + addOn.toFloat() / length
@@ -180,20 +164,14 @@ class Line(private val a: Point, private val b: Point) : DiscreteShape, OpenShap
         fun fromPVector2D(
             start: PVector,
             end: PVector,
-        ): Line {
-            return Line(Point(start.x, start.y), Point(end.x, end.y))
-        }
+        ): Line = Line(Point(start.x, start.y), Point(end.x, end.y))
 
         fun fromPVector3D(
             start: PVector,
             end: PVector,
-        ): Line {
-            return Line(Point(start.x, start.y, start.z), Point(end.x, end.y, end.z))
-        }
+        ): Line = Line(Point(start.x, start.y, start.z), Point(end.x, end.y, end.z))
 
-        fun makePositiveRealLine(upper: Number): Line {
-            return Line(Point(0f, 0f), Point(upper, 0f))
-        }
+        fun makePositiveRealLine(upper: Number): Line = Line(Point(0f, 0f), Point(upper, 0f))
 
         fun makeRealLine(
             lower: Float,
@@ -206,20 +184,16 @@ class Line(private val a: Point, private val b: Point) : DiscreteShape, OpenShap
         fun hLIne(
             sketch: PApplet,
             y: Float,
-        ): Line {
-            return Line(Point(0f, y), Point(sketch.width.toFloat(), y))
-        }
+        ): Line = Line(Point(0f, y), Point(sketch.width.toFloat(), y))
 
         fun vLine(
             sketch: PApplet,
             x: Float,
-        ): Line {
-            return Line(Point(x, 0f), Point(x, sketch.height.toFloat()))
-        }
+        ): Line = Line(Point(x, 0f), Point(x, sketch.height.toFloat()))
     }
 
-    override fun draw(sketch: PApplet) {
-        return when (dimensions) {
+    override fun draw(sketch: PApplet) =
+        when (dimensions) {
             2 -> {
                 sketch.line(a.x, a.y, b.x, b.y)
             }
@@ -232,5 +206,4 @@ class Line(private val a: Point, private val b: Point) : DiscreteShape, OpenShap
                 throw IllegalArgumentException("Can only draw 2D and 3D objects")
             }
         }
-    }
 }

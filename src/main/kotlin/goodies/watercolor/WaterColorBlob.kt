@@ -8,11 +8,15 @@ import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
 
-class WaterColorBlob(val basePolygon: Polygon) {
-
+class WaterColorBlob(
+    val basePolygon: Polygon,
+) {
     val deformedPolygons: MutableList<Polygon> = mutableListOf()
 
-    fun createDeformedPolygons(n: Int, depth: Int) {
+    fun createDeformedPolygons(
+        n: Int,
+        depth: Int,
+    ) {
         for (i in 0 until n) {
             deformedPolygons.add(deform(basePolygon, depth))
         }
@@ -27,7 +31,10 @@ class WaterColorBlob(val basePolygon: Polygon) {
     companion object {
         private val rng = java.util.Random()
 
-        fun deform(polygon: Polygon, depth: Int): Polygon {
+        fun deform(
+            polygon: Polygon,
+            depth: Int,
+        ): Polygon {
             val points = mutableListOf<Point>()
             for (edge in polygon.edges) {
                 points.add(edge.start)
@@ -41,7 +48,7 @@ class WaterColorBlob(val basePolygon: Polygon) {
             line: Line,
             depth: Int,
             lengthVariance: Float,
-            angleVariance: Float
+            angleVariance: Float,
         ) {
             if (depth < 0) return
 
@@ -49,17 +56,20 @@ class WaterColorBlob(val basePolygon: Polygon) {
             val midPoint = line.scaleFromStart(midFactor).end
 
             val displacement = (rng.nextGaussian() * lengthVariance).toFloat()
-            val baseAngle = atan2(
-                (line.end.y - line.start.y).toDouble(),
-                (line.end.x - line.start.x).toDouble()
-            ).toFloat()
-            val perpAngle = baseAngle + Math.PI.toFloat() / 2f +
-                (rng.nextGaussian() * angleVariance * Math.PI / 180.0).toFloat()
+            val baseAngle =
+                atan2(
+                    (line.end.y - line.start.y).toDouble(),
+                    (line.end.x - line.start.x).toDouble(),
+                ).toFloat()
+            val perpAngle =
+                baseAngle + Math.PI.toFloat() / 2f +
+                    (rng.nextGaussian() * angleVariance * Math.PI / 180.0).toFloat()
 
-            val splitPoint = Point(
-                midPoint.x + cos(perpAngle.toDouble()).toFloat() * displacement,
-                midPoint.y + sin(perpAngle.toDouble()).toFloat() * displacement
-            )
+            val splitPoint =
+                Point(
+                    midPoint.x + cos(perpAngle.toDouble()).toFloat() * displacement,
+                    midPoint.y + sin(perpAngle.toDouble()).toFloat() * displacement,
+                )
 
             val left = Line(line.start, splitPoint)
             val right = Line(splitPoint, line.end)

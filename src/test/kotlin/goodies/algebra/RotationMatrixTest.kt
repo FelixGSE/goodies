@@ -6,18 +6,17 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
 internal class RotationMatrixTest {
-
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     @Nested
     inner class Properties {
-
         @Test
         fun `Multiplying several high dimensional RotationMatrices should still have a determinant of 1`() {
             // Given
-            val matrix = RotationMatrix(0, 3, 4, 0.5)
-                .dot(RotationMatrix(2, 3, 4, 0.5))
-                .dot(RotationMatrix(1, 3, 4, 0.5))
-                .dot(RotationMatrix(1, 2, 4, 0.5))
+            val matrix =
+                RotationMatrix(0, 3, 4, 0.5)
+                    .dot(RotationMatrix(2, 3, 4, 0.5))
+                    .dot(RotationMatrix(1, 3, 4, 0.5))
+                    .dot(RotationMatrix(1, 2, 4, 0.5))
 
             // When
 

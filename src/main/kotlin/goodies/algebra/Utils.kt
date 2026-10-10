@@ -1,2 +1,1 @@
 package goodies.algebra
-

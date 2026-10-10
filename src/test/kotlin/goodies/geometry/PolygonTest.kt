@@ -9,18 +9,17 @@ import org.junit.jupiter.api.TestInstance
 import java.lang.Math.toRadians
 
 class PolygonTest {
-
     @Nested
     inner class EdgesTest {
-
         @Test
         fun `edges should return correct edges for a triangle`() {
             // Given
-            val vertexList = listOf(
-                Point(0.0, 0.0),
-                Point(1.0, 0.0),
-                Point(1.0, 1.0),
-            )
+            val vertexList =
+                listOf(
+                    Point(0.0, 0.0),
+                    Point(1.0, 0.0),
+                    Point(1.0, 1.0),
+                )
             val polygon = Polygon(vertexList)
 
             // When
@@ -34,19 +33,21 @@ class PolygonTest {
         @Disabled("known failure: expected the legacy Java Line, got goodies.geometry.Line; no owner yet")
         fun `edges should close the polygon with the last edge`() {
             // Given
-            val polygon = Polygon(
-                listOf(
-                    Point(0.0, 0.0),
-                    Point(1.0, 0.0),
-                    Point(1.0, 1.0),
-                ),
-            )
+            val polygon =
+                Polygon(
+                    listOf(
+                        Point(0.0, 0.0),
+                        Point(1.0, 0.0),
+                        Point(1.0, 1.0),
+                    ),
+                )
 
-            val expectedEdges = listOf(
-                Line(Point(0.0, 0.0), Point(1.0, 0.0)),
-                Line(Point(1.0, 0.0), Point(1.0, 1.0)),
-                Line(Point(1.0, 1.0), Point(0.0, 0.0)),
-            )
+            val expectedEdges =
+                listOf(
+                    Line(Point(0.0, 0.0), Point(1.0, 0.0)),
+                    Line(Point(1.0, 0.0), Point(1.0, 1.0)),
+                    Line(Point(1.0, 1.0), Point(0.0, 0.0)),
+                )
 
             // When
             val result = polygon.edges
@@ -59,13 +60,14 @@ class PolygonTest {
     @Test
     fun `convexHull should return original vertices when polygon has 3 or fewer vertices`() {
         // Given
-        val polygon = Polygon(
-            listOf(
-                Point(0.0, 0.0),
-                Point(1.0, 0.0),
-                Point(1.0, 1.0),
-            ),
-        )
+        val polygon =
+            Polygon(
+                listOf(
+                    Point(0.0, 0.0),
+                    Point(1.0, 0.0),
+                    Point(1.0, 1.0),
+                ),
+            )
 
         // When
         val result = polygon.convexHull()
@@ -77,23 +79,25 @@ class PolygonTest {
     @Test
     fun `convexHull should return correct convex hull vertices for a simple polygon`() {
         // Given
-        val polygon = Polygon(
-            listOf(
-                Point(0.0, 0.0),
-                Point(1.0, 0.0),
-                Point(1.0, 1.0),
-                Point(0.0, 1.0),
-                Point(0.5, 0.5),
-            ),
-        )
-        val expectedConvexHull = Polygon(
-            listOf(
-                Point(0.0, 0.0),
-                Point(1.0, 0.0),
-                Point(1.0, 1.0),
-                Point(0.0, 1.0),
-            ),
-        )
+        val polygon =
+            Polygon(
+                listOf(
+                    Point(0.0, 0.0),
+                    Point(1.0, 0.0),
+                    Point(1.0, 1.0),
+                    Point(0.0, 1.0),
+                    Point(0.5, 0.5),
+                ),
+            )
+        val expectedConvexHull =
+            Polygon(
+                listOf(
+                    Point(0.0, 0.0),
+                    Point(1.0, 0.0),
+                    Point(1.0, 1.0),
+                    Point(0.0, 1.0),
+                ),
+            )
 
         // When
         val result = polygon.convexHull()
@@ -105,17 +109,17 @@ class PolygonTest {
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     @Nested
     inner class IsConvexTests {
-
         @Test
         fun `isConvex should return true for a triangle`() {
             // Given
-            val polygon = Polygon(
-                listOf(
-                    Point(0.0, 0.0),
-                    Point(1.0, 0.0),
-                    Point(1.0, 1.0),
-                ),
-            )
+            val polygon =
+                Polygon(
+                    listOf(
+                        Point(0.0, 0.0),
+                        Point(1.0, 0.0),
+                        Point(1.0, 1.0),
+                    ),
+                )
 
             // When
             val result = polygon.isConvex
@@ -127,14 +131,15 @@ class PolygonTest {
         @Test
         fun `isConvex should return true for a convex quadrilateral`() {
             // Given
-            val polygon = Polygon(
-                listOf(
-                    Point(0.0, 0.0),
-                    Point(2.0, 0.0),
-                    Point(2.0, 2.0),
-                    Point(0.0, 2.0),
-                ),
-            )
+            val polygon =
+                Polygon(
+                    listOf(
+                        Point(0.0, 0.0),
+                        Point(2.0, 0.0),
+                        Point(2.0, 2.0),
+                        Point(0.0, 2.0),
+                    ),
+                )
 
             // When
             val result = polygon.isConvex
@@ -146,15 +151,16 @@ class PolygonTest {
         @Test
         fun `isConvex should return false for a non-convex pentagon`() {
             // Given
-            val polygon = Polygon(
-                listOf(
-                    Point(0.0, 0.0),
-                    Point(2.0, 0.0),
-                    Point(1.5, 0.5),
-                    Point(1.0, 1.0),
-                    Point(0.0, 1.0),
-                ),
-            )
+            val polygon =
+                Polygon(
+                    listOf(
+                        Point(0.0, 0.0),
+                        Point(2.0, 0.0),
+                        Point(1.5, 0.5),
+                        Point(1.0, 1.0),
+                        Point(0.0, 1.0),
+                    ),
+                )
 
             // When
             val result = polygon.isConvex
@@ -166,18 +172,18 @@ class PolygonTest {
 
     @Nested
     inner class InteriorAnglesTests {
-
         @Test
         @Disabled("known failure: expected List<Double>, got List<Float> in another order; VAL-3, E3.4")
         fun `should return correct angles for a triangle`() {
             // Given
-            val polygon = Polygon(
-                listOf(
-                    Point(0.0, 0.0),
-                    Point(1.0, 0.0),
-                    Point(1.0, 1.0),
-                ),
-            )
+            val polygon =
+                Polygon(
+                    listOf(
+                        Point(0.0, 0.0),
+                        Point(1.0, 0.0),
+                        Point(1.0, 1.0),
+                    ),
+                )
 
             val expectedAngles = listOf(45.0, 45.0, 90.0).map { toRadians(it) }
 
@@ -191,14 +197,15 @@ class PolygonTest {
         @Test
         fun `should return correct angles for a convex quadrilateral`() {
             // Given
-            val polygon = Polygon(
-                listOf(
-                    Point(0.0, 0.0),
-                    Point(2.0, 0.0),
-                    Point(2.0, 2.0),
-                    Point(0.0, 2.0),
-                ),
-            )
+            val polygon =
+                Polygon(
+                    listOf(
+                        Point(0.0, 0.0),
+                        Point(2.0, 0.0),
+                        Point(2.0, 2.0),
+                        Point(0.0, 2.0),
+                    ),
+                )
 
             val expectedAngles = listOf(90.0, 90.0, 90.0, 90.0).map { toRadians(it).toFloat() }
 
@@ -210,18 +217,21 @@ class PolygonTest {
         }
 
         @Test
-        @Disabled("known failure: expected [2.36, 1.70, 2.26, 2.48, 1.98], got [0.79, 3.14, 2.36, 1.57, 1.57]; no owner yet")
+        @Disabled(
+            "known failure: expected [2.36, 1.70, 2.26, 2.48, 1.98], got [0.79, 3.14, 2.36, 1.57, 1.57]; no owner yet",
+        )
         fun `should return correct angles for a non-convex pentagon`() {
             // Given
-            val polygon = Polygon(
-                listOf(
-                    Point(0.0, 0.0),
-                    Point(2.0, 0.0),
-                    Point(1.5, 0.5),
-                    Point(1.0, 1.0),
-                    Point(0.0, 1.0),
-                ),
-            )
+            val polygon =
+                Polygon(
+                    listOf(
+                        Point(0.0, 0.0),
+                        Point(2.0, 0.0),
+                        Point(1.5, 0.5),
+                        Point(1.0, 1.0),
+                        Point(0.0, 1.0),
+                    ),
+                )
 
             val expectedAngles = listOf(135.0, 97.378, 129.744, 142.238, 113.640).map { toRadians(it).toFloat() }
 

@@ -9,14 +9,16 @@ import org.junit.jupiter.api.TestInstance
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class WaterColorBlobTest {
-
-    private val square = Polygon(
-        Point(0f, 0f), Point(100f, 0f), Point(100f, 100f), Point(0f, 100f)
-    )
+    private val square =
+        Polygon(
+            Point(0f, 0f),
+            Point(100f, 0f),
+            Point(100f, 100f),
+            Point(0f, 100f),
+        )
 
     @Nested
     inner class Construction {
-
         @Test
         fun `should create blob with base polygon`() {
             // Given / When
@@ -30,7 +32,6 @@ class WaterColorBlobTest {
 
     @Nested
     inner class Deformation {
-
         @Test
         fun `should create deformed polygons`() {
             // Given

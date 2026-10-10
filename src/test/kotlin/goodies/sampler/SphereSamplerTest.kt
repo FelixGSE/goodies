@@ -8,10 +8,8 @@ import org.junit.jupiter.api.TestInstance
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SphereSamplerTest {
-
     @Nested
     inner class UnitSphere {
-
         @Test
         fun `should draw point on unit sphere with length 1`() {
             // Given / When
@@ -34,7 +32,6 @@ class SphereSamplerTest {
 
     @Nested
     inner class UnitNSphere {
-
         @Test
         fun `should draw point on N-sphere with correct dimensionality`() {
             // Given

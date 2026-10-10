@@ -4,11 +4,13 @@ import goodies.geometry.Point
 import processing.core.PApplet
 import java.awt.Color
 
-fun hexColorToRGBInt(hex: String): Int {
-    return Color.decode(hex).rgb
-}
+fun hexColorToRGBInt(hex: String): Int = Color.decode(hex).rgb
 
-fun scaleToScreen(points: Collection<Point>, sketch: PApplet, margin: Number): Collection<Point> {
+fun scaleToScreen(
+    points: Collection<Point>,
+    sketch: PApplet,
+    margin: Number,
+): Collection<Point> {
     val minX = points.minOf { it.x }
     val maxX = points.maxOf { it.x }
     val minY = points.minOf { it.y }
@@ -23,7 +25,11 @@ fun scaleToScreen(points: Collection<Point>, sketch: PApplet, margin: Number): C
     }
 }
 
-fun scaleToScreen2(points: Collection<Point>, sketch: PApplet, margin: Number): Float {
+fun scaleToScreen2(
+    points: Collection<Point>,
+    sketch: PApplet,
+    margin: Number,
+): Float {
     val minX = points.minOf { it.x }
     val maxX = points.maxOf { it.x }
     val minY = points.minOf { it.y }

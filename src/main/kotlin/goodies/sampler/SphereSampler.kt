@@ -7,7 +7,6 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 object SphereSampler {
-
     @JvmStatic
     fun drawPointOnUnitSphere(): RealVector {
         val unitNormal = NormalDistribution(0.0, 1.0)
@@ -28,11 +27,10 @@ object SphereSampler {
     }
 
     @JvmStatic
-    fun lengthOfVector(inputVector: RealVector): Double {
-        return sqrt(
+    fun lengthOfVector(inputVector: RealVector): Double =
+        sqrt(
             inputVector.getEntry(0).pow(2) +
                 inputVector.getEntry(1).pow(2) +
-                inputVector.getEntry(2).pow(2)
+                inputVector.getEntry(2).pow(2),
         )
-    }
 }

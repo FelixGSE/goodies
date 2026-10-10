@@ -15,9 +15,10 @@ import kotlin.random.Random
  * @param n The size of the sample to generate.
  * @return A list containing the randomly sampled elements.
  */
-fun <T> sampleWithReplacementFromList(input: List<T>, n: Int): List<T> {
-    return List(n) { input.random() }
-}
+fun <T> sampleWithReplacementFromList(
+    input: List<T>,
+    n: Int,
+): List<T> = List(n) { input.random() }
 
 /** Probabilities given as `Float` are off by up to ~1e-7 each; the tolerance admits them. */
 const val PROBABILITY_SUM_TOLERANCE = 1e-6
@@ -28,7 +29,11 @@ const val PROBABILITY_SUM_TOLERANCE = 1e-6
  * Weights are probabilities summing to one within [PROBABILITY_SUM_TOLERANCE].
  * Pass a seeded [rng] to make the draw reproducible.
  */
-fun <T> weightedSample(items: List<T>, weights: List<Number>, rng: Random = Random.Default): T {
+fun <T> weightedSample(
+    items: List<T>,
+    weights: List<Number>,
+    rng: Random = Random.Default,
+): T {
     val weightsAsDouble = weights.map { it.toDouble() }
     val sum = weightsAsDouble.sum()
     require(abs(sum - 1.0) <= PROBABILITY_SUM_TOLERANCE) { "Weights must sum to one, was $sum" }
@@ -44,28 +49,25 @@ fun <T> weightedSampleWithReplacementFromList(
     weights: List<Double>,
     n: Int,
     rng: Random = Random.Default,
-): List<T> {
-    return List(n) { weightedSample(items, weights, rng) }
-}
+): List<T> = List(n) { weightedSample(items, weights, rng) }
 
-fun zeroOrOne(): Int {
-    return if (Math.random() > 0.5) {
+fun zeroOrOne(): Int =
+    if (Math.random() > 0.5) {
         0
     } else {
         1
     }
-}
 
-fun randomBitList(n: Int): List<Int> {
-    return List(n) { zeroOrOne() }
-}
+fun randomBitList(n: Int): List<Int> = List(n) { zeroOrOne() }
 
-fun randomNormal(mean: Number, std: Number): Float {
-    return NormalDistribution(
+fun randomNormal(
+    mean: Number,
+    std: Number,
+): Float =
+    NormalDistribution(
         mean.toDouble(),
         std.toDouble(),
     ).sample().toFloat()
-}
 
 fun randomNormal(
     mean: List<Number> = listOf(0, 0),
@@ -80,17 +82,25 @@ fun randomNormal(
     return MultivariateNormalDistribution(meanArray, covMatrixArray).sample().toList().map { it.toFloat() }
 }
 
-fun nRandomNormal(mean: Number, std: Number, n: Int): List<Float> {
-    return List(n) { randomNormal(mean, std) }
-}
+fun nRandomNormal(
+    mean: Number,
+    std: Number,
+    n: Int,
+): List<Float> = List(n) { randomNormal(mean, std) }
 
-fun logNormal(mu: Number, sigma: Number): Float {
+fun logNormal(
+    mu: Number,
+    sigma: Number,
+): Float {
     require(sigma.toFloat() > 0) { "Standard deviation (sigma) must be greater than 0" }
     val logNormalDistribution = LogNormalDistribution(mu.toDouble(), sigma.toDouble())
     return logNormalDistribution.sample().toFloat()
 }
 
-fun paretoSample(scale: Number, shape: Number): Float {
+fun paretoSample(
+    scale: Number,
+    shape: Number,
+): Float {
     val paretoDistribution = ParetoDistribution(scale.toDouble(), shape.toDouble())
     return paretoDistribution.sample().toFloat()
 }
@@ -101,20 +111,30 @@ fun chiSquaredSample(degreesOfFreedom: Number): Float {
     return chiSquaredDistribution.sample().toFloat()
 }
 
-fun randomInteger(a: Int, b: Int): Int {
+fun randomInteger(
+    a: Int,
+    b: Int,
+): Int {
     require(a <= b) { "Invalid range: a must be less than or equal to b" }
     return Random.nextInt(a, b + 1)
 }
 
-fun randomInteger(n: Int, a: Int, b: Int): List<Int> {
-    return List(n) { randomInteger(a, b) }
-}
+fun randomInteger(
+    n: Int,
+    a: Int,
+    b: Int,
+): List<Int> = List(n) { randomInteger(a, b) }
 
-fun randomFloat(a: Number = 0.0, b: Number = 1.0): Float {
+fun randomFloat(
+    a: Number = 0.0,
+    b: Number = 1.0,
+): Float {
     require(a.toFloat() <= b.toFloat()) { "Invalid range: a must be less than or equal to b" }
     return a.toFloat() + (Random.nextFloat() * (b.toFloat() - a.toFloat()))
 }
 
-fun randomFloats(n: Int, a: Number = 0.0, b: Number = 1.0): List<Float> {
-    return List(n) { randomFloat(a, b) }
-}
+fun randomFloats(
+    n: Int,
+    a: Number = 0.0,
+    b: Number = 1.0,
+): List<Float> = List(n) { randomFloat(a, b) }

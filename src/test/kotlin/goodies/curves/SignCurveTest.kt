@@ -1,12 +1,10 @@
 package goodies.curves
 
-import kotlin.test.assertFailsWith
-import org.junit.jupiter.api.Test
 import org.assertj.core.api.Assertions.assertThat
-
+import org.junit.jupiter.api.Test
+import kotlin.test.assertFailsWith
 
 class SignCurveGeneratorTest {
-
     @Test
     fun `signCurve should create a sign curve when input is within valid range`() {
         // Given
@@ -24,7 +22,6 @@ class SignCurveGeneratorTest {
         // Then
         val expectedSize = ((xEnd - xStart) / stepSize + 1).toInt()
         assertThat(result).hasSize(expectedSize)
-
     }
 
     @Test
@@ -32,7 +29,6 @@ class SignCurveGeneratorTest {
         // Given
         val xStart = 10.0
         val xEnd = 5.0
-
 
         // When & Then
         assertFailsWith<IllegalArgumentException> {

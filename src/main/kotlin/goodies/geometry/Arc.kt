@@ -1,4 +1,3 @@
 package goodies.geometry
 
-class Arc {
-}
+class Arc

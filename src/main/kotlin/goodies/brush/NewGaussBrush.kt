@@ -18,11 +18,9 @@ class NewGaussBrush(
     private val pinOpacity: List<Float>,
     private val color: Int = 0,
 ) : Brush {
-
     private val numberOfPoints = brushPins.size
 
     companion object {
-
         fun initBrush(
             dimension: Int,
             numberOfPoints: Int,
@@ -39,25 +37,28 @@ class NewGaussBrush(
             val mean = Point.zeros(dimension).toDoubleArray()
             val covariance = DiagonalMatrix(List(dimension) { variance }).toArrayOfDoubleArray()
 
-            val brushPins = List(numberOfPoints) {
-                MultivariateNormalDistribution(mean, covariance).sample().toTypedArray()
-            }.map { Point(*it) }
-            val pinSizes = List(numberOfPoints) {
-                abs(
-                    NormalDistribution(
-                        sizeMean.toDouble(),
-                        sizeStd.toDouble(),
-                    ).sample(),
-                ).toFloat()
-            }
-            val pinOpacity = List(numberOfPoints) {
-                abs(
-                    NormalDistribution(
-                        opacityMean.toDouble(),
-                        opacityStd.toDouble(),
-                    ).sample(),
-                ).toFloat()
-            }
+            val brushPins =
+                List(numberOfPoints) {
+                    MultivariateNormalDistribution(mean, covariance).sample().toTypedArray()
+                }.map { Point(*it) }
+            val pinSizes =
+                List(numberOfPoints) {
+                    abs(
+                        NormalDistribution(
+                            sizeMean.toDouble(),
+                            sizeStd.toDouble(),
+                        ).sample(),
+                    ).toFloat()
+                }
+            val pinOpacity =
+                List(numberOfPoints) {
+                    abs(
+                        NormalDistribution(
+                            opacityMean.toDouble(),
+                            opacityStd.toDouble(),
+                        ).sample(),
+                    ).toFloat()
+                }
             return NewGaussBrush(
                 brushPins,
                 pinSizes,
@@ -70,7 +71,10 @@ class NewGaussBrush(
         }
     }
 
-    fun draw(sketch: PApplet, path: PolygonPath) {
+    fun draw(
+        sketch: PApplet,
+        path: PolygonPath,
+    ) {
         val currentPositions = brushPins.map { it.translate(path.start) }.toMutableList()
 
         for (direction in path.directions) {
@@ -79,13 +83,14 @@ class NewGaussBrush(
                 val nextPosition = currentPosition + direction
                 val line = Line(currentPosition.toPVector(), nextPosition.toPVector())
                 val midpoint = line.midPoint
-                val lineThicknessNoise = PApplet.map(
-                    sketch.noise(midpoint.x * sizeNoiseScale, midpoint.y * sizeNoiseScale),
-                    0F,
-                    1F,
-                    sizeNoiseLowerBound,
-                    sizeNoiseUpperBound,
-                )
+                val lineThicknessNoise =
+                    PApplet.map(
+                        sketch.noise(midpoint.x * sizeNoiseScale, midpoint.y * sizeNoiseScale),
+                        0F,
+                        1F,
+                        sizeNoiseLowerBound,
+                        sizeNoiseUpperBound,
+                    )
                 val weight = pinSizes[i] + lineThicknessNoise
                 sketch.strokeWeight(pinSizes[i] + weight)
                 sketch.stroke(color, pinOpacity[i])

@@ -9,14 +9,16 @@ import org.junit.jupiter.api.TestInstance
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class AgentTest {
-
-    private val boundary = Polygon(
-        Point(0f, 0f), Point(100f, 0f), Point(100f, 100f), Point(0f, 100f)
-    )
+    private val boundary =
+        Polygon(
+            Point(0f, 0f),
+            Point(100f, 0f),
+            Point(100f, 100f),
+            Point(0f, 100f),
+        )
 
     @Nested
     inner class Construction {
-
         @Test
         fun `should create agent with boundary`() {
             // Given / When

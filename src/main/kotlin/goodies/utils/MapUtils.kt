@@ -37,7 +37,10 @@ fun map2(
     val p = 0.5.toFloat()
 
     when (type) {
-        EaseFunctionType.LINEAR -> return c * t / d + start2
+        EaseFunctionType.LINEAR -> {
+            return c * t / d + start2
+        }
+
         EaseFunctionType.SQRT -> {
             when (easingType) {
                 EasingType.EASE_IN -> {
@@ -154,8 +157,14 @@ fun map2(
 
         EaseFunctionType.EXPONENTIAL -> {
             when (easingType) {
-                EasingType.EASE_IN -> return c * pow(2F, 10 * (t / d - 1)) + start2
-                EasingType.EASE_OUT -> return c * (-pow(2F, -10 * t / d) + 1) + start2
+                EasingType.EASE_IN -> {
+                    return c * pow(2F, 10 * (t / d - 1)) + start2
+                }
+
+                EasingType.EASE_OUT -> {
+                    return c * (-pow(2F, -10 * t / d) + 1) + start2
+                }
+
                 EasingType.EASE_IN_OUT -> {
                     t /= d / 2
                     if (t < 1) return c / 2 * pow(2F, 10 * (t - 1)) + start2

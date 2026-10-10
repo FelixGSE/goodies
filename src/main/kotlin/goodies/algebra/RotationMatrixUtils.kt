@@ -6,9 +6,13 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 object RotationMatrixUtils {
-
     @JvmStatic
-    fun getRotationMatrixForAxis(i: Int, j: Int, dimensions: Int, angle: Float): RealMatrix {
+    fun getRotationMatrixForAxis(
+        i: Int,
+        j: Int,
+        dimensions: Int,
+        angle: Float,
+    ): RealMatrix {
         require(!(i > dimensions || j > dimensions))
         require(i < j) { "Dimension j must be greater than i" }
 

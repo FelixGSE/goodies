@@ -11,10 +11,8 @@ import processing.core.PVector
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ConversionsTest {
-
     @Nested
     inner class RealVectorConversions {
-
         @Test
         fun `should convert RealVector to list of floats`() {
             // Given
@@ -81,7 +79,6 @@ class ConversionsTest {
 
     @Nested
     inner class PVectorConversions {
-
         @Test
         fun `should convert 2D PVector to RealVector`() {
             // Given
@@ -145,7 +142,6 @@ class ConversionsTest {
 
     @Nested
     inner class ListAndArrayConversions {
-
         @Test
         fun `should convert list of floats to PVector 2D`() {
             // Given
@@ -229,7 +225,6 @@ class ConversionsTest {
 
     @Nested
     inner class TypeConversions {
-
         @Test
         fun `should convert double to float`() {
             assertThat(Conversions.doubleToFloat(3.14)).isCloseTo(3.14f, offset(0.001f))
