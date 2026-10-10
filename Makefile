@@ -15,6 +15,7 @@ MIN ?= 0.0
 # `make scan TRIVY_ARGS="--format sarif --output trivy.sarif"` for CI reports.
 # Trivy reads TRIVY_CACHE_DIR itself: point it at a cached vulnerability DB.
 TRIVY_ARGS ?=
+TRIVY_VERSION := 0.75.0
 
 ##@ Build
 
@@ -52,8 +53,8 @@ hygiene: ## Run every hook on every file, as CI does
 ##@ Security
 
 .PHONY: scan
-scan: ## Scan dependencies and secrets, fail on HIGH/CRITICAL (config: trivy.yaml)
-	@command -v trivy > /dev/null || { echo "trivy not found: use the dev container or https://trivy.dev/latest/getting-started/installation/" >&2; exit 1; }
+scan: ## Scan deps and secrets, fail on HIGH/CRITICAL (make scan TRIVY_ARGS="--format sarif")
+	@command -v trivy > /dev/null || { echo "trivy $(TRIVY_VERSION) not found: use the dev container or install it from https://trivy.dev/latest/getting-started/installation/" >&2; exit 1; }
 	trivy fs $(TRIVY_ARGS) .
 
 .PHONY: lock
