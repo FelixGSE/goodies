@@ -1,6 +1,6 @@
 # Read by `make scan` (trivy fs .): HIGH and CRITICAL findings fail the scan,
-# fixed or not, test dependencies included. Dependencies come from
-# gradle.lockfile (`make lock`).
+# fixed or not. Dependencies come from gradle.lockfile (`make lock`); trivy
+# drops test-only ones unless pkg.include-dev-deps is set.
 severity:
   - HIGH
   - CRITICAL
