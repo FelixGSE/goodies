@@ -15,63 +15,12 @@ repositories {
     mavenCentral()
 }
 
-// ---------------------------------------------------------------------------
-// Processing core
-//
-// Processing 4 is not published to Maven Central, so core.jar comes from a local
-// Processing install. Resolution order:
-//   1. -PprocessingCoreJar=/path/to/core.jar
-//   2. PROCESSING_CORE_JAR environment variable (set for you in the dev container)
-//   3. a Processing.app install in the usual macOS locations
-// Run `./gradlew processingCore` to see what got picked.
-// ---------------------------------------------------------------------------
-val processingSearchPaths = listOf(
-    "/Applications/Processing.app/Contents/app/resources/core/library",
-    "${System.getProperty("user.home")}/Applications/Processing.app/Contents/app/resources/core/library",
-)
-
-fun locateProcessingCore(): File {
-    val explicit = (findProperty("processingCoreJar") as String?) ?: System.getenv("PROCESSING_CORE_JAR")
-    if (!explicit.isNullOrBlank()) {
-        val jar = File(explicit)
-        if (!jar.isFile) {
-            throw GradleException("Processing core jar not found at '$explicit'.")
-        }
-        return jar
-    }
-
-    // Any core-*.jar in the install, so a Processing update does not break the build.
-    val found = processingSearchPaths
-        .map(::File)
-        .firstNotNullOfOrNull { dir ->
-            dir.listFiles { f: File -> f.name.startsWith("core") && f.name.endsWith(".jar") }
-                ?.sortedBy { it.name }
-                ?.lastOrNull()
-        }
-
-    return found ?: throw GradleException(
-        """
-        Could not find Processing's core.jar.
-
-        Looked in:
-        ${processingSearchPaths.joinToString("\n        ") { "- $it" }}
-
-        Install Processing 4, or point the build at the jar explicitly:
-          ./gradlew build -PprocessingCoreJar=/path/to/core.jar
-          PROCESSING_CORE_JAR=/path/to/core.jar ./gradlew build
-
-        The dev container ships one and sets PROCESSING_CORE_JAR for you.
-        """.trimIndent()
-    )
-}
-
-/** Lazy, so tasks that do not compile anything still work without Processing installed. */
-val processingCore: FileCollection = files(provider { locateProcessingCore() })
+val processingCore = "org.processing:core:4.5.6"
 
 dependencies {
-    // Supplied by Processing at runtime, so never bundled into the distributed jar.
-    compileOnly(processingCore)
-    testImplementation(processingCore)
+    // core 4.5.6 declares kotlin-stdlib 2.3, which this 1.9 compiler cannot read; core itself has no Kotlin.
+    compileOnly(processingCore) { exclude(group = "org.jetbrains.kotlin") }
+    testImplementation(processingCore) { exclude(group = "org.jetbrains.kotlin") }
 
     api("org.apache.commons:commons-math3:3.6.1")
     api("com.github.haifengl:smile-plot:2.6.0")
@@ -210,10 +159,4 @@ val installLibrary by tasks.registering(Sync::class) {
     from(processingLibrary)
     into("$sketchbookDir/libraries/$libraryName")
     doLast { logger.lifecycle("Installed $libraryName to $sketchbookDir/libraries/$libraryName") }
-}
-
-tasks.register("processingCore") {
-    group = "processing"
-    description = "Prints the Processing core jar this build resolves against."
-    doLast { println(locateProcessingCore().absolutePath) }
 }
