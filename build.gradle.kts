@@ -4,6 +4,7 @@ plugins {
     jacoco
     id("com.gradleup.shadow") version "9.6.1"
     id("org.jlleitschuh.gradle.ktlint") version "14.2.0"
+    id("dev.detekt") version "2.0.0-alpha.6"
 }
 
 group = "org.felixgse"
@@ -37,6 +38,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-params")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+    detektPlugins("dev.detekt:detekt-rules-libraries:2.0.0-alpha.6")
 }
 
 kotlin {
@@ -49,6 +52,18 @@ java {
 
 ktlint {
     version.set("1.8.0")
+}
+
+detekt {
+    buildUponDefaultConfig = true
+    allRules = true
+    config.setFrom("config/detekt/detekt.yml")
+    baseline = file("config/detekt/baseline.xml")
+}
+
+tasks.check {
+    setDependsOn(dependsOn.filterNot { it is TaskProvider<*> && it.name == "detekt" })
+    dependsOn("detektMain", "detektTest")
 }
 
 tasks.test {
