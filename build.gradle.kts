@@ -102,7 +102,7 @@ tasks.shadowJar {
     archiveVersion.set("")
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
     mergeServiceFiles()
-    filesNotMatching(listOf("META-INF/services/**", "META-INF/*.kotlin_module")) {
+    filesNotMatching("META-INF/services/**") {
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     }
     failOnDuplicateEntries = true
