@@ -1,0 +1,21 @@
+# Read by `make scan` (trivy fs .): HIGH and CRITICAL findings fail the scan,
+# fixed or not, test dependencies included. Dependencies come from
+# gradle.lockfile (`make lock`).
+severity:
+  - HIGH
+  - CRITICAL
+exit-code: 1
+ignorefile: .trivyignore.yaml
+db:
+  no-progress: true
+pkg:
+  include-dev-deps: true
+scan:
+  scanners:
+    - vuln
+    - secret
+  skip-dirs:
+    - build
+    - .gradle
+    - bin
+    - out
