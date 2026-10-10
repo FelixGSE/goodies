@@ -100,12 +100,13 @@ tasks.shadowJar {
     archiveBaseName.set(libraryName)
     archiveClassifier.set("")
     archiveVersion.set("")
+    // shadow 9 drops duplicates before its transformers run: service files stay
+    // INCLUDE so mergeServiceFiles sees every copy, the rest keeps the first one
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
     mergeServiceFiles()
     filesNotMatching("META-INF/services/**") {
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     }
-    failOnDuplicateEntries = true
 }
 
 val libraryProperties = tasks.register("libraryProperties") {
