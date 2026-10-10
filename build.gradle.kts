@@ -3,6 +3,7 @@ plugins {
     `java-library`
     jacoco
     id("com.gradleup.shadow") version "9.6.1"
+    id("org.jlleitschuh.gradle.ktlint") version "14.2.0"
 }
 
 group = "org.felixgse"
@@ -44,6 +45,10 @@ kotlin {
 
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+}
+
+ktlint {
+    version.set("1.8.0")
 }
 
 tasks.test {

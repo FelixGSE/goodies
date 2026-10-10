@@ -35,6 +35,16 @@ coverage: ## Run the tests with coverage, fail below MIN (e.g. make coverage MIN
 clean: ## Delete build output
 	$(GRADLE) clean
 
+##@ Quality
+
+.PHONY: fmt
+fmt: ## Format every Kotlin file with ktlint
+	$(GRADLE) ktlintFormat
+
+.PHONY: lint
+lint: ## Check formatting with ktlint
+	$(GRADLE) ktlintCheck
+
 ##@ Hygiene
 
 .PHONY: hooks
