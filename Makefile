@@ -63,10 +63,6 @@ install: ## Install into the local Processing sketchbook
 .PHONY: to-processing
 to-processing: install
 
-.PHONY: core
-core: ## Print the Processing core jar the build resolves against
-	$(GRADLE) --quiet processingCore
-
 ##@ Help
 
 .PHONY: help
