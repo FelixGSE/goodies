@@ -5,35 +5,54 @@ import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.withPrecision
 import org.junit.jupiter.api.Test
 import utils.itemPercentages
+import kotlin.random.Random
 
 internal class RandomUtilsTest {
 
     @Test
-    fun `weightedSample sample weighted samples from a given list`(
-    ) {
-
+    fun `weightedSample should return items in proportion to their probabilities`() {
         // Given
-        val repetitions = 10000
+        val rng = Random(42)
+        val n = 10_000
+        val tolerance = 0.02 // 4σ for n = 10 000, p = 0.5
         val options = listOf("one", "two", "three")
-        val distribution = listOf(0.3, 0.5, 0.2)
-        val samples = mutableListOf<String>()
+        val probabilities = listOf(0.3, 0.5, 0.2)
+        val expected = probabilities.toDoubleArray()
 
         // When
-        for (i in 0..repetitions) {
-            samples.add(weightedSample(options, distribution))
-        }
-
-        val percentages = itemPercentages(samples)
-        val result = listOf(
-            percentages["one"],
-            percentages["two"],
-            percentages["three"]
-        ).toTypedArray().map { it!!.toDouble() }.toDoubleArray()
-        val expected = distribution.toTypedArray()
+        val result = List(n) { weightedSample(options, probabilities, rng) }
 
         // Then
-        Assertions.assertThat(result)
-            .containsSequence(expected, withPrecision(0.01))
+        val percentages = itemPercentages(result)
+        Assertions.assertThat(options.map { percentages.getValue(it) }.toDoubleArray())
+            .containsExactly(expected, withPrecision(tolerance))
+    }
+
+    @Test
+    fun `weightedSample should accept probabilities when their floating sum is just below one`() {
+        // Given
+        val options = listOf("one", "two", "three")
+        val probabilities = listOf(0.7, 0.2, 0.1)
+
+        // When
+        val thrown = Assertions.catchThrowable { weightedSample(options, probabilities, Random(42)) }
+
+        // Then
+        Assertions.assertThat(thrown).isNull()
+    }
+
+    @Test
+    fun `weightedSample should throw IllegalArgumentException when weights do not sum to one`() {
+        // Given
+        val options = listOf("one", "two", "three")
+        val weights = listOf(3, 5, 2)
+
+        // When
+        val thrown = Assertions.catchThrowable { weightedSample(options, weights, Random(42)) }
+
+        // Then
+        Assertions.assertThat(thrown).isInstanceOf(IllegalArgumentException::class.java)
+            .hasMessageContaining("sum to one")
     }
 
     @Test

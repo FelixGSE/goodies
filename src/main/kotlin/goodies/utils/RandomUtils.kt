@@ -1,6 +1,7 @@
 package goodies.utils
 
 import org.apache.commons.math3.distribution.*
+import kotlin.math.abs
 import kotlin.random.Random
 
 /**
@@ -18,22 +19,33 @@ fun <T> sampleWithReplacementFromList(input: List<T>, n: Int): List<T> {
     return List(n) { input.random() }
 }
 
-fun <T> weightedSample(items: List<T>, weights: List<Number>): T {
+/** Probabilities given as `Float` are off by up to ~1e-7 each; the tolerance admits them. */
+const val PROBABILITY_SUM_TOLERANCE = 1e-6
+
+/**
+ * Draws one of [items], item `i` with probability `weights[i]`.
+ *
+ * Weights are probabilities summing to one within [PROBABILITY_SUM_TOLERANCE].
+ * Pass a seeded [rng] to make the draw reproducible.
+ */
+fun <T> weightedSample(items: List<T>, weights: List<Number>, rng: Random = Random.Default): T {
     val weightsAsDouble = weights.map { it.toDouble() }
-    if (weightsAsDouble.sum() != 1.0) {
-        throw IllegalArgumentException("Weights must sum to one")
-    }
-    if (items.size != weights.size) {
-        throw IllegalArgumentException("The number of items and weights must match")
-    }
+    val sum = weightsAsDouble.sum()
+    require(abs(sum - 1.0) <= PROBABILITY_SUM_TOLERANCE) { "Weights must sum to one, was $sum" }
+    require(items.size == weights.size) { "The number of items and weights must match" }
     val cumulativeWeights = weightsAsDouble.scan(0.0) { acc, weight -> acc + weight }.drop(1)
-    val randomValue = Random.nextDouble() * cumulativeWeights.last()
+    val randomValue = rng.nextDouble() * cumulativeWeights.last()
     val index = cumulativeWeights.indexOfFirst { it > randomValue }
     return items[index]
 }
 
-fun <T> weightedSampleWithReplacementFromList(items: List<T>, weights: List<Double>, n: Int): List<T> {
-    return List(n) { weightedSample(items, weights) }
+fun <T> weightedSampleWithReplacementFromList(
+    items: List<T>,
+    weights: List<Double>,
+    n: Int,
+    rng: Random = Random.Default,
+): List<T> {
+    return List(n) { weightedSample(items, weights, rng) }
 }
 
 fun zeroOrOne(): Int {
