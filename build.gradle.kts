@@ -19,6 +19,14 @@ dependencyLocking {
     lockAllConfigurations()
 }
 
+val resolveAndLockAll by tasks.registering {
+    description = "Resolves every resolvable configuration; with --write-locks it rewrites gradle.lockfile."
+    notCompatibleWithConfigurationCache("resolves configurations at execution time")
+    doLast {
+        configurations.filter { it.isCanBeResolved }.forEach { it.resolve() }
+    }
+}
+
 val processingCore = "org.processing:core:4.5.6"
 
 dependencies {

@@ -58,8 +58,8 @@ scan: ## Scan dependencies and secrets, fail on HIGH/CRITICAL (config: trivy.yam
 
 .PHONY: lock
 lock: ## Refresh gradle.lockfile after a dependency or plugin change
-	$(GRADLE) dependencies --write-locks --quiet > /dev/null
-	@git diff --quiet -- gradle.lockfile && echo "gradle.lockfile unchanged" || echo "gradle.lockfile changed: commit it"
+	$(GRADLE) resolveAndLockAll --write-locks --quiet
+	@status="$$(git status --porcelain -- gradle.lockfile)" && { [[ -z "$$status" ]] && echo "gradle.lockfile unchanged" || echo "gradle.lockfile changed: commit it"; }
 
 ##@ Processing library
 
