@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.9.25"
+    kotlin("jvm") version "2.4.21"
     `java-library`
     jacoco
     id("com.gradleup.shadow") version "9.6.1"
@@ -18,9 +18,8 @@ repositories {
 val processingCore = "org.processing:core:4.5.6"
 
 dependencies {
-    // core 4.5.6 declares kotlin-stdlib 2.3, which this 1.9 compiler cannot read; core itself has no Kotlin.
-    compileOnly(processingCore) { exclude(group = "org.jetbrains.kotlin") }
-    testImplementation(processingCore) { exclude(group = "org.jetbrains.kotlin") }
+    compileOnly(processingCore)
+    testImplementation(processingCore)
 
     api("org.apache.commons:commons-math3:3.6.1")
     api("com.github.haifengl:smile-plot:2.6.0")
