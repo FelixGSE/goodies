@@ -19,7 +19,7 @@ class CubeTest {
         cube.scale(10);
         cube.translate(new PVector(10,10,10));
 
-        
+
         System.out.println(cube.getCenter());
         // assertThat(result).isEqualTo(-10f);
 
@@ -31,7 +31,7 @@ class CubeTest {
 
         Cube cube = Cube.getCube(new PVector(300,300),100);
 
-        
+
         System.out.println(cube);
         // assertThat(result).isEqualTo(-10f);
 

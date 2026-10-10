@@ -580,7 +580,7 @@ public class Triangle implements Shape,  Iterable<PVector> {
         for(int i = 0; i <= circleCountUpperBound; i++){
             float circleArea = (float) (area() * ( percentage / 100 ) / (i * decay ));
             float circleRadiusForArea = Circle.getRadiusForArea(circleArea);
-            
+
             for(int j = 0; j <= 2000; j++){
                 PVector candidateCenter = computeRandomPointIn();
                 Circle candidateCircle = new Circle(candidateCenter, circleRadiusForArea);

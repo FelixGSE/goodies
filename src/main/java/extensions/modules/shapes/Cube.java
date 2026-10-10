@@ -26,16 +26,16 @@ public class Cube implements Iterable<PVector> {
     private final PVector H = new PVector(-1, 1, 1);
 
     List<PVector> vertices = List.of(A, B, C, D, E, F, G, H);
-    
+
     private final PVector center = computeCenter();
-    
+
     private final PVector bottom = new PVector(0, -1, 0);
     private final PVector top = new PVector(0, 1, 0);
     private final PVector near = new PVector(0, 0, 1);
     private final PVector far = new PVector(0, 0, -1);
     private final PVector left = new PVector(-1, 0, 0);
     private final PVector right = new PVector(1, 0, 0);
-    
+
     private final List<PVector> faceCenter = List.of(bottom, top, near, far, left, right);
 
     public void scale(float factor) {
@@ -55,7 +55,7 @@ public class Cube implements Iterable<PVector> {
             vertex.add(translation);
         }
         center.add(translation);
-        
+
         for(PVector vertex : getFaceCenter()){
             vertex.add(translation);
         }
@@ -82,7 +82,7 @@ public class Cube implements Iterable<PVector> {
     }
 
     public Grid getEqualGridPartition(int parts){
-        
+
         return new Grid(getLeft().x, getRight().x, parts, getBottom().y, getTop().y, parts, getFar().z, getNear().z, parts, 3);
 
     }
@@ -97,7 +97,7 @@ public class Cube implements Iterable<PVector> {
             y = y + vertex.y;
             z = z + vertex.z;
         }
-        
+
         return new PVector(x/8, y/8, z/8);
     }
 

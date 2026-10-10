@@ -35,6 +35,16 @@ coverage: ## Run the tests with coverage, fail below MIN (e.g. make coverage MIN
 clean: ## Delete build output
 	$(GRADLE) clean
 
+##@ Hygiene
+
+.PHONY: hooks
+hooks: ## Install the git hooks (prek) into this clone or worktree
+	prek install --hook-type pre-commit --hook-type commit-msg
+
+.PHONY: hygiene
+hygiene: ## Run every hook on every file, as CI does
+	prek run --all-files
+
 ##@ Processing library
 
 .PHONY: lib

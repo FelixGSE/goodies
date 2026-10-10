@@ -1,0 +1,27 @@
+# Run by prek (https://github.com/j178/prek), a drop-in for pre-commit.
+# Install once per clone or worktree: `make hooks`. CI runs the same hooks on
+# every pull request, so skipping them locally only moves the failure.
+# Every hook is a shell script in scripts/: no Python, no network, no venvs.
+default_install_hook_types: [pre-commit, commit-msg]
+
+repos:
+  - repo: local
+    hooks:
+      - id: hygiene
+        name: whitespace, line endings, final newline, merge markers, file size
+        entry: scripts/hygiene.sh
+        language: script
+        types: [text]
+      - id: branch-name
+        name: branch name follows <type>/<issue>-<slug>, never main
+        entry: scripts/lint-branch.sh
+        language: script
+        pass_filenames: false
+        always_run: true
+      - id: commit-message
+        name: commit message follows Conventional Commits
+        entry: scripts/lint-commit-msg.sh
+        language: script
+        stages: [commit-msg]
+      # Q.5 adds ktlint and detekt here, as `language: system` hooks that
+      # call ./gradlew, so formatting and lint findings never reach review.

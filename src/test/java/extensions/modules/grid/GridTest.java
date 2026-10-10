@@ -12,7 +12,7 @@ import com.google.common.collect.TreeBasedTable;
 public class GridTest {
     @Test
     void shouldCreateA2DGrid() {
-        
+
         // Given
         Grid grid = new Grid(0, 100, 10, 0, 100, 10, 2);
 
@@ -24,7 +24,7 @@ public class GridTest {
 
     @Test
     void shouldCreateA3DGrid() {
-        
+
         // Given
         Grid grid = new Grid(0, 100, 10, 0, 100, 10,0, 100, 10, 3);
 
