@@ -23,5 +23,10 @@ repos:
         entry: scripts/lint-commit-msg.sh
         language: script
         stages: [commit-msg]
+      - id: trivyignore
+        name: trivy ignores have a reason and expire within 30 days
+        entry: scripts/lint-trivyignore.sh
+        language: script
+        files: ^\.trivyignore\.yaml$
       # Q.5 adds ktlint and detekt here, as `language: system` hooks that
       # call ./gradlew, so formatting and lint findings never reach review.
