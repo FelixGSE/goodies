@@ -13,7 +13,7 @@ repos:
         language: script
         types: [text]
       - id: branch-name
-        name: branch name follows <type>/<issue>-<slug>, never main
+        name: branch name follows <type>/<slug>, never main
         entry: scripts/lint-branch.sh
         language: script
         pass_filenames: false

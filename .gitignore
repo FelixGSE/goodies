@@ -7,3 +7,6 @@ distribution/
 .gradle/
 build/
 !gradle/wrapper/gradle-wrapper.jar
+
+# IDE build output (VS Code Java extension)
+bin/
