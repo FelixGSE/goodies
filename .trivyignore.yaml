@@ -1,5 +1,3 @@
-# Findings `make scan` accepts for now. Every entry needs id, statement (why it
-# is safe to ship) and expired_at (YYYY-MM-DD, at most 30 days out); after that
-# date the finding fails the scan again. scripts/lint-trivyignore.sh checks it.
-# Secret findings go under `secrets:` with the same three keys.
+# Findings `make scan` accepts for now: id, statement (why) and expired_at
+# (YYYY-MM-DD, about a month out). After that date the finding fails again.
 vulnerabilities: []
