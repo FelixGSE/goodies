@@ -1,4 +1,10 @@
 # Findings `make scan` accepts for now. Every entry needs id, statement (why it
 # is safe to ship) and expired_at (YYYY-MM-DD, at most 30 days out); after that
 # date the finding fails the scan again. scripts/lint-trivyignore.sh checks it.
+# To add one, replace `[]` with the list, one key per line:
+#
+# vulnerabilities:
+#   - id: CVE-0000-00000
+#     statement: reachable only from tests, no fixed version yet
+#     expired_at: 2000-01-01
 vulnerabilities: []
