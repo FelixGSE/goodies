@@ -43,8 +43,12 @@ fmt: ## Format every Kotlin file with ktlint
 
 .PHONY: lint
 lint: ## Check formatting with ktlint, lint with detekt, test the baseline check
-	$(GRADLE) ktlintCheck detektMain detektTest
+	$(GRADLE) --continue ktlintCheck detektMain detektTest
 	scripts/lint-detekt-baseline-test.sh
+
+.PHONY: check
+check: lint ## Done gate: lint, tests, coverage above MIN (e.g. make check MIN=0.6)
+	$(GRADLE) check jacocoTestReport jacocoTestCoverageVerification -PcoverageMinimum=$(MIN)
 
 .PHONY: baseline
 baseline: ## Rewrite the detekt baselines after fixing legacy findings; they may only shrink
