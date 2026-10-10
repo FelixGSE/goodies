@@ -58,6 +58,7 @@ detekt {
     buildUponDefaultConfig = true
     allRules = true
     config.setFrom("config/detekt/detekt.yml")
+    // the plugin derives baseline-main.xml and baseline-test.xml from this name
     baseline = file("config/detekt/baseline.xml")
 }
 
