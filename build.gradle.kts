@@ -62,6 +62,7 @@ detekt {
 }
 
 tasks.check {
+    // the plugin wires the untyped detekt into check; only the typed detektMain/detektTest run
     setDependsOn(dependsOn.filterNot { it is TaskProvider<*> && it.name == "detekt" })
     dependsOn("detektMain", "detektTest")
 }
