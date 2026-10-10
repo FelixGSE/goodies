@@ -12,11 +12,6 @@ TEST_FILTER := $(if $(T),--tests "*$(T)*",)
 # `make coverage MIN=0.6` fails when line coverage is below 60%.
 MIN ?= 0.0
 
-# `make scan TRIVY_ARGS="--format sarif --output trivy.sarif"` for CI reports.
-# Trivy reads TRIVY_CACHE_DIR itself: point it at a cached vulnerability DB.
-TRIVY_ARGS ?=
-TRIVY_VERSION := 0.75.0
-
 ##@ Build
 
 .PHONY: build
@@ -53,9 +48,8 @@ hygiene: ## Run every hook on every file, as CI does
 ##@ Security
 
 .PHONY: scan
-scan: ## Scan deps and secrets, fail on HIGH/CRITICAL (make scan TRIVY_ARGS="--format sarif")
-	@command -v trivy > /dev/null || { echo "trivy $(TRIVY_VERSION) not found: use the dev container or install it from https://trivy.dev/latest/getting-started/installation/" >&2; exit 1; }
-	trivy fs $(TRIVY_ARGS) .
+scan: ## Scan dependencies, licenses, secrets and config; fail on HIGH/CRITICAL
+	trivy fs .
 
 .PHONY: lock
 lock: ## Refresh gradle.lockfile after a dependency or plugin change
