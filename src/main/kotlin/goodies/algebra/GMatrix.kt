@@ -233,8 +233,8 @@ open class GMatrix(private val matrix: RealMatrix) : Iterable<Point>, Graphics, 
         return GMatrix(matrix.preMultiply(other.toRealMatrix()))
     }
 
-    override fun dot(gVector: Point): Point {
-        return Point(matrix.preMultiply(gVector.toRealVector()))
+    override fun dot(other: Point): Point {
+        return Point(matrix.preMultiply(other.toRealVector()))
     }
 
     fun getRow(index: Int): Point {
