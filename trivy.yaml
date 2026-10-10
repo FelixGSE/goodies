@@ -1,6 +1,7 @@
 # Read by `make scan` (trivy fs .): HIGH and CRITICAL findings fail the scan,
 # fixed or not. Dependencies come from gradle.lockfile (`make lock`); trivy
-# drops test-only ones unless pkg.include-dev-deps is set.
+# drops test-only ones unless pkg.include-dev-deps is set. The two ignored
+# licenses are Processing core and trove4j: on the classpath, never shipped.
 severity:
   - HIGH
   - CRITICAL
@@ -10,10 +11,16 @@ db:
   no-progress: true
 pkg:
   include-dev-deps: true
+license:
+  ignored:
+    - LGPL-2.0-or-later
+    - LGPL-2.1-only
 scan:
   scanners:
     - vuln
     - secret
+    - misconfig
+    - license
   skip-dirs:
     - build
     - .gradle
