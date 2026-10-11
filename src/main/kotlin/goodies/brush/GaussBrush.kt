@@ -61,33 +61,10 @@ class GaussBrush(
             opacityStd: Number = 1.0,
             color: Int = 0,
         ): GaussBrush {
-            val covariance =
-                arrayOf(
-                    doubleArrayOf(variance.toDouble(), 0.0),
-                    doubleArrayOf(0.0, variance.toDouble()),
-                )
-            val brushPins =
-                List(numberOfPoints) {
-                    MultivariateNormalDistribution(start.toDoubleArray(), covariance).sample().toTypedArray()
-                }.map { Point(*it) }
-            val pinSizes =
-                List(numberOfPoints) {
-                    abs(
-                        NormalDistribution(
-                            sizeMean.toDouble(),
-                            sizeStd.toDouble(),
-                        ).sample(),
-                    ).toFloat()
-                }
-            val pinOpacity =
-                List(numberOfPoints) {
-                    abs(
-                        NormalDistribution(
-                            opacityMean.toDouble(),
-                            opacityStd.toDouble(),
-                        ).sample(),
-                    ).toFloat()
-                }
+            val covariance = arrayOf(doubleArrayOf(variance.toDouble(), 0.0), doubleArrayOf(0.0, variance.toDouble()))
+            val brushPins = samplePins(start.toDoubleArray(), covariance, numberOfPoints)
+            val pinSizes = absoluteNormalSamples(mean = sizeMean, std = sizeStd, count = numberOfPoints)
+            val pinOpacity = absoluteNormalSamples(mean = opacityMean, std = opacityStd, count = numberOfPoints)
             return GaussBrush(
                 brushPins = brushPins,
                 pinSizes = pinSizes,
@@ -98,5 +75,20 @@ class GaussBrush(
                 color = color,
             )
         }
+
+        private fun samplePins(
+            mean: DoubleArray,
+            covariance: Array<DoubleArray>,
+            count: Int,
+        ): List<Point> =
+            List(count) {
+                MultivariateNormalDistribution(mean, covariance).sample().toTypedArray()
+            }.map { Point(*it) }
+
+        private fun absoluteNormalSamples(
+            mean: Number,
+            std: Number,
+            count: Int,
+        ): List<Float> = List(count) { abs(NormalDistribution(mean.toDouble(), std.toDouble()).sample()).toFloat() }
     }
 }

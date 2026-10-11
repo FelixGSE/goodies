@@ -3,15 +3,6 @@
   <ManuallySuppressedIssues/>
   <CurrentIssues>
     <ID>AbstractClassCanBeConcreteClass:GoodiesSketch.kt:GoodiesSketch$GoodiesSketch</ID>
-    <ID>CascadingCallWrapping:ListUtils.kt:toList()</ID>
-    <ID>CognitiveComplexMethod:ChaikinCurve.kt:ChaikinCurve.Companion$private fun fitChaikinCurve: PolygonLikeShape</ID>
-    <ID>CognitiveComplexMethod:MapUtils.kt:fun map2: Float</ID>
-    <ID>CognitiveComplexMethod:Polygon.kt:Polygon$fun convexHull: Polygon</ID>
-    <ID>ComplexCondition:Polygon.kt:Polygon$nextVertex == currentVertex || cross > 0 || ( cross == 0.0F &amp;&amp; vertex.distance(currentVertex) > nextVertex.distance( currentVertex, ) )</ID>
-    <ID>CyclomaticComplexMethod:MapUtils.kt:fun map2: Float</ID>
-    <ID>CyclomaticComplexMethod:Polygon.kt:Polygon$fun convexHull: Polygon</ID>
-    <ID>CyclomaticComplexMethod:SimpleFont.kt:SimpleFont$fun drawLetter</ID>
-    <ID>CyclomaticComplexMethod:SimpleFont2.kt:SimpleFont2$fun drawLetter</ID>
     <ID>EmptyFunctionBlock:StreamLineIntegrator.kt:StreamLineIntegrator${ }</ID>
     <ID>ForbiddenMethodCall:Point.kt:Point$println( "[WARNING] setMag() returns a new Vector instead of modifying the old one. Overwrite you variable " + "with the result of setMag()", )</ID>
     <ID>FunctionNameMaxLength:Conversions.kt:Conversions$@JvmStatic fun listOfListOfFloatsToDoubleArrays: Array&lt;DoubleArray></ID>
@@ -21,16 +12,6 @@
     <ID>FunctionNaming:Conversions.kt:Conversions$@Suppress("ktlint:standard:function-naming") @JvmStatic fun PVectorToDoubleArray: DoubleArray</ID>
     <ID>LargeClass:SimpleFont.kt:SimpleFont : Font</ID>
     <ID>LargeClass:SimpleFont2.kt:SimpleFont2 : Font</ID>
-    <ID>LongMethod:GaussBrush.kt:GaussBrush.Companion$fun initBrush: GaussBrush</ID>
-    <ID>LongMethod:MapUtils.kt:fun map2: Float</ID>
-    <ID>LongMethod:NewGaussBrush.kt:NewGaussBrush.Companion$fun initBrush: NewGaussBrush</ID>
-    <ID>LongMethod:Polygon.kt:Polygon$fun convexHull: Polygon</ID>
-    <ID>LongMethod:Quadrilateral.kt:Quadrilateral$private fun quadSubdivide: ShapeTreeNode&lt;Quadrilateral></ID>
-    <ID>LongMethod:SimpleFont.kt:SimpleFont$fun drawLetter</ID>
-    <ID>LongMethod:SimpleFont.kt:SimpleFont$private fun drawD</ID>
-    <ID>LongMethod:SimpleFont2.kt:SimpleFont2$fun drawLetter</ID>
-    <ID>LongMethod:SimpleFont2.kt:SimpleFont2$private fun drawD</ID>
-    <ID>LongMethod:WaterColorBlob.kt:WaterColorBlob.Companion$private fun subdivide</ID>
     <ID>LongParameterList:CosineCurve.kt:fun cosineCurve: List&lt;Point></ID>
     <ID>LongParameterList:GaussBrush.kt:GaussBrush</ID>
     <ID>LongParameterList:GaussBrush.kt:GaussBrush.Companion$fun initBrush: GaussBrush</ID>
@@ -42,12 +23,10 @@
     <ID>LongParameterList:SignCurve.kt:fun signCurve: List&lt;Point></ID>
     <ID>LongParameterList:SimpleFont.kt:SimpleFont$fun drawLetters</ID>
     <ID>LongParameterList:SimpleFont2.kt:SimpleFont2$fun drawLetters</ID>
-    <ID>LongParameterList:WaterColorBlob.kt:WaterColorBlob.Companion$private fun subdivide</ID>
     <ID>MissingPackageDeclaration:ShapeTree.kt:.ShapeTree.kt</ID>
     <ID>NotImplementedDeclaration:GoodiesSketch.kt:GoodiesSketch$throw NotImplementedError("draw() must be implemented in subclasses.")</ID>
     <ID>NotImplementedDeclaration:GoodiesSketch.kt:GoodiesSketch$throw NotImplementedError("setup() must be implemented in subclasses.")</ID>
     <ID>NotImplementedDeclaration:Polygon.kt:Polygon$TODO("Not yet implemented")</ID>
-    <ID>ReturnCount:MapUtils.kt:fun map2: Float</ID>
     <ID>SpreadOperator:GaussBrush.kt:GaussBrush.Companion$(*it)</ID>
     <ID>SpreadOperator:Line.kt:Line$(*translation.toTypedArray())</ID>
     <ID>SpreadOperator:NewGaussBrush.kt:NewGaussBrush.Companion$(*it)</ID>
@@ -263,7 +242,6 @@
     <ID>UndocumentedPublicFunction:Utils.kt:fun isPrime: Boolean</ID>
     <ID>UndocumentedPublicFunction:Utils.kt:fun listOfPointsToListOfLines: List&lt;Line></ID>
     <ID>UndocumentedPublicFunction:Utils.kt:fun sumOfSquares: Float</ID>
-    <ID>UnnecessaryParentheses:Polygon.kt:Polygon$( cross == 0.0F &amp;&amp; vertex.distance(currentVertex) > nextVertex.distance( currentVertex, ) )</ID>
     <ID>UnusedParameter:Utils.kt:margin: Number</ID>
     <ID>UnusedPrivateProperty:OrthogonalProjectionMatrix.kt:OrthogonalProjectionMatrix$targetDimensions: Int</ID>
     <ID>UseDataClass:ShapeTreeNode.kt:ShapeTreeNode&lt;T></ID>

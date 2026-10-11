@@ -83,36 +83,39 @@ open class Polygon(
         }
 
         val hull = mutableListOf<Point>()
-
         val startPoint = vertices.minWith(compareBy<Point>({ it.x }, { it.y }))
-
         var currentVertex = startPoint
         do {
             hull.add(currentVertex)
-
-            var nextVertex = vertices[0]
-            for (vertex in vertices) {
-                if (vertex == currentVertex) continue
-
-                val cross =
-                    (vertex.x - currentVertex.x) * (nextVertex.y - currentVertex.y) -
-                        (vertex.y - currentVertex.y) * (nextVertex.x - currentVertex.x)
-
-                if (nextVertex == currentVertex || cross > 0 || (
-                        cross == 0.0F && vertex.distance(currentVertex) >
-                            nextVertex.distance(
-                                currentVertex,
-                            )
-                    )
-                ) {
-                    nextVertex = vertex
-                }
-            }
-
-            currentVertex = nextVertex
+            currentVertex = nextHullVertex(currentVertex)
         } while (currentVertex != startPoint)
 
         return Polygon(hull)
+    }
+
+    private fun nextHullVertex(current: Point): Point {
+        var next = vertices[0]
+        for (vertex in vertices) {
+            if (vertex != current && isBetterHullCandidate(vertex, current, next)) {
+                next = vertex
+            }
+        }
+        return next
+    }
+
+    private fun isBetterHullCandidate(
+        candidate: Point,
+        current: Point,
+        next: Point,
+    ): Boolean {
+        if (next == current) {
+            return true
+        }
+        val cross =
+            (candidate.x - current.x) * (next.y - current.y) -
+                (candidate.y - current.y) * (next.x - current.x)
+        val isCollinearAndFarther = cross == 0.0F && candidate.distance(current) > next.distance(current)
+        return cross > 0 || isCollinearAndFarther
     }
 
     fun interiorAngles(): List<Float> {

@@ -40,28 +40,32 @@ class ChaikinCurve(
             var lines = initialEdges
 
             repeat(iterations + 1) {
-                val shorts = lines.map { line -> shortenLine(line) }
-
-                val newLines = mutableListOf<Line>()
-                for (j in 0 until shorts.size - 1) {
-                    val thisLine = shorts[j]
-                    val nextLine = shorts[j + 1]
-                    val connectingLine = Line(a = thisLine.end, b = nextLine.start)
-                    newLines.add(thisLine)
-                    newLines.add(connectingLine)
-                    if (j == shorts.size - 2) {
-                        newLines.add(nextLine)
-                    }
-                }
-                if (closed) {
-                    val endLine = Line(a = shorts.last().end, b = newLines.first().start)
-                    newLines.add(endLine)
-                }
-                lines = newLines
+                lines = chaikinStep(lines, closed)
             }
 
             val points = linesToPoints(lines)
             return if (closed) Polygon(points) else PolygonPath(points)
+        }
+
+        private fun chaikinStep(
+            lines: List<Line>,
+            closed: Boolean,
+        ): List<Line> {
+            val shorts = lines.map { line -> shortenLine(line) }
+            val newLines = mutableListOf<Line>()
+            for (j in 0 until shorts.size - 1) {
+                val thisLine = shorts[j]
+                val nextLine = shorts[j + 1]
+                newLines.add(thisLine)
+                newLines.add(Line(a = thisLine.end, b = nextLine.start))
+                if (j == shorts.size - 2) {
+                    newLines.add(nextLine)
+                }
+            }
+            if (closed) {
+                newLines.add(Line(a = shorts.last().end, b = newLines.first().start))
+            }
+            return newLines
         }
 
         private fun linesToPoints(lines: List<Line>): List<Point> {

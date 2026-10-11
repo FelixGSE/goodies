@@ -61,88 +61,50 @@ open class Quadrilateral(
         val (longestSideIndex, pointOnSide, pointOnOppositeSite) = splitFunction(quadrilateral)
 
         val (left, right) =
-            when (longestSideIndex) {
-                0 -> {
-                    Pair(
-                        first =
-                            Quadrilateral(
-                                first = pointOnSide,
-                                second = quadrilateral.b,
-                                third = quadrilateral.c,
-                                fourth = pointOnOppositeSite,
-                            ),
-                        second =
-                            Quadrilateral(
-                                first = quadrilateral.a,
-                                second = pointOnSide,
-                                third = pointOnOppositeSite,
-                                fourth = quadrilateral.d,
-                            ),
-                    )
-                }
-
-                1 -> {
-                    Pair(
-                        first =
-                            Quadrilateral(
-                                first = pointOnOppositeSite,
-                                second = pointOnSide,
-                                third = quadrilateral.c,
-                                fourth = quadrilateral.d,
-                            ),
-                        second =
-                            Quadrilateral(
-                                first = quadrilateral.a,
-                                second = quadrilateral.b,
-                                third = pointOnSide,
-                                fourth = pointOnOppositeSite,
-                            ),
-                    )
-                }
-
-                2 -> {
-                    Pair(
-                        first =
-                            Quadrilateral(
-                                first = quadrilateral.a,
-                                second = pointOnOppositeSite,
-                                third = pointOnSide,
-                                fourth = quadrilateral.d,
-                            ),
-                        second =
-                            Quadrilateral(
-                                first = pointOnOppositeSite,
-                                second = quadrilateral.b,
-                                third = quadrilateral.c,
-                                fourth = pointOnSide,
-                            ),
-                    )
-                }
-
-                else -> {
-                    Pair(
-                        first =
-                            Quadrilateral(
-                                first = quadrilateral.a,
-                                second = quadrilateral.b,
-                                third = pointOnOppositeSite,
-                                fourth = pointOnSide,
-                            ),
-                        second =
-                            Quadrilateral(
-                                first = pointOnSide,
-                                second = pointOnOppositeSite,
-                                third = quadrilateral.c,
-                                fourth = quadrilateral.d,
-                            ),
-                    )
-                }
-            }
+            splitAt(
+                quadrilateral = quadrilateral,
+                longestSideIndex = longestSideIndex,
+                onSide = pointOnSide,
+                onOppositeSide = pointOnOppositeSite,
+            )
 
         val leftChild = quadSubdivide(left, depth - 1, splitFunction)
         val rightChild = quadSubdivide(right, depth - 1, splitFunction)
 
         return ShapeTreeNode(value = quadrilateral, left = leftChild, right = rightChild)
+    }
+
+    private fun splitAt(
+        quadrilateral: Quadrilateral,
+        longestSideIndex: Int,
+        onSide: Point,
+        onOppositeSide: Point,
+    ): Pair<Quadrilateral, Quadrilateral> {
+        val a = quadrilateral.a
+        val b = quadrilateral.b
+        val c = quadrilateral.c
+        val d = quadrilateral.d
+        return when (longestSideIndex) {
+            0 -> {
+                Quadrilateral(listOf(onSide, b, c, onOppositeSide)) to
+                    Quadrilateral(listOf(a, onSide, onOppositeSide, d))
+            }
+
+            1 -> {
+                Quadrilateral(listOf(onOppositeSide, onSide, c, d)) to
+                    Quadrilateral(listOf(a, b, onSide, onOppositeSide))
+            }
+
+            2 -> {
+                Quadrilateral(listOf(a, onOppositeSide, onSide, d)) to
+                    Quadrilateral(listOf(onOppositeSide, b, c, onSide))
+            }
+
+            else -> {
+                Quadrilateral(listOf(a, b, onOppositeSide, onSide)) to
+                    Quadrilateral(listOf(onSide, onOppositeSide, c, d))
+            }
+        }
     }
 
     companion object {

@@ -32,6 +32,48 @@ class SimpleFont(
             Line(PVector(0F, 0F), PVector(0F, 1F)),
         ).map { scaleLines(line = it, scaleX = baseScaleLowerX, scaleY = baseScaleLowerY) }
 
+    private val glyphs: Map<String, (PApplet, Point, Number) -> Unit> =
+        mapOf(
+            "-" to this::drawDash,
+            "/" to this::drawSlash,
+            "0" to this::drawZero,
+            "1" to this::drawOne,
+            "2" to this::drawTwo,
+            "3" to this::drawThree,
+            "4" to this::drawFour,
+            "5" to this::drawFive,
+            "6" to this::drawSix,
+            "7" to this::drawSeven,
+            "8" to this::drawEight,
+            "9" to this::drawNine,
+            "A" to this::drawA,
+            "B" to this::drawB,
+            "C" to this::drawC,
+            "D" to this::drawD,
+            "E" to this::drawE,
+            "F" to this::drawF,
+            "G" to this::drawG,
+            "H" to this::drawH,
+            "I" to this::drawI,
+            "J" to this::drawJ,
+            "K" to this::drawK,
+            "L" to this::drawL,
+            "M" to this::drawM,
+            "N" to this::drawN,
+            "O" to this::drawO,
+            "P" to this::drawP,
+            "Q" to this::drawQ,
+            "R" to this::drawR,
+            "S" to this::drawS,
+            "T" to this::drawT,
+            "U" to this::drawU,
+            "V" to this::drawV,
+            "W" to this::drawW,
+            "X" to this::drawX,
+            "Y" to this::drawY,
+            "Z" to this::drawZ,
+        )
+
     private fun scaleLines(
         line: Line,
         scaleX: Number,
@@ -122,22 +164,19 @@ class SimpleFont(
         val topBottomRight = scaleLines(upperLines[RIGHT], scale, scale).getShifted(position.toPVector()).end
 
         scaleLines(upperLines[LEFT], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        Line(topLeft, topMid).draw(sketch)
+        Line(topMid, rightMid).draw(sketch)
+        Line(rightMid, topBottomRight).draw(sketch)
 
-        Line(
-            topLeft,
-            topMid,
-        ).draw(sketch)
+        drawLowerBowlOfD(sketch = sketch, position = position, scale = scale, topBottomRight = topBottomRight)
+    }
 
-        Line(
-            topMid,
-            rightMid,
-        ).draw(sketch)
-
-        Line(
-            rightMid,
-            topBottomRight,
-        ).draw(sketch)
-
+    private fun drawLowerBowlOfD(
+        sketch: PApplet,
+        position: Point,
+        scale: Number,
+        topBottomRight: PVector,
+    ) {
         val offSet = PVector(0F, upperYMax * scale.toFloat())
 
         val bottomRightMid =
@@ -147,20 +186,9 @@ class SimpleFont(
         val bottomLeft =
             scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).start
 
-        Line(
-            topBottomRight,
-            bottomRightMid,
-        ).draw(sketch)
-
-        Line(
-            bottomRightMid,
-            bottomMid,
-        ).draw(sketch)
-
-        Line(
-            bottomLeft,
-            bottomMid,
-        ).draw(sketch)
+        Line(topBottomRight, bottomRightMid).draw(sketch)
+        Line(bottomRightMid, bottomMid).draw(sketch)
+        Line(bottomLeft, bottomMid).draw(sketch)
 
         scaleLines(lowerLines[LEFT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
     }
@@ -766,163 +794,7 @@ class SimpleFont(
         position: Point,
         scale: Number,
     ) {
-        when (letter) {
-            "-" -> {
-                drawDash(sketch, position, scale)
-            }
-
-            "/" -> {
-                drawSlash(sketch, position, scale)
-            }
-
-            " " -> {
-                return
-            }
-
-            "0" -> {
-                drawZero(sketch, position, scale)
-            }
-
-            "1" -> {
-                drawOne(sketch, position, scale)
-            }
-
-            "2" -> {
-                drawTwo(sketch, position, scale)
-            }
-
-            "3" -> {
-                drawThree(sketch, position, scale)
-            }
-
-            "4" -> {
-                drawFour(sketch, position, scale)
-            }
-
-            "5" -> {
-                drawFive(sketch, position, scale)
-            }
-
-            "6" -> {
-                drawSix(sketch, position, scale)
-            }
-
-            "7" -> {
-                drawSeven(sketch, position, scale)
-            }
-
-            "8" -> {
-                drawEight(sketch, position, scale)
-            }
-
-            "9" -> {
-                drawNine(sketch, position, scale)
-            }
-
-            "A" -> {
-                drawA(sketch, position, scale)
-            }
-
-            "B" -> {
-                drawB(sketch, position, scale)
-            }
-
-            "C" -> {
-                drawC(sketch, position, scale)
-            }
-
-            "D" -> {
-                drawD(sketch, position, scale)
-            }
-
-            "E" -> {
-                drawE(sketch, position, scale)
-            }
-
-            "F" -> {
-                drawF(sketch, position, scale)
-            }
-
-            "G" -> {
-                drawG(sketch, position, scale)
-            }
-
-            "H" -> {
-                drawH(sketch, position, scale)
-            }
-
-            "I" -> {
-                drawI(sketch, position, scale)
-            }
-
-            "J" -> {
-                drawJ(sketch, position, scale)
-            }
-
-            "K" -> {
-                drawK(sketch, position, scale)
-            }
-
-            "L" -> {
-                drawL(sketch, position, scale)
-            }
-
-            "M" -> {
-                drawM(sketch, position, scale)
-            }
-
-            "N" -> {
-                drawN(sketch, position, scale)
-            }
-
-            "O" -> {
-                drawO(sketch, position, scale)
-            }
-
-            "P" -> {
-                drawP(sketch, position, scale)
-            }
-
-            "Q" -> {
-                drawQ(sketch, position, scale)
-            }
-
-            "R" -> {
-                drawR(sketch, position, scale)
-            }
-
-            "S" -> {
-                drawS(sketch, position, scale)
-            }
-
-            "T" -> {
-                drawT(sketch, position, scale)
-            }
-
-            "U" -> {
-                drawU(sketch, position, scale)
-            }
-
-            "V" -> {
-                drawV(sketch, position, scale)
-            }
-
-            "W" -> {
-                drawW(sketch, position, scale)
-            }
-
-            "X" -> {
-                drawX(sketch, position, scale)
-            }
-
-            "Y" -> {
-                drawY(sketch, position, scale)
-            }
-
-            "Z" -> {
-                drawZ(sketch, position, scale)
-            }
-        }
+        glyphs[letter]?.invoke(sketch, position, scale)
     }
 
     fun drawLetters(

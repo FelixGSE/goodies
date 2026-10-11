@@ -21,7 +21,7 @@ fun cartesianProduct(
         .plus(sets)
         .fold(listOf(emptyList<Number>())) { acc, set ->
             acc.flatMap { list -> set.map { element -> list + element } }
-        }.toList()
+        }
 }
 
 fun floatRange(
