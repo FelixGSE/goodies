@@ -8,8 +8,8 @@ fun isPerfectSquare(number: Int): Boolean {
 }
 
 fun isFibonacciNumber(number: Int): Boolean =
-    isPerfectSquare(5 * number * number + 4) ||
-        isPerfectSquare(5 * number * number - 4)
+    isPerfectSquare(GESSEL_FACTOR * number * number + GESSEL_OFFSET) ||
+        isPerfectSquare(GESSEL_FACTOR * number * number - GESSEL_OFFSET)
 
 fun generateFibonacciInRange(
     a: Long,
@@ -49,7 +49,7 @@ fun isPrime(input: Int): Boolean {
 fun isEven(n: Int): Boolean = n % 2 == 0
 
 fun getBoundingBoxHeightAndWidth(points: List<Point>): List<Float> {
-    if (points.size < 3) {
+    if (points.size < MIN_BOUNDING_POINTS) {
         throw IllegalAccessException()
     }
     var minX = points[0].x
@@ -98,3 +98,7 @@ fun listOfPointsToListOfLines(
     }
     return lines.toList()
 }
+
+private const val GESSEL_FACTOR = 5
+private const val GESSEL_OFFSET = 4
+private const val MIN_BOUNDING_POINTS = 3

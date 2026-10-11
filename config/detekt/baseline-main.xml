@@ -43,32 +43,6 @@
     <ID>LongParameterList:SimpleFont.kt:SimpleFont$fun drawLetters</ID>
     <ID>LongParameterList:SimpleFont2.kt:SimpleFont2$fun drawLetters</ID>
     <ID>LongParameterList:WaterColorBlob.kt:WaterColorBlob.Companion$private fun subdivide</ID>
-    <ID>MagicNumber:Agent.kt:Agent$10</ID>
-    <ID>MagicNumber:Agent.kt:Agent$45</ID>
-    <ID>MagicNumber:Agent.kt:Agent$5</ID>
-    <ID>MagicNumber:Conversions.kt:Conversions$3</ID>
-    <ID>MagicNumber:Line.kt:Line$3</ID>
-    <ID>MagicNumber:MapUtils.kt:10</ID>
-    <ID>MagicNumber:Point.kt:Point$3</ID>
-    <ID>MagicNumber:Point.kt:Point.Companion$3</ID>
-    <ID>MagicNumber:Polygon.kt:Polygon$3</ID>
-    <ID>MagicNumber:Quadrilateral.kt:Quadrilateral$3</ID>
-    <ID>MagicNumber:Quadrilateral.kt:Quadrilateral$4</ID>
-    <ID>MagicNumber:SimpleFont.kt:SimpleFont$0.3F</ID>
-    <ID>MagicNumber:SimpleFont.kt:SimpleFont$0.65F</ID>
-    <ID>MagicNumber:SimpleFont.kt:SimpleFont$0.6F</ID>
-    <ID>MagicNumber:SimpleFont.kt:SimpleFont$0.8F</ID>
-    <ID>MagicNumber:SimpleFont.kt:SimpleFont$3</ID>
-    <ID>MagicNumber:SimpleFont2.kt:SimpleFont2$0.3F</ID>
-    <ID>MagicNumber:SimpleFont2.kt:SimpleFont2$0.65F</ID>
-    <ID>MagicNumber:SimpleFont2.kt:SimpleFont2$0.6F</ID>
-    <ID>MagicNumber:SimpleFont2.kt:SimpleFont2$0.8F</ID>
-    <ID>MagicNumber:SimpleFont2.kt:SimpleFont2$3</ID>
-    <ID>MagicNumber:Sphere.kt:Sphere$3</ID>
-    <ID>MagicNumber:Sphere.kt:Sphere.Companion$3</ID>
-    <ID>MagicNumber:Utils.kt:3</ID>
-    <ID>MagicNumber:Utils.kt:4</ID>
-    <ID>MagicNumber:Utils.kt:5</ID>
     <ID>MissingPackageDeclaration:ShapeTree.kt:.ShapeTree.kt</ID>
     <ID>NotImplementedDeclaration:GoodiesSketch.kt:GoodiesSketch$throw NotImplementedError("draw() must be implemented in subclasses.")</ID>
     <ID>NotImplementedDeclaration:GoodiesSketch.kt:GoodiesSketch$throw NotImplementedError("setup() must be implemented in subclasses.")</ID>

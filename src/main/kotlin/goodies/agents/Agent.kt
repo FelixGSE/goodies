@@ -10,8 +10,8 @@ import kotlin.math.sin
 class Agent(
     var pos: Point,
     val boundary: Polygon,
-    var size: Float = (Math.random() * 45 + 5).toFloat(),
-    var speed: Float = (Math.random() * 10 + 10).toFloat(),
+    var size: Float = (Math.random() * SIZE_SPREAD + MIN_SIZE).toFloat(),
+    var speed: Float = (Math.random() * SPEED_SPREAD + MIN_SPEED).toFloat(),
     var dir: Int = 1,
 ) {
     constructor(boundary: Polygon) : this(
@@ -44,3 +44,8 @@ class Agent(
         sketch.point(pos.x, pos.y)
     }
 }
+
+private const val MIN_SIZE = 5
+private const val SIZE_SPREAD = 45
+private const val MIN_SPEED = 10
+private const val SPEED_SPREAD = 10

@@ -148,7 +148,7 @@ class Line(
     override fun draw(sketch: PApplet) {
         when (dimensions) {
             2 -> sketch.line(a.x, a.y, b.x, b.y)
-            3 -> sketch.line(a.x, a.y, a.z, b.x, b.y, b.z)
+            SPATIAL_DIMENSIONS -> sketch.line(a.x, a.y, a.z, b.x, b.y, b.z)
             else -> throw IllegalArgumentException("Can only draw 2D and 3D objects")
         }
     }

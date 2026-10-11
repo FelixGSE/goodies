@@ -9,7 +9,7 @@ class Sphere(
 ) : NSphere(center, radius),
     Drawable {
     init {
-        require(dimensions == 3) { "A sphere can only have three dimensions" }
+        require(dimensions == SPATIAL_DIMENSIONS) { "A sphere can only have three dimensions" }
     }
 
     override fun draw(sketch: PApplet) {
@@ -17,6 +17,6 @@ class Sphere(
     }
 
     companion object {
-        fun unitSphere(): NEllipsoid = unitNSphere(3)
+        fun unitSphere(): NEllipsoid = unitNSphere(SPATIAL_DIMENSIONS)
     }
 }

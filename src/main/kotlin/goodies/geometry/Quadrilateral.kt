@@ -8,7 +8,7 @@ open class Quadrilateral(
     vertices: List<Point>,
 ) : Polygon(vertices) {
     init {
-        require(vertices.size == 4) { "Quadrilateral must have 4 vertices" }
+        require(vertices.size == QUADRILATERAL_VERTICES) { "Quadrilateral must have 4 vertices" }
     }
 
     val a: Point
@@ -18,20 +18,16 @@ open class Quadrilateral(
     val c: Point
         get() = vertices[2]
     val d: Point
-        get() = vertices[3]
+        get() = vertices.last()
 
     constructor(vararg vertices: Point) : this(vertices.toList())
 
     constructor(first: Point, second: Point, third: Point, fourth: Point) : this(listOf(first, second, third, fourth))
 
-    private fun oppositeSideIndex(side: Int): Int =
-        when (side) {
-            0 -> 2
-            1 -> 3
-            2 -> 0
-            3 -> 1
-            else -> throw IllegalArgumentException("Invalid side")
-        }
+    private fun oppositeSideIndex(side: Int): Int {
+        require(side in 0 until QUADRILATERAL_VERTICES) { "Invalid side" }
+        return (side + 2) % QUADRILATERAL_VERTICES
+    }
 
     private fun goldenRationSplit(quadrilateral: Quadrilateral): Triple<Int, Point, Point> {
         val longestSideIndex = quadrilateral.longestEdgeIndex()
@@ -161,3 +157,5 @@ open class Quadrilateral(
             )
     }
 }
+
+private const val QUADRILATERAL_VERTICES = 4

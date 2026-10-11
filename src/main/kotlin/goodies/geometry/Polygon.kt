@@ -26,7 +26,7 @@ open class Polygon(
 
     override val isConvex: Boolean
         get() {
-            if (vertices.size <= 3) {
+            if (vertices.size <= TRIANGLE_VERTICES) {
                 return true
             }
 
@@ -78,7 +78,7 @@ open class Polygon(
     }
 
     fun convexHull(): Polygon {
-        if (vertices.size <= 3) {
+        if (vertices.size <= TRIANGLE_VERTICES) {
             return Polygon(vertices.toList())
         }
 
@@ -181,3 +181,5 @@ open class Polygon(
         return isInside
     }
 }
+
+private const val TRIANGLE_VERTICES = 3

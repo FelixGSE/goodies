@@ -162,18 +162,18 @@ fun map2(
         EaseFunctionType.EXPONENTIAL -> {
             when (easingType) {
                 EasingType.EASE_IN -> {
-                    return c * pow(2F, 10 * (t / d - 1)) + start2
+                    return c * pow(2F, EXPONENT_SCALE * (t / d - 1)) + start2
                 }
 
                 EasingType.EASE_OUT -> {
-                    return c * (-pow(2F, -10 * t / d) + 1) + start2
+                    return c * (-pow(2F, -EXPONENT_SCALE * t / d) + 1) + start2
                 }
 
                 EasingType.EASE_IN_OUT -> {
                     t /= d / 2
-                    if (t < 1) return c / 2 * pow(2F, 10 * (t - 1)) + start2
+                    if (t < 1) return c / 2 * pow(2F, EXPONENT_SCALE * (t - 1)) + start2
                     t--
-                    return c / 2 * (-pow(2F, -10 * t) + 2) + start2
+                    return c / 2 * (-pow(2F, -EXPONENT_SCALE * t) + 2) + start2
                 }
             }
         }
@@ -247,3 +247,5 @@ fun map3(
     }
     return out
 }
+
+private const val EXPONENT_SCALE = 10

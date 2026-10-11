@@ -43,9 +43,9 @@ class WaterColorBlob(
                     points = points,
                     line = edge,
                     depth = depth - 1,
-                    lengthVariance = 100f / (depth + 1),
+                    lengthVariance = BASE_VARIANCE / (depth + 1),
                     angleVariance =
-                        100f / (depth + 1),
+                        BASE_VARIANCE / (depth + 1),
                 )
             }
             return Polygon(points)
@@ -81,8 +81,8 @@ class WaterColorBlob(
 
             val left = Line(a = line.start, b = splitPoint)
             val right = Line(a = splitPoint, b = line.end)
-            val nextLengthVariance = 100f / (2 * depth.coerceAtLeast(1) + 1)
-            val nextAngleVariance = 100f / (depth.coerceAtLeast(1) + 1)
+            val nextLengthVariance = BASE_VARIANCE / (2 * depth.coerceAtLeast(1) + 1)
+            val nextAngleVariance = BASE_VARIANCE / (depth.coerceAtLeast(1) + 1)
 
             subdivide(
                 points = points,
@@ -102,3 +102,5 @@ class WaterColorBlob(
         }
     }
 }
+
+private const val BASE_VARIANCE = 100f

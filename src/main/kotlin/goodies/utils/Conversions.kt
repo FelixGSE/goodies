@@ -1,5 +1,6 @@
 package goodies.utils
 
+import goodies.geometry.SPATIAL_DIMENSIONS
 import org.apache.commons.math3.linear.MatrixUtils
 import org.apache.commons.math3.linear.RealVector
 import processing.core.PApplet
@@ -28,7 +29,7 @@ object Conversions {
     ): DoubleArray =
         when (dimensions) {
             2 -> doubleArrayOf(pvector.x.toDouble(), pvector.y.toDouble())
-            3 -> doubleArrayOf(pvector.x.toDouble(), pvector.y.toDouble(), pvector.z.toDouble())
+            SPATIAL_DIMENSIONS -> doubleArrayOf(pvector.x.toDouble(), pvector.y.toDouble(), pvector.z.toDouble())
             else -> throw IllegalArgumentException("Invalid number of dimensions")
         }
 
@@ -37,7 +38,7 @@ object Conversions {
         val arr = realVector.toArray()
         return when (arr.size) {
             2 -> PVector(arr[0].toFloat(), arr[1].toFloat())
-            3 -> PVector(arr[0].toFloat(), arr[1].toFloat(), arr[2].toFloat())
+            SPATIAL_DIMENSIONS -> PVector(arr[0].toFloat(), arr[1].toFloat(), arr[2].toFloat())
             else -> throw IllegalArgumentException("Can only convert 2 and 3 dimensional values to PVector")
         }
     }
@@ -61,7 +62,7 @@ object Conversions {
     fun listOfFloatsToPVector(listOfFloats: List<Float>): PVector =
         when (listOfFloats.size) {
             2 -> PVector(listOfFloats[0], listOfFloats[1])
-            3 -> PVector(listOfFloats[0], listOfFloats[1], listOfFloats[2])
+            SPATIAL_DIMENSIONS -> PVector(listOfFloats[0], listOfFloats[1], listOfFloats[2])
             else -> throw IllegalArgumentException("Can only convert 2 and 3 dimensional values to PVector")
         }
 
@@ -77,7 +78,7 @@ object Conversions {
     fun doubleArrayToPVector(value: DoubleArray): PVector =
         when (value.size) {
             2 -> PVector(value[0].toFloat(), value[1].toFloat())
-            3 -> PVector(value[0].toFloat(), value[1].toFloat(), value[2].toFloat())
+            SPATIAL_DIMENSIONS -> PVector(value[0].toFloat(), value[1].toFloat(), value[2].toFloat())
             else -> throw IllegalArgumentException("Can only convert 2 and three dimensional Arrays to PVector")
         }
 

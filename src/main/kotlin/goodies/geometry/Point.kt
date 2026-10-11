@@ -114,7 +114,9 @@ class Point(
     fun pow(exponent: Number): Point = Point(coordinates.toArray().map { it.pow(exponent.toDouble()) })
 
     fun cross(other: Point): Point {
-        require(dimensions == 3 && other.dimensions == 3) { "Points must have dimension equal to 3 for this method" }
+        require(dimensions == SPATIAL_DIMENSIONS && other.dimensions == SPATIAL_DIMENSIONS) {
+            "Points must have dimension equal to 3 for this method"
+        }
         return Point(
             this[1] * other[2] - this[2] * other[1],
             this[2] * other[0] - this[0] * other[2],
@@ -183,17 +185,17 @@ class Point(
     }
 
     fun rotateZ(angle: Number): Point {
-        require(dimensions >= 3) { NOT_SPATIAL }
+        require(dimensions >= SPATIAL_DIMENSIONS) { NOT_SPATIAL }
         return rotateAxis(i = 0, j = 1, angle = angle.toFloat())
     }
 
     fun rotateY(angle: Number): Point {
-        require(dimensions >= 3) { NOT_SPATIAL }
+        require(dimensions >= SPATIAL_DIMENSIONS) { NOT_SPATIAL }
         return rotateAxis(i = 0, j = 2, angle = angle.toFloat())
     }
 
     fun rotateX(angle: Number): Point {
-        require(dimensions >= 3) { NOT_SPATIAL }
+        require(dimensions >= SPATIAL_DIMENSIONS) { NOT_SPATIAL }
         return rotateAxis(i = 1, j = 2, angle = angle.toFloat())
     }
 
@@ -238,9 +240,9 @@ class Point(
         Point(StereographicProjection.projectDownOneDimension(distance, coordinates))
 
     fun projectDownTo3D(distance: Float = 1.0f): Point {
-        require(dimensions >= 3) { "Point must have dimension 4 to be projected down to 3D" }
+        require(dimensions >= SPATIAL_DIMENSIONS) { "Point must have dimension 4 to be projected down to 3D" }
         var point = this.copy()
-        repeat(dimensions - 3) {
+        repeat(dimensions - SPATIAL_DIMENSIONS) {
             point = point.projectDown(distance)
         }
         return point
@@ -329,7 +331,7 @@ class Point(
                 PVector(this[0], this[1])
             }
 
-            3 -> {
+            SPATIAL_DIMENSIONS -> {
                 PVector(this[0], this[1], this[2])
             }
 
@@ -341,7 +343,7 @@ class Point(
     fun draw(sketch: PApplet) {
         when (dimensions) {
             2 -> sketch.point(this[0], this[1])
-            3 -> sketch.point(this[0], this[1], this[2])
+            SPATIAL_DIMENSIONS -> sketch.point(this[0], this[1], this[2])
             else -> throw IllegalArgumentException("Can't convert Point to PVector - Too many dimensions")
         }
     }
@@ -357,7 +359,7 @@ class Point(
 
         fun random2D(): Point = Point.randomPoint(2)
 
-        fun random3D(): Point = Point.randomPoint(3)
+        fun random3D(): Point = Point.randomPoint(SPATIAL_DIMENSIONS)
 
         /**
          * Generate a 2D GVector from an angle. For compliance with Processing PVector class
