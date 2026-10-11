@@ -99,7 +99,7 @@ class SimpleFont(
             upperLines[BOTTOM],
             scale,
             scale,
-        ).getShifted(position.toPVector()).scaleFromEnd(CROSSBAR_LENGTH).draw(sketch)
+        ).getShifted(position.toPVector()).scaleFromEnd(PARTIAL_STROKE_LENGTH).draw(sketch)
         scaleLines(upperLines[LEFT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
@@ -119,7 +119,7 @@ class SimpleFont(
             upperLines[BOTTOM],
             scale,
             scale,
-        ).getShifted(position.toPVector()).scaleFromEnd(CROSSBAR_LENGTH).draw(sketch)
+        ).getShifted(position.toPVector()).scaleFromEnd(PARTIAL_STROKE_LENGTH).draw(sketch)
         scaleLines(upperLines[LEFT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
@@ -139,7 +139,7 @@ class SimpleFont(
             upperLines[RIGHT],
             scale,
             scale,
-        ).getShifted(position.toPVector()).scaleFromStart(CROSSBAR_LENGTH).draw(sketch)
+        ).getShifted(position.toPVector()).scaleFromStart(PARTIAL_STROKE_LENGTH).draw(sketch)
         scaleLines(upperLines[LEFT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
@@ -147,7 +147,7 @@ class SimpleFont(
         scaleLines(lowerLines[RIGHT], scale, scale)
             .getShifted(position.toPVector())
             .getShifted(offSet)
-            .scaleFromEnd(CROSSBAR_LENGTH)
+            .scaleFromEnd(PARTIAL_STROKE_LENGTH)
             .draw(sketch)
         scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
         scaleLines(lowerLines[LEFT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
@@ -238,7 +238,7 @@ class SimpleFont(
             upperLines[BOTTOM],
             scale,
             scale,
-        ).getShifted(position.toPVector()).scaleFromEnd(CROSSBAR_LENGTH).draw(sketch)
+        ).getShifted(position.toPVector()).scaleFromEnd(PARTIAL_STROKE_LENGTH).draw(sketch)
         scaleLines(upperLines[LEFT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
@@ -810,12 +810,3 @@ class SimpleFont(
         }
     }
 }
-
-private const val TOP = 0
-private const val RIGHT = 1
-private const val BOTTOM = 2
-private const val LEFT = 3
-private const val CROSSBAR_LENGTH = 0.65F
-private const val HOOK_LENGTH = 0.3F
-private const val BOWL_LENGTH = 0.8F
-private const val DIGIT_STROKE_LENGTH = 0.6F
