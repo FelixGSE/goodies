@@ -15,6 +15,7 @@ import kotlin.random.Random
  * selected from the input list. Sampling is done with replacement, meaning
  * the same element may appear more than once in the resulting sample.
  *
+ * @param T The type of the elements.
  * @param input The input list from which to sample.
  * @param n The size of the sample to generate.
  * @return A list containing the randomly sampled elements.

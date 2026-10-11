@@ -13,7 +13,6 @@
     <ID>CyclomaticComplexMethod:SimpleFont.kt:SimpleFont$fun drawLetter</ID>
     <ID>CyclomaticComplexMethod:SimpleFont2.kt:SimpleFont2$fun drawLetter</ID>
     <ID>EmptyFunctionBlock:StreamLineIntegrator.kt:StreamLineIntegrator${ }</ID>
-    <ID>ForbiddenComment:RotationMatrix.kt:RotationMatrix.Companion$// TODO: -1 correct?</ID>
     <ID>ForbiddenMethodCall:Point.kt:Point$println( "[WARNING] setMag() returns a new Vector instead of modifying the old one. Overwrite you variable " + "with the result of setMag()", )</ID>
     <ID>FunctionNameMaxLength:Conversions.kt:Conversions$@JvmStatic fun listOfListOfFloatsToDoubleArrays: Array&lt;DoubleArray></ID>
     <ID>FunctionNameMaxLength:RandomUtils.kt:fun &lt;T> weightedSampleWithReplacementFromList: List&lt;T></ID>
@@ -74,7 +73,6 @@
     <ID>NotImplementedDeclaration:GoodiesSketch.kt:GoodiesSketch$throw NotImplementedError("draw() must be implemented in subclasses.")</ID>
     <ID>NotImplementedDeclaration:GoodiesSketch.kt:GoodiesSketch$throw NotImplementedError("setup() must be implemented in subclasses.")</ID>
     <ID>NotImplementedDeclaration:Polygon.kt:Polygon$TODO("Not yet implemented")</ID>
-    <ID>OutdatedDocumentation:RandomUtils.kt:fun &lt;T> sampleWithReplacementFromList: List&lt;T></ID>
     <ID>ReturnCount:MapUtils.kt:fun map2: Float</ID>
     <ID>SpreadOperator:GaussBrush.kt:GaussBrush.Companion$(*it)</ID>
     <ID>SpreadOperator:Line.kt:Line$(*translation.toTypedArray())</ID>

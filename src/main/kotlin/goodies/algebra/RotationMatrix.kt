@@ -47,7 +47,7 @@ class RotationMatrix(
             dimensions: Int,
             index: Int,
         ): Pair<Int, Int> {
-            // TODO: -1 correct?
+            // TODO DESIGN: CODE-7 the bound joins with || and accepts every index
             require(index > 0 || index < getNumberOfRotations(dimensions) - 1) { "Invalid got $dimensions and $index" }
             var currentIndex = 0
             for (i in 0 until dimensions - 1) {
