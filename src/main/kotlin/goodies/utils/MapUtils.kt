@@ -236,13 +236,13 @@ fun map3(
 
         EasingType.EASE_OUT -> {
             t /= d
-            out = c * (1 - pow((1 - t), v)) + start2
+            out = c * (1 - pow(1 - t, v)) + start2
         }
 
         EasingType.EASE_IN_OUT -> {
             t /= d / 2
             if (t < 1) return c / 2 * pow(t, v) + start2
-            out = c / 2 * (2 - pow((2 - t), v)) + start2
+            out = c / 2 * (2 - pow(2 - t, v)) + start2
         }
     }
     return out

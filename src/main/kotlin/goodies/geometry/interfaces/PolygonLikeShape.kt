@@ -28,12 +28,4 @@ interface PolygonLikeShape :
     }
 
     fun longestEdge(): Line = edges[longestEdgeIndex()]
-
-//    fun getBoundingBox(): Rectangle {
-//        val xMin = this.vertices.minByOrNull { it.x }!!.x
-//        val xMax = this.vertices.maxByOrNull { it.x }!!.x
-//        val yMin = this.vertices.minByOrNull { it.y }!!.y
-//        val yMax = this.vertices.maxByOrNull { it.y }!!.y
-//        return Rectangle(xMin, yMin, xMax - xMin, yMax - yMin)
-//    }
 }

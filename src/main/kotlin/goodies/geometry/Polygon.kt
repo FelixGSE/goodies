@@ -74,30 +74,6 @@ open class Polygon(
         return weightedSample(edges, weights).randomPointOn()
     }
 
-//    fun getIntersections(otherPolygon: Polygon): List<Point> {
-//        val edges1 = this.edges
-//        val edges2 = otherPolygon.edges
-//
-//        val allEdges = edges1 + edges2
-//
-//        val intersectionPoints = mutableListOf<Point>()
-//
-//        for (i in allEdges.indices) {
-//            val edge1 = allEdges[i]
-//
-//            for (j in i + 1 until allEdges.size) {
-//                val edge2 = allEdges[j]
-//                val intersection = edge1.computeSegmentIntersection(edge2)
-//
-//                if (intersection != null) {
-//                    intersectionPoints.add(Point.fromPVector2D(intersection))
-//                }
-//            }
-//        }
-//
-//        return intersectionPoints
-//    }
-
     fun convexHull(): Polygon {
         if (vertices.size <= 3) {
             return Polygon(vertices.toList())
@@ -105,12 +81,7 @@ open class Polygon(
 
         val hull = mutableListOf<Point>()
 
-        var startPoint = vertices[0]
-        for (vertex in vertices) {
-            if (vertex.x < startPoint.x || (vertex.x == startPoint.x && vertex.y < startPoint.y)) {
-                startPoint = vertex
-            }
-        }
+        val startPoint = vertices.minWith(compareBy<Point>({ it.x }, { it.y }))
 
         var currentVertex = startPoint
         do {
@@ -194,7 +165,7 @@ open class Polygon(
 
         val scale = randomFloat(lower.toFloat(), upper.toFloat())
 
-        val newPolygon = Polygon(polygon.edges.map { (it.scaleFromStart(scale).end) }.toList())
+        val newPolygon = Polygon(polygon.edges.map { it.scaleFromStart(scale).end }.toList())
 
         return polygonSpiral(newPolygon, iterations - 1) + listOf(newPolygon)
     }
@@ -204,12 +175,10 @@ open class Polygon(
         var i = 0
         var j = vertices.size - 1
         while (i < vertices.size) {
-            if ((vertices[i].y > point.y) != (vertices[j].y > point.y) &&
-                (
-                    point.x <
-                        (vertices[j].x - vertices[i].x) * (point.y - vertices[i].y) / (vertices[j].y - vertices[i].y) +
-                        vertices[i].x
-                )
+            if (vertices[i].y > point.y != vertices[j].y > point.y &&
+                point.x <
+                (vertices[j].x - vertices[i].x) * (point.y - vertices[i].y) / (vertices[j].y - vertices[i].y) +
+                vertices[i].x
             ) {
                 inside = !inside
             }

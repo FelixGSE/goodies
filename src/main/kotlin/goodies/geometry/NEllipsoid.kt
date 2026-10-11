@@ -87,11 +87,6 @@ open class NEllipsoid(
             if (ssqDenominator == 0.0F) {
                 val angle = 0.0F
                 angles.add(angle)
-//            } else if (point.slice(0, i).map { it * it }.sum() == 0.0F && point[i + 1] > 0) {
-//                val angle = 0.0F
-//                angles.add(angle)
-//            } else if (point.slice(0, i).map { it * it }.sum() == 0.0F && point[i + 1] < 0) {
-//                angles.add(PI.toFloat())
             } else {
                 val numerator = point[i + 1]
                 val denominator = sqrt(ssqDenominator)

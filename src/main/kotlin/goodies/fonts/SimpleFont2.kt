@@ -225,9 +225,6 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-//        scaleLines(upperLines[3], scale, scale).getShifted(position.toPVector()).draw(sketch)
-//        val offSet = PVector(0F, upperYMax * scale.toFloat())
-//        scaleLines(lowerLines[3], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
         Line(
             scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).midPoint,
             scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).midPoint,
@@ -729,27 +726,6 @@ class SimpleFont2(
         scaleLines(lowerLines[1], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
     }
 
-    /*
-    private val upperLines = listOf(
-            Line(PVector(0F,0F), PVector(1F,0F)),
-            Line(PVector(1F,0F), PVector(1F,1F)),
-            Line(PVector(0F,1F), PVector(1F,1F)),
-            Line(PVector(0F,0F), PVector(0F,1F)),
-        ).map { scaleLines(it, baseScaleUpperX,  baseScaleUpperY) }
-
-        val upperXMin = 0
-        val upperXMax = 1 * baseScaleUpperX.toFloat()
-        val upperYMin = 0
-        private val upperYMax = 1 * baseScaleUpperY.toFloat()
-
-        private val lowerLines = listOf(
-            Line(PVector(0F,0F), PVector(1F,0F)),
-            Line(PVector(1F,0F), PVector(1F,1F)),
-            Line(PVector(0F,1F), PVector(1F,1F)),
-            Line(PVector(0F,0F), PVector(0F,1F)),
-        ).map { scaleLines(it, baseScaleLowerX,  baseScaleLowerY) }
-     */
-
     fun drawLetter(
         sketch: PGraphics,
         letter: String,
@@ -925,7 +901,7 @@ class SimpleFont2(
         for ((i, letter) in letters.withIndex()) {
             if (letter == 'I') {
             }
-            val pos = Point(position.x + (offset.toFloat() * i), position.y)
+            val pos = Point(position.x + offset.toFloat() * i, position.y)
             drawLetter(sketch, letter.toString(), pos, scale)
         }
     }

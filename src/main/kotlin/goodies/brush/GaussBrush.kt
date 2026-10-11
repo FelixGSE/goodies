@@ -95,7 +95,6 @@ class GaussBrush(
                 sketch.strokeWeight(pinSizes[i] + weight)
                 sketch.stroke(color, pinOpacity[i])
                 line.draw(sketch)
-//                sketch.line(currentPosition[0], currentPosition[1], nextPosition[0], nextPosition[1])
                 currentPositions[i] = nextPosition
             }
         }

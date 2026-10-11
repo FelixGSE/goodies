@@ -8,8 +8,4 @@ class TransformationStack(
     fun withTranslation(translationVector: Number) {
         matrices.add(TranslationMatrix(dimension, translationVector))
     }
-
-//    fun build(): GMatrix {
-//        return matrices.reduce { acc, gMatrix -> acc.dot(gMatrix) }
-//    }
 }

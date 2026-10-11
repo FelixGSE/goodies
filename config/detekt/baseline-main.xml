@@ -8,7 +8,6 @@
     <ID>BooleanPropertyNaming:GoodiesSketch.kt:GoodiesSketch$private val exitOnSave = true</ID>
     <ID>BooleanPropertyNaming:Polygon.kt:Polygon$var inside = false</ID>
     <ID>CascadingCallWrapping:ListUtils.kt:toList()</ID>
-    <ID>CascadingCallWrapping:Point.kt:Point$toTypedArray()</ID>
     <ID>ClassOrdering:DeJongAttractor.kt:DeJongAttractor$val location: PVector get() = PVector(x, y)</ID>
     <ID>ClassOrdering:GMatrix.kt:GMatrix$override val determinant: Float get() { if (!isSquare) { throw IllegalArgumentException("Matrix must be square") } else { return LUDecomposition(matrix).determinant.toFloat() } }</ID>
     <ID>ClassOrdering:GMatrix.kt:GMatrix$val columns: List&lt;Point> get() { val columnList = mutableListOf&lt;Point>() for (i in 0 until size.first) { columnList.add(Point(matrix.getColumnVector(i))) } return columnList.toList() }</ID>
@@ -186,8 +185,6 @@
     <ID>MagicNumber:Utils.kt:4</ID>
     <ID>MagicNumber:Utils.kt:5</ID>
     <ID>MagicNumber:WaterColorBlob.kt:WaterColorBlob.Companion$100f</ID>
-    <ID>MaxLineLength:Point.kt:Point$*</ID>
-    <ID>MaxLineLength:Point.kt:Point$// println("[WARNING] rotate() returns a new Point instead of modifying the original one. You should overwrite the " +</ID>
     <ID>MissingPackageDeclaration:ShapeTree.kt:.ShapeTree.kt</ID>
     <ID>NamedArguments:Agent.kt:Agent$update(curly, curlx, noiseScale, noiseStrength)</ID>
     <ID>NamedArguments:DeJongAttractor.kt:DeJongAttractor$DeJongAttractor(xNext, yNext, a, b, c, d)</ID>
@@ -224,8 +221,6 @@
     <ID>SpreadOperator:GaussBrush.kt:GaussBrush.Companion$(*it)</ID>
     <ID>SpreadOperator:Line.kt:Line$(*translation.toTypedArray())</ID>
     <ID>SpreadOperator:NewGaussBrush.kt:NewGaussBrush.Companion$(*it)</ID>
-    <ID>SpreadOperator:Point.kt:Point$( *(0 until dimensions) .map { this[it] + translation.toDouble() }.toTypedArray(), )</ID>
-    <ID>SpreadOperator:Point.kt:Point$(*(0 until dimensions).map { this[it] + translation[it].toDouble() }.toTypedArray())</ID>
     <ID>SpreadOperator:Point.kt:Point$(*coordinates.toArray().toTypedArray())</ID>
     <ID>SpreadOperator:Point.kt:Point$(*coordinates.toTypedArray())</ID>
     <ID>SpreadOperator:Point.kt:Point$(*pVector.array().toTypedArray())</ID>
@@ -475,22 +470,7 @@
     <ID>UnnamedParameterUse:WaterColorBlob.kt:WaterColorBlob.Companion$atan2</ID>
     <ID>UnnamedParameterUse:WaterColorBlob.kt:WaterColorBlob.Companion$subdivide</ID>
     <ID>UnnecessaryFullyQualifiedName:GMatrix.kt:GMatrix.&lt;no name provided>$org.apache.commons.math3.linear.DefaultRealMatrixChangingVisitor</ID>
-    <ID>UnnecessaryParentheses:GMatrix.kt:(-1.0 * this.toDouble())</ID>
-    <ID>UnnecessaryParentheses:ListUtils.kt:(listOf(a, b).plus(sets))</ID>
-    <ID>UnnecessaryParentheses:MapUtils.kt:(1 - t)</ID>
-    <ID>UnnecessaryParentheses:MapUtils.kt:(2 - t)</ID>
-    <ID>UnnecessaryParentheses:Point.kt:(Point(this.toList()))</ID>
-    <ID>UnnecessaryParentheses:Point.kt:(this)</ID>
     <ID>UnnecessaryParentheses:Polygon.kt:Polygon$( cross == 0.0F &amp;&amp; vertex.distance(currentVertex) > nextVertex.distance( currentVertex, ) )</ID>
-    <ID>UnnecessaryParentheses:Polygon.kt:Polygon$( point.x &lt; (vertices[j].x - vertices[i].x) * (point.y - vertices[i].y) / (vertices[j].y - vertices[i].y) + vertices[i].x )</ID>
-    <ID>UnnecessaryParentheses:Polygon.kt:Polygon$(it.scaleFromStart(scale).end)</ID>
-    <ID>UnnecessaryParentheses:Polygon.kt:Polygon$(vertex.x == startPoint.x &amp;&amp; vertex.y &lt; startPoint.y)</ID>
-    <ID>UnnecessaryParentheses:Polygon.kt:Polygon$(vertices[i].y > point.y)</ID>
-    <ID>UnnecessaryParentheses:Polygon.kt:Polygon$(vertices[j].y > point.y)</ID>
-    <ID>UnnecessaryParentheses:RandomUtils.kt:(Random.nextFloat() * (b.toFloat() - a.toFloat()))</ID>
-    <ID>UnnecessaryParentheses:SimpleFont.kt:SimpleFont$(offset.toFloat() * i)</ID>
-    <ID>UnnecessaryParentheses:SimpleFont2.kt:SimpleFont2$(offset.toFloat() * i)</ID>
-    <ID>UnnecessaryParentheses:WaterColorBlob.kt:WaterColorBlob.Companion$(depth.coerceAtLeast(1))</ID>
     <ID>UnusedParameter:Utils.kt:margin: Number</ID>
     <ID>UnusedPrivateFunction:GoodiesSketch.kt:GoodiesSketch$private fun saveAndExit</ID>
     <ID>UnusedPrivateProperty:GoodiesSketch.kt:GoodiesSketch$private val availableSketchRenderer = listOf(P2D, P3D)</ID>

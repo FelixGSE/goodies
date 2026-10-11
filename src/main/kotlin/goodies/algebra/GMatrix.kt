@@ -32,7 +32,6 @@ open class GMatrix(
         },
     )
 
-    // toString with size
     override fun toString(): String = "GMatrix(${matrix.rowDimension}x${matrix.columnDimension})"
 
     override fun hashCode(): Int {
@@ -287,22 +286,6 @@ open class GMatrix(
             return containsPositive && containsNegative
         }
 
-//    val nullSpace: Point
-//        get() {
-//            val svd = SingularValueDecomposition(matrix)
-//            val rank = svd.rank
-//            val vt = svd.vt
-//
-//            val nullSpaceVectors = mutableListOf<RealVector>()
-//
-//            for (i in rank until vt.rowDimension) {
-//                val nullSpaceVector = vt.getRowVector(i)
-//                nullSpaceVectors.add(nullSpaceVector)
-//            }
-//
-//            return Point(nullSpaceVectors)
-//        }
-
     override fun toRealMatrix(): RealMatrix = matrix.copy()
 
     fun toArrayOfDoubleArray(): Array<DoubleArray> = rows.map { it.toDoubleArray() }.toTypedArray()
@@ -318,7 +301,7 @@ open class GMatrix(
 
 operator fun Number.plus(gMatrix: GMatrix): GMatrix = gMatrix + this
 
-operator fun Number.minus(gMatrix: GMatrix): GMatrix = gMatrix + (-1.0 * this.toDouble())
+operator fun Number.minus(gMatrix: GMatrix): GMatrix = gMatrix + -1.0 * this.toDouble()
 
 operator fun Number.times(gMatrix: GMatrix): GMatrix = gMatrix * this
 

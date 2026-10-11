@@ -134,7 +134,7 @@ fun randomFloat(
     b: Number = 1.0,
 ): Float {
     require(a.toFloat() <= b.toFloat()) { "Invalid range: a must be less than or equal to b" }
-    return a.toFloat() + (Random.nextFloat() * (b.toFloat() - a.toFloat()))
+    return a.toFloat() + Random.nextFloat() * (b.toFloat() - a.toFloat())
 }
 
 fun randomFloats(

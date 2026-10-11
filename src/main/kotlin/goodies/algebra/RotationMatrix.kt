@@ -51,7 +51,6 @@ class RotationMatrix(
             for (i in 0 until dimensions - 1) {
                 for (j in i + 1 until dimensions) {
                     if (currentIndex == index) {
-                        // Found the coordinates
                         return Pair(i, j)
                     }
                     currentIndex++
@@ -62,18 +61,6 @@ class RotationMatrix(
         }
 
         fun getNumberOfRotations(dimensions: Int): Int = (0 until dimensions).sum()
-
-        /*
-        2 -  1 -  i-1
-        3 -  3 -  i+0
-        4 -  6 -  i+2
-        5 - 10 -  i+5
-        6 - 15 -  i+9
-        7 - 21 -  i+14
-
-
-        6 *
-         */
     }
 
     fun toGMatrix(): GMatrix = GMatrix(toRealMatrix().copy())

@@ -74,7 +74,7 @@ class WaterColorBlob(
 
             val left = Line(line.start, splitPoint)
             val right = Line(splitPoint, line.end)
-            val nextLengthVariance = 100f / (2 * (depth.coerceAtLeast(1)) + 1)
+            val nextLengthVariance = 100f / (2 * depth.coerceAtLeast(1) + 1)
             val nextAngleVariance = 100f / (depth.coerceAtLeast(1) + 1)
 
             subdivide(points, left, depth - 1, nextLengthVariance, nextAngleVariance)

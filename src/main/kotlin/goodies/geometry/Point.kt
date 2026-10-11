@@ -137,20 +137,14 @@ class Point(
 
     fun translate(vararg translation: Number): Point {
         require(translation.size == dimensions) { TRANSLATION_DIMENSION_MISMATCH }
-        return Point(*(0 until dimensions).map { this[it] + translation[it].toDouble() }.toTypedArray())
+        return Point((0 until dimensions).map { this[it] + translation[it].toDouble() })
     }
 
-    fun translate(translation: Number): Point =
-        Point(
-            *(0 until dimensions)
-                .map {
-                    this[it] + translation.toDouble()
-                }.toTypedArray(),
-        )
+    fun translate(translation: Number): Point = Point((0 until dimensions).map { this[it] + translation.toDouble() })
 
     fun translate(translation: Point): Point {
         require(translation.dimensions == dimensions) { TRANSLATION_DIMENSION_MISMATCH }
-        return Point(*(0 until dimensions).map { this[it] + translation[it].toDouble() }.toTypedArray())
+        return Point((0 until dimensions).map { this[it] + translation[it].toDouble() })
     }
 
     fun scale(factor: Number): Point = Point(coordinates.mapMultiply(factor.toDouble()))
@@ -200,8 +194,6 @@ class Point(
         if (dimensions != 2) {
             throw IllegalArgumentException("Invalid dimensions. Points must have dimension equal to 2 for this method")
         }
-//        println("[WARNING] rotate() returns a new Point instead of modifying the original one. You should overwrite the " +
-//                "original one with the result")
         return rotateAxis(0, 1, angle.toFloat())
     }
 
@@ -239,19 +231,6 @@ class Point(
         i: Int,
         angle: Number,
     ): Point = RotationMatrix(i, dimensions, angle).dot(this)
-
-//    fun rotateSequence(axes: List<Int>, angles: List<Number>): Point {
-//        require(axes.size == angles.size) {
-//            "Number of axes and angles must be the same"
-//        }
-//
-//        axes.zip(angles).map { (axis, angle) ->
-//            RotationMatrix(axis, dimensions, angle)
-//        }.reduce { acc, point ->
-//            acc.dot(point)
-//        }.let {
-//            return it
-//    }
 
     fun rotateAxisAroundReferencePoint(
         i: Int,
@@ -295,8 +274,8 @@ class Point(
     fun newWithLength(length: Number): Point = Point(coordinates.unitVector().map { it * length.toDouble() })
 
     /**
-     * Alias for newWithLength(). Compliance with Processing PVector. Returns a new vector instead of modifying the original.
-     *
+     * Alias for newWithLength(). Compliance with Processing PVector.
+     * Returns a new vector instead of modifying the original.
      */
     fun setMag(length: Number): Point {
         println(
@@ -436,12 +415,12 @@ private const val TRANSLATION_DIMENSION_MISMATCH = "Translation does not match p
 
 fun RealMatrix.multiplyPoint(point: Point): Point = Point(this.preMultiply(point.toRealVector()))
 
-fun Iterable<Number>.toPoint(): Point = (Point(this.toList()))
+fun Iterable<Number>.toPoint(): Point = Point(this.toList())
 
-operator fun Number.plus(point: Point): Point = point + (this)
+operator fun Number.plus(point: Point): Point = point + this
 
 operator fun Number.minus(point: Point): Point = Point(point.map { this.toFloat() - it })
 
-operator fun Number.times(point: Point): Point = point * (this)
+operator fun Number.times(point: Point): Point = point * this
 
 operator fun Number.div(point: Point): Point = Point(point.map { this.toFloat() / it })
