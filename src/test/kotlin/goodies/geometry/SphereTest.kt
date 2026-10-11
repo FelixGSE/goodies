@@ -1,5 +1,6 @@
 package goodies.geometry
 
+import goodies.support.assertThat
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.TestInstance
@@ -51,11 +52,12 @@ internal class SphereTest {
             // Given
             val unitSphere = Sphere.unitSphere()
             val anglesAsRadians = angles.map { toRadians(it) }
+
             // When
             val result = unitSphere.pointOnSurface(anglesAsRadians)
 
             // Then
-            assertThat(result.toDoubleArray()).containsSequence(expected.toDoubleArray(), withPrecision(0.01))
+            assertThat(result).isCloseTo(expected, withPrecision(0.01))
         }
 
         private fun pointOnSurfaceZeroAzimuthCases(): Stream<Arguments> =
@@ -75,11 +77,12 @@ internal class SphereTest {
             // Given
             val unitSphere = Sphere.unitSphere()
             val anglesAsRadians = angles.map { toRadians(it) }
+
             // When
             val result = unitSphere.pointOnSurface(anglesAsRadians)
 
             // Then
-            assertThat(result.toDoubleArray()).containsSequence(expected.toDoubleArray(), withPrecision(0.01))
+            assertThat(result).isCloseTo(expected, withPrecision(0.01))
         }
 
         private fun pointOnSurfaceEasternAzimuthCases(): Stream<Arguments> =
@@ -104,11 +107,12 @@ internal class SphereTest {
             // Given
             val unitSphere = Sphere.unitSphere()
             val anglesAsRadians = angles.map { toRadians(it) }
+
             // When
             val result = unitSphere.pointOnSurface(anglesAsRadians)
 
             // Then
-            assertThat(result.toDoubleArray()).containsSequence(expected.toDoubleArray(), withPrecision(0.01))
+            assertThat(result).isCloseTo(expected, withPrecision(0.01))
         }
 
         private fun pointOnSurfaceWesternAzimuthCases(): Stream<Arguments> =
@@ -125,6 +129,42 @@ internal class SphereTest {
                 Arguments.of(listOf(315.0, 45.0), Point(-0.5, 0.5, piQuarter)),
                 Arguments.of(listOf(315.0, 90.0), Point(-piQuarter, piQuarter, 0)),
                 Arguments.of(listOf(315.0, 135.0), Point(-0.5, 0.5, -piQuarter)),
+            )
+
+        @ParameterizedTest(name = "{displayName} [{index}] {0}")
+        @MethodSource("pointOnSurfacePoleCases")
+        fun `pointOnSurface should return a pole for any azimuth when polar angle is 0 or 180 degrees`(
+            angles: List<Double>,
+            expected: Point,
+        ) {
+            // Given
+            val unitSphere = Sphere.unitSphere()
+            val anglesAsRadians = angles.map { toRadians(it) }
+
+            // When
+            val result = unitSphere.pointOnSurface(anglesAsRadians)
+
+            // Then
+            assertThat(result).isCloseTo(expected, withPrecision(0.01))
+        }
+
+        private fun pointOnSurfacePoleCases(): Stream<Arguments> =
+            Stream.of(
+                Arguments.of(listOf(0.0, 180.0), Point(0, 0, -1)),
+                Arguments.of(listOf(45.0, 0.0), Point(0, 0, 1)),
+                Arguments.of(listOf(45.0, 180.0), Point(0, 0, -1)),
+                Arguments.of(listOf(90.0, 0.0), Point(0, 0, 1)),
+                Arguments.of(listOf(90.0, 180.0), Point(0, 0, -1)),
+                Arguments.of(listOf(135.0, 0.0), Point(0, 0, 1)),
+                Arguments.of(listOf(135.0, 180.0), Point(0, 0, -1)),
+                Arguments.of(listOf(180.0, 0.0), Point(0, 0, 1)),
+                Arguments.of(listOf(180.0, 180.0), Point(0, 0, -1)),
+                Arguments.of(listOf(225.0, 0.0), Point(0, 0, 1)),
+                Arguments.of(listOf(225.0, 180.0), Point(0, 0, -1)),
+                Arguments.of(listOf(270.0, 0.0), Point(0, 0, 1)),
+                Arguments.of(listOf(270.0, 180.0), Point(0, 0, -1)),
+                Arguments.of(listOf(315.0, 0.0), Point(0, 0, 1)),
+                Arguments.of(listOf(315.0, 180.0), Point(0, 0, -1)),
             )
 
         @ParameterizedTest
