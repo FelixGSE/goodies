@@ -30,7 +30,7 @@ internal class PointTest {
         }
 
         @ParameterizedTest
-        @MethodSource("getPointInputFromNumbers")
+        @MethodSource("constructFromNumbersCases")
         fun `Construct a Point object from Numbers`(
             x: Number,
             y: Number,
@@ -45,7 +45,7 @@ internal class PointTest {
             assertThat(result).isEqualTo(expected)
         }
 
-        private fun getPointInputFromNumbers(): Stream<Arguments> =
+        private fun constructFromNumbersCases(): Stream<Arguments> =
             Stream.of(
                 Arguments.of(1, 1),
                 Arguments.of(1L, 1L),
@@ -54,7 +54,7 @@ internal class PointTest {
             )
 
         @ParameterizedTest
-        @MethodSource("getPointInputFromList")
+        @MethodSource("constructFromListCases")
         fun `Construct a Point object from A List`(coordinates: List<Number>) {
             // Given
             val expected = Point(coordinates)
@@ -66,7 +66,7 @@ internal class PointTest {
             assertThat(result).isEqualTo(expected)
         }
 
-        private fun getPointInputFromList(): Stream<List<Number>> =
+        private fun constructFromListCases(): Stream<List<Number>> =
             Stream.of(
                 listOf(1, 1),
                 listOf(1L, 1L),
@@ -433,14 +433,13 @@ internal class PointTest {
         }
 
         @ParameterizedTest(name = "TestPoint: {0}")
-        @MethodSource("getArgsForRotate")
+        @MethodSource("rotateCases")
         fun `rotate should rotate a Point clock wise by degree`(
             angle: Number,
             expected: Point,
         ) {
             // Given
             val point = Point(1, 0)
-//            val angle = PApplet.radians(90f)
             // When
             val result = point.rotate(angle)
 
@@ -448,7 +447,7 @@ internal class PointTest {
             assertThat(result.toDoubleArray()).containsSequence(expected.toDoubleArray(), withPrecision(0.01))
         }
 
-        private fun getArgsForRotate(): Stream<Arguments> =
+        private fun rotateCases(): Stream<Arguments> =
             Stream.of(
                 Arguments.of(90, Point(0, -1)),
                 Arguments.of(180, Point(-1, 0)),
@@ -457,7 +456,7 @@ internal class PointTest {
             )
 
         @ParameterizedTest(name = "TestPoint: {0}")
-        @MethodSource("getInvalidPointsForRotate")
+        @MethodSource("rotateInvalidDimensionsCases")
         fun `rotate should throw IllegalArgumentException when Point dimensions is not equal to 2`(point: Point) {
             // When
 
@@ -468,17 +467,16 @@ internal class PointTest {
                 .hasMessageContaining("Invalid dimensions. Points must have dimension equal to 2 for this method")
         }
 
-        private fun getInvalidPointsForRotate(): Stream<Point> = Stream.of(Point(1), Point(1, 2, 3))
+        private fun rotateInvalidDimensionsCases(): Stream<Point> = Stream.of(Point(1), Point(1, 2, 3))
 
         @ParameterizedTest(name = "TestPoint: {0}")
-        @MethodSource("getArgsForRotateZ")
+        @MethodSource("rotateZCases")
         fun `rotateZ should rotate a Point clock wise by degree`(
             angle: Number,
             expected: Point,
         ) {
             // Given
             val point = Point(1, 0, 0)
-//            val angle = PApplet.radians(90f)
             // When
             val result = point.rotateZ(angle)
 
@@ -486,7 +484,7 @@ internal class PointTest {
             assertThat(result.toDoubleArray()).containsSequence(expected.toDoubleArray(), withPrecision(0.01))
         }
 
-        private fun getArgsForRotateZ(): Stream<Arguments> =
+        private fun rotateZCases(): Stream<Arguments> =
             Stream.of(
                 Arguments.of(90, Point(0, -1, 0)),
                 Arguments.of(180, Point(-1, 0, 0)),
@@ -495,7 +493,7 @@ internal class PointTest {
             )
 
         @ParameterizedTest(name = "TestPoint: {0}")
-        @MethodSource("getInvalidPointsForRotationsInThreeDimensions")
+        @MethodSource("rotateZInvalidDimensionsCases")
         fun `rotateZ should throw IllegalArgumentException when Point dimensions is less than 3`(point: Point) {
             // When
 
@@ -506,15 +504,16 @@ internal class PointTest {
                 .hasMessageContaining("Invalid dimensions. Point must have at least 3 dimensions for this method")
         }
 
+        private fun rotateZInvalidDimensionsCases(): Stream<Point> = Stream.of(Point(), Point(1), Point(1, 2))
+
         @ParameterizedTest(name = "TestPoint: {0}")
-        @MethodSource("getArgsForRotateY")
+        @MethodSource("rotateYCases")
         fun `rotateY should rotate a Point clock wise by degree`(
             angle: Number,
             expected: Point,
         ) {
             // Given
             val point = Point(1, 0, 0)
-//            val angle = PApplet.radians(90f)
             // When
             val result = point.rotateY(angle)
 
@@ -522,7 +521,7 @@ internal class PointTest {
             assertThat(result.toDoubleArray()).containsSequence(expected.toDoubleArray(), withPrecision(0.01))
         }
 
-        private fun getArgsForRotateY(): Stream<Arguments> =
+        private fun rotateYCases(): Stream<Arguments> =
             Stream.of(
                 Arguments.of(90, Point(0, 0, -1)),
                 Arguments.of(180, Point(-1, 0, 0)),
@@ -531,7 +530,7 @@ internal class PointTest {
             )
 
         @ParameterizedTest(name = "TestPoint: {0}")
-        @MethodSource("getInvalidPointsForRotationsInThreeDimensions")
+        @MethodSource("rotateYInvalidDimensionsCases")
         fun `rotateY should throw IllegalArgumentException when Point dimensions is less than 3`(point: Point) {
             // When
 
@@ -542,15 +541,16 @@ internal class PointTest {
                 .hasMessageContaining("Invalid dimensions. Point must have at least 3 dimensions for this method")
         }
 
+        private fun rotateYInvalidDimensionsCases(): Stream<Point> = Stream.of(Point(), Point(1), Point(1, 2))
+
         @ParameterizedTest(name = "TestPoint: {0}")
-        @MethodSource("getArgsForRotateX")
+        @MethodSource("rotateXCases")
         fun `rotateX should rotate a Point clock wise by degree`(
             angle: Number,
             expected: Point,
         ) {
             // Given
             val point = Point(0, 0, 1)
-//            val angle = PApplet.radians(90f)
             // When
             val result = point.rotateX(angle)
 
@@ -558,16 +558,13 @@ internal class PointTest {
             assertThat(result.toDoubleArray()).containsSequence(expected.toDoubleArray(), withPrecision(0.01))
         }
 
-        private fun getArgsForRotateX(): Stream<Arguments> =
+        private fun rotateXCases(): Stream<Arguments> =
             Stream.of(
                 Arguments.of(90, Point(0, 1, 0)),
                 Arguments.of(180, Point(0, 0, -1)),
                 Arguments.of(270, Point(0, -1, 0)),
                 Arguments.of(360, Point(0, 0, 1)),
             )
-
-        private fun getInvalidPointsForRotationsInThreeDimensions(): Stream<Point> =
-            Stream.of(Point(), Point(1), Point(1, 2))
 
         @Test
         fun `negate should create Vector pointing in the opposite direction with the same length`() {
@@ -765,7 +762,7 @@ internal class PointTest {
         }
 
         @ParameterizedTest(name = "TestPoint: {0}")
-        @MethodSource("getNonConvertiblePoints")
+        @MethodSource("toPVectorInvalidDimensionsCases")
         fun `toPVector should throw IllegalArgumentException when Vector has dimension is not 2 or 3`(point: Point) {
             // When
 
@@ -776,6 +773,6 @@ internal class PointTest {
                 .hasMessageContaining("Can't convert Point to PVector - Invalid number of dimensions")
         }
 
-        private fun getNonConvertiblePoints(): Stream<Point> = Stream.of(Point(1), Point(1, 2, 3, 4))
+        private fun toPVectorInvalidDimensionsCases(): Stream<Point> = Stream.of(Point(1), Point(1, 2, 3, 4))
     }
 }

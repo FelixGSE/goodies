@@ -3,24 +3,5 @@
   <ManuallySuppressedIssues/>
   <CurrentIssues>
     <ID>BooleanPropertyNaming:PolygonTest.kt:PolygonTest.IsConvexTests$val result = polygon.isConvex</ID>
-    <ID>EmptyFunctionBlock:RandomUtilsKtTest.kt:RandomUtilsKtTest${ }</ID>
-    <ID>ForbiddenMethodCall:GeneralUtilsKtTest.kt:GeneralUtilsKtTest$println(result.uppercase().takeLast(6))</ID>
-    <ID>ForbiddenMethodCall:RandomUtilsTest.kt:RandomUtilsTest$println(a)</ID>
-    <ID>LongMethod:SphereTest.kt:SphereTest.Basics$private fun getParametersForComputationCartesianCoordinatesToPolarCoordinates: Stream&lt;Arguments></ID>
-    <ID>LongMethod:SphereTest.kt:SphereTest.Basics$private fun getParametersForComputationOfPolarCoordinatesToCartesianCoordinates: Stream&lt;Arguments></ID>
-    <ID>UnusedPrivateFunction:CircleTest.kt:CircleTest.Basics$private fun getParametersForComputationOfPointsOnSphere: Stream&lt;Arguments></ID>
-    <ID>UnusedPrivateFunction:PointTest.kt:PointTest.Construction$private fun getPointInputFromList: Stream&lt;List&lt;Number>></ID>
-    <ID>UnusedPrivateFunction:PointTest.kt:PointTest.Construction$private fun getPointInputFromNumbers: Stream&lt;Arguments></ID>
-    <ID>UnusedPrivateFunction:PointTest.kt:PointTest.Conversions$private fun getNonConvertiblePoints: Stream&lt;Point></ID>
-    <ID>UnusedPrivateFunction:PointTest.kt:PointTest.Geometry$private fun getArgsForRotate: Stream&lt;Arguments></ID>
-    <ID>UnusedPrivateFunction:PointTest.kt:PointTest.Geometry$private fun getArgsForRotateX: Stream&lt;Arguments></ID>
-    <ID>UnusedPrivateFunction:PointTest.kt:PointTest.Geometry$private fun getArgsForRotateY: Stream&lt;Arguments></ID>
-    <ID>UnusedPrivateFunction:PointTest.kt:PointTest.Geometry$private fun getArgsForRotateZ: Stream&lt;Arguments></ID>
-    <ID>UnusedPrivateFunction:PointTest.kt:PointTest.Geometry$private fun getInvalidPointsForRotate: Stream&lt;Point></ID>
-    <ID>UnusedPrivateFunction:PointTest.kt:PointTest.Geometry$private fun getInvalidPointsForRotationsInThreeDimensions: Stream&lt;Point></ID>
-    <ID>UnusedPrivateFunction:SphereTest.kt:SphereTest.Basics$private fun getParametersForComputationCartesianCoordinatesToPolarCoordinates: Stream&lt;Arguments></ID>
-    <ID>UnusedPrivateFunction:SphereTest.kt:SphereTest.Basics$private fun getParametersForComputationOfPolarCoordinatesToCartesianCoordinates: Stream&lt;Arguments></ID>
-    <ID>UnusedPrivateFunction:SphereTest.kt:SphereTest.Construction$private fun getCentersForInvalidSphereConstructions: Stream&lt;Point></ID>
-    <ID>UnusedVariable:RandomUtilsTest.kt:RandomUtilsTest$i</ID>
   </CurrentIssues>
 </SmellBaseline>

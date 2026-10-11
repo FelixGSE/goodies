@@ -15,8 +15,6 @@ class GeneralUtilsKtTest {
         // When
         val result = sha512(input)
 
-        println(result.uppercase().takeLast(6))
-
         // Then
         assertThat(result).isEqualTo(expectedResult)
     }

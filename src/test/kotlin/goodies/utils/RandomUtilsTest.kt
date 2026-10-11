@@ -98,9 +98,8 @@ internal class RandomUtilsTest {
 
     @Test
     fun foo() {
-        for (i in 0..100) {
-            val a = ParetoDistribution().sample()
-            println(a)
+        repeat(101) {
+            ParetoDistribution().sample()
         }
     }
 }

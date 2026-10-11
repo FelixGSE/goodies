@@ -34,7 +34,7 @@ internal class CircleTest {
     @Nested
     inner class Basics {
         @ParameterizedTest
-        @MethodSource("getParametersForComputationOfPointsOnSphere")
+        @MethodSource("pointOnSurfaceCases")
         fun `pointOnSurface should compute a defined sample of points on a unit circle`(
             angle: Double,
             expected: Point,
@@ -49,8 +49,20 @@ internal class CircleTest {
             assertThat(result.toDoubleArray()).containsSequence(expected.toDoubleArray(), withPrecision(0.01))
         }
 
+        private fun pointOnSurfaceCases(): Stream<Arguments> =
+            Stream.of(
+                Arguments.of(0, Point(0, 1)),
+                Arguments.of(45, Point(sqrt(2.0) / 2, sqrt(2.0) / 2)),
+                Arguments.of(90, Point(1, 0)),
+                Arguments.of(135, Point(sqrt(2.0) / 2, -sqrt(2.0) / 2)),
+                Arguments.of(180, Point(0, -1)),
+                Arguments.of(225, Point(-sqrt(2.0) / 2, -sqrt(2.0) / 2)),
+                Arguments.of(270, Point(-1, 0)),
+                Arguments.of(315, Point(-sqrt(2.0) / 2, sqrt(2.0) / 2)),
+            )
+
         @ParameterizedTest
-        @MethodSource("getParametersForComputationOfPointsOnSphere")
+        @MethodSource("anglesForPointOnSurfaceCases")
         fun `anglesForPointOnSurface should compute the angle for a point on a unit circle`(
             angle: Double,
             point: Point,
@@ -66,7 +78,7 @@ internal class CircleTest {
             assertThat(result).isEqualTo(angleAsRadians.toFloat(), withPrecision(0.0001f))
         }
 
-        private fun getParametersForComputationOfPointsOnSphere(): Stream<Arguments> =
+        private fun anglesForPointOnSurfaceCases(): Stream<Arguments> =
             Stream.of(
                 Arguments.of(0, Point(0, 1)),
                 Arguments.of(45, Point(sqrt(2.0) / 2, sqrt(2.0) / 2)),
