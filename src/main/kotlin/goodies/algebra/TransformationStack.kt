@@ -6,6 +6,7 @@ class TransformationStack(
 ) {
     private val matrices = mutableListOf<GMatrix>(IdentityMatrix(dimension))
 
+    /** Adds a translation by [translationVector] along every axis. */
     fun withTranslation(translationVector: Number) {
         matrices.add(TranslationMatrix(dimensions = dimension, translationFactor = translationVector))
     }

@@ -25,10 +25,14 @@ class RotationMatrix(
         angle,
     )
 
+    /** Returns a copy of this rotation as a plain [GMatrix]. */
     fun toGMatrix(): GMatrix = GMatrix(toRealMatrix().copy())
 
     /** Builders for rotation matrices, angles in radians. */
     companion object {
+        /**
+         * Returns the rotation by [angle] radians in the plane of axes [i] < [j] of a [dimensions]-dimensional space.
+         */
         fun getRotationMatrixForAxis(
             i: Int,
             j: Int,
@@ -49,6 +53,11 @@ class RotationMatrix(
             return rotationMatrix
         }
 
+        /**
+         * Returns the axis pair (i, j), i < j, of rotation plane [index], counting pairs in row order.
+         *
+         * Throws IllegalStateException when [dimensions] has no plane [index].
+         */
         fun getCoordinates(
             dimensions: Int,
             index: Int,
@@ -67,6 +76,7 @@ class RotationMatrix(
             error("no rotation plane $index in $dimensions dimensions")
         }
 
+        /** Returns the number of rotation planes in [dimensions] dimensions, n(n - 1) / 2. */
         fun getNumberOfRotations(dimensions: Int): Int = (0 until dimensions).sum()
     }
 }

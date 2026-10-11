@@ -7,6 +7,7 @@ import kotlin.math.sin
 
 /** Rotation matrices with the angle in degrees. */
 object RotationMatrixUtils {
+    /** Returns the rotation by [angle] degrees in the plane of axes [i] < [j] of a [dimensions]-dimensional space. */
     @JvmStatic
     fun getRotationMatrixForAxis(
         i: Int,
