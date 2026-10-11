@@ -84,13 +84,14 @@ class WaterColorBlobTest {
         fun `deform should keep the base vertices at the start of each edge run`() {
             // Given
             val depth = 3
+            val baseIndices = listOf(0, 8, 16, 24)
             val expected = square.vertices
 
             // When
             val result = WaterColorBlob.deform(square, depth)
 
             // Then
-            assertThat(result.vertices.filterIndexed { index, _ -> index % 8 == 0 }).isEqualTo(expected)
+            assertThat(baseIndices.map { result.vertices[it] }).isEqualTo(expected)
         }
 
         @Test
