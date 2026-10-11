@@ -94,8 +94,8 @@ class Line(
     /** Returns this segment moved by [translation], one value per axis. */
     fun translate(translation: List<Number>): Line =
         Line(
-            a = a.translate(*translation.toTypedArray()),
-            b = b.translate(*translation.toTypedArray()),
+            a = a.translate(Point(translation)),
+            b = b.translate(Point(translation)),
         )
 
     override fun translate(translation: Number): Line =

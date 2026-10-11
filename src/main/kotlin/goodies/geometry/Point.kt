@@ -395,7 +395,7 @@ class Point(
         fun randomPoint(dimensions: Int): Point {
             require(dimensions >= 0) { "Dimensions must greater or equal than zero" }
 
-            return Point(*drawPointOnUnitNSphere(dimensions).toArray().toTypedArray())
+            return Point(drawPointOnUnitNSphere(dimensions))
         }
 
         /** Returns a uniformly random point on the unit circle. */
