@@ -1,6 +1,5 @@
 package goodies.utils
 
-import org.apache.commons.math3.distribution.ParetoDistribution
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.withPrecision
 import org.junit.jupiter.api.Test
@@ -94,12 +93,5 @@ internal class RandomUtilsTest {
 
         // Then
         Assertions.assertThat(result).isEqualTo(n)
-    }
-
-    @Test
-    fun foo() {
-        repeat(101) {
-            ParetoDistribution().sample()
-        }
     }
 }
