@@ -26,7 +26,7 @@ open class Quadrilateral(
     constructor(first: Point, second: Point, third: Point, fourth: Point) : this(listOf(first, second, third, fourth))
 
     private fun oppositeSideIndex(side: Int): Int {
-        require(side in 0 until QUADRILATERAL_VERTICES) { "Invalid side" }
+        require(side in 0 until QUADRILATERAL_VERTICES) { "side must be in 0..3, got $side" }
         return (side + 2) % QUADRILATERAL_VERTICES
     }
 

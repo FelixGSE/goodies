@@ -96,7 +96,7 @@ internal class PointTest {
             // Then
             assertThat(result)
                 .isInstanceOf(IllegalArgumentException().javaClass)
-                .hasMessageContaining("Dimensions must greater or equal than zero")
+                .hasMessageContaining("randomPoint needs 0 or more dimensions, got -1")
         }
 
         @Test
@@ -148,7 +148,7 @@ internal class PointTest {
 
             assertThat(result)
                 .isInstanceOf(IllegalArgumentException().javaClass)
-                .hasMessageContaining("Point does not have enough dimensions")
+                .hasMessageContaining("x needs 1 or more dimensions, got 0")
         }
 
         @Test
@@ -173,7 +173,7 @@ internal class PointTest {
 
             assertThat(result)
                 .isInstanceOf(IllegalArgumentException().javaClass)
-                .hasMessageContaining("Point does not have enough dimensions")
+                .hasMessageContaining("y needs 2 or more dimensions, got 1")
         }
 
         @Test
@@ -198,7 +198,7 @@ internal class PointTest {
 
             assertThat(result)
                 .isInstanceOf(IllegalArgumentException().javaClass)
-                .hasMessageContaining("Point does not have enough dimensions")
+                .hasMessageContaining("z needs 3 or more dimensions, got 2")
         }
     }
 
@@ -286,7 +286,7 @@ internal class PointTest {
             // Then
             assertThat(result)
                 .isInstanceOf(IllegalArgumentException().javaClass)
-                .hasMessageContaining("Points dimension do not match")
+                .hasMessageContaining("Points need equal dimensions, got 3 and 2")
         }
 
         @Test
@@ -413,7 +413,7 @@ internal class PointTest {
 
             assertThat(result)
                 .isInstanceOf(IllegalArgumentException().javaClass)
-                .hasMessageContaining("Translation does not match point dimension")
+                .hasMessageContaining("translate needs 3 values, got 2")
         }
 
         @Test
@@ -464,7 +464,7 @@ internal class PointTest {
             // Then
             assertThat(result)
                 .isInstanceOf(IllegalArgumentException().javaClass)
-                .hasMessageContaining("Invalid dimensions. Points must have dimension equal to 2 for this method")
+                .hasMessageContaining("rotate needs 2 dimensions")
         }
 
         private fun rotateInvalidDimensionsCases(): Stream<Point> = Stream.of(Point(1), Point(1, 2, 3))
@@ -501,7 +501,7 @@ internal class PointTest {
             // Then
             assertThat(result)
                 .isInstanceOf(IllegalArgumentException().javaClass)
-                .hasMessageContaining("Invalid dimensions. Point must have at least 3 dimensions for this method")
+                .hasMessageContaining("rotateZ needs 3 or more dimensions")
         }
 
         private fun rotateZInvalidDimensionsCases(): Stream<Point> = Stream.of(Point(), Point(1), Point(1, 2))
@@ -538,7 +538,7 @@ internal class PointTest {
             // Then
             assertThat(result)
                 .isInstanceOf(IllegalArgumentException().javaClass)
-                .hasMessageContaining("Invalid dimensions. Point must have at least 3 dimensions for this method")
+                .hasMessageContaining("rotateY needs 3 or more dimensions")
         }
 
         private fun rotateYInvalidDimensionsCases(): Stream<Point> = Stream.of(Point(), Point(1), Point(1, 2))
@@ -589,6 +589,20 @@ internal class PointTest {
 
             // Then
             assertThat(result).isEqualTo(expected)
+        }
+
+        @Test
+        fun `projectDownTo3D should throw IllegalArgumentException when point has fewer than 3 dimensions`() {
+            // Given
+            val point = Point(1, 2)
+
+            // When
+            val result = catchThrowable { point.projectDownTo3D() }
+
+            // Then
+            assertThat(result)
+                .isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessageContaining("projectDownTo3D needs 3 or more dimensions, got 2")
         }
     }
 
@@ -670,7 +684,20 @@ internal class PointTest {
             // Then
             assertThat(result)
                 .isInstanceOf(IllegalArgumentException().javaClass)
-                .hasMessageContaining("Length must not be negative")
+                .hasMessageContaining("Length must not be negative, got -1")
+        }
+
+        @Test
+        fun `limit should return the zero vector when limit is zero`() {
+            // Given
+            val point = Point(3, 4)
+            val expected = Point.zeros(2)
+
+            // When
+            val result = point.limit(0)
+
+            // Then
+            assertThat(result).isEqualTo(expected)
         }
     }
 

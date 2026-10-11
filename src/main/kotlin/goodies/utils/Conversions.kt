@@ -30,7 +30,7 @@ object Conversions {
         when (dimensions) {
             2 -> doubleArrayOf(pvector.x.toDouble(), pvector.y.toDouble())
             SPATIAL_DIMENSIONS -> doubleArrayOf(pvector.x.toDouble(), pvector.y.toDouble(), pvector.z.toDouble())
-            else -> throw IllegalArgumentException("Invalid number of dimensions")
+            else -> throw IllegalArgumentException("PVector has 2 or 3 dimensions, got $dimensions")
         }
 
     @JvmStatic

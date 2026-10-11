@@ -28,19 +28,19 @@ class Point(
 
     val x: Float
         get() {
-            require(dimensions > 0) { TOO_FEW_DIMENSIONS }
+            require(dimensions > 0) { tooFewDimensions("x", needed = 1, got = dimensions) }
             return this[0]
         }
 
     val y: Float
         get() {
-            require(dimensions > 1) { TOO_FEW_DIMENSIONS }
+            require(dimensions > 1) { tooFewDimensions("y", needed = 2, got = dimensions) }
             return this[1]
         }
 
     val z: Float
         get() {
-            require(dimensions > 2) { TOO_FEW_DIMENSIONS }
+            require(dimensions > 2) { tooFewDimensions("z", needed = SPATIAL_DIMENSIONS, got = dimensions) }
             return this[2]
         }
 
@@ -94,7 +94,9 @@ class Point(
 
     /** Returns the product with [other], coordinate by coordinate. Requires equal dimensions. */
     operator fun times(other: Point): Point {
-        require(dimensions == other.dimensions) { "Points dimension do not match" }
+        require(dimensions == other.dimensions) {
+            "Points need equal dimensions, got $dimensions and ${other.dimensions}"
+        }
         return Point(other.toDoubleArray().zip(coordinates.toArray()) { x, y -> x * y })
     }
 
@@ -125,7 +127,7 @@ class Point(
     /** Returns the cross product with [other]. Requires both to be 3D. */
     fun cross(other: Point): Point {
         require(dimensions == SPATIAL_DIMENSIONS && other.dimensions == SPATIAL_DIMENSIONS) {
-            "Points must have dimension equal to 3 for this method"
+            "cross needs two 3D points, got ${dimensions}D and ${other.dimensions}D"
         }
         return Point(
             this[1] * other[2] - this[2] * other[1],
@@ -136,7 +138,7 @@ class Point(
 
     /** Returns this point moved by [translation], one value per axis. Requires one value per axis. */
     fun translate(vararg translation: Number): Point {
-        require(translation.size == dimensions) { TRANSLATION_DIMENSION_MISMATCH }
+        require(translation.size == dimensions) { translationMismatch(needed = dimensions, got = translation.size) }
         return Point((0 until dimensions).map { this[it] + translation[it].toDouble() })
     }
 
@@ -145,7 +147,9 @@ class Point(
 
     /** Returns this point moved by [translation]. Requires equal dimensions. */
     fun translate(translation: Point): Point {
-        require(translation.dimensions == dimensions) { TRANSLATION_DIMENSION_MISMATCH }
+        require(translation.dimensions == dimensions) {
+            translationMismatch(needed = dimensions, got = translation.dimensions)
+        }
         return Point((0 until dimensions).map { this[it] + translation[it].toDouble() })
     }
 
@@ -196,25 +200,25 @@ class Point(
 
     /** Returns this 2D point rotated by [angle] degrees, clockwise in standard axes. Requires 2D. */
     fun rotate(angle: Number): Point {
-        require(dimensions == 2) { "Invalid dimensions. Points must have dimension equal to 2 for this method" }
+        require(dimensions == 2) { "rotate needs 2 dimensions, got $dimensions" }
         return rotateAxis(i = 0, j = 1, angle = angle.toFloat())
     }
 
     /** Returns this point rotated by [angle] degrees in the plane of axes 0 and 1. Requires 3D or more. */
     fun rotateZ(angle: Number): Point {
-        require(dimensions >= SPATIAL_DIMENSIONS) { NOT_SPATIAL }
+        require(dimensions >= SPATIAL_DIMENSIONS) { notSpatial("rotateZ", got = dimensions) }
         return rotateAxis(i = 0, j = 1, angle = angle.toFloat())
     }
 
     /** Returns this point rotated by [angle] degrees in the plane of axes 0 and 2. Requires 3D or more. */
     fun rotateY(angle: Number): Point {
-        require(dimensions >= SPATIAL_DIMENSIONS) { NOT_SPATIAL }
+        require(dimensions >= SPATIAL_DIMENSIONS) { notSpatial("rotateY", got = dimensions) }
         return rotateAxis(i = 0, j = 2, angle = angle.toFloat())
     }
 
     /** Returns this point rotated by [angle] degrees in the plane of axes 1 and 2. Requires 3D or more. */
     fun rotateX(angle: Number): Point {
-        require(dimensions >= SPATIAL_DIMENSIONS) { NOT_SPATIAL }
+        require(dimensions >= SPATIAL_DIMENSIONS) { notSpatial("rotateX", got = dimensions) }
         return rotateAxis(i = 1, j = 2, angle = angle.toFloat())
     }
 
@@ -271,7 +275,7 @@ class Point(
 
     /** Returns this point projected down to 3D by repeated [projectDown]. Requires 3D or more. */
     fun projectDownTo3D(distance: Float = 1.0f): Point {
-        require(dimensions >= SPATIAL_DIMENSIONS) { "projectDownTo3D needs 3 or more dimensions, got $dimensions" }
+        require(dimensions >= SPATIAL_DIMENSIONS) { notSpatial("projectDownTo3D", got = dimensions) }
         var point = this.copy()
         repeat(dimensions - SPATIAL_DIMENSIONS) {
             point = point.projectDown(distance)
@@ -307,7 +311,7 @@ class Point(
         t: Float,
     ): Point {
         require(dimensions == other.dimensions) {
-            "Vectors must be of the same dimension for lerp operation."
+            "Points need equal dimensions, got $dimensions and ${other.dimensions}"
         }
 
         val resultVector = DoubleArray(dimensions)
@@ -393,7 +397,7 @@ class Point(
 
         /** Returns a uniformly random point on the unit sphere in [dimensions] dimensions, which must be >= 0. */
         fun randomPoint(dimensions: Int): Point {
-            require(dimensions >= 0) { "Dimensions must greater or equal than zero" }
+            require(dimensions >= 0) { "randomPoint needs 0 or more dimensions, got $dimensions" }
 
             return Point(drawPointOnUnitNSphere(dimensions))
         }
@@ -422,9 +426,21 @@ class Point(
     }
 }
 
-private const val TRANSLATION_DIMENSION_MISMATCH = "Translation does not match point dimension"
-private const val TOO_FEW_DIMENSIONS = "Point does not have enough dimensions"
-private const val NOT_SPATIAL = "Invalid dimensions. Point must have at least 3 dimensions for this method"
+private fun tooFewDimensions(
+    axis: String,
+    needed: Int,
+    got: Int,
+): String = "$axis needs $needed or more dimensions, got $got"
+
+private fun translationMismatch(
+    needed: Int,
+    got: Int,
+): String = "translate needs $needed values, got $got"
+
+private fun notSpatial(
+    operation: String,
+    got: Int,
+): String = "$operation needs 3 or more dimensions, got $got"
 
 /** Returns [point] as a row vector multiplied by this matrix. */
 fun RealMatrix.multiplyPoint(point: Point): Point = Point(this.preMultiply(point.toRealVector()))

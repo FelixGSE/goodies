@@ -10,7 +10,9 @@ class Sphere(
 ) : NSphere(center, radius),
     Drawable {
     init {
-        require(dimensions == SPATIAL_DIMENSIONS) { "A sphere can only have three dimensions" }
+        require(dimensions == SPATIAL_DIMENSIONS) {
+            "Sphere needs a 3D center, got ${dimensions}D. Use Circle, or NSphere for any dimension"
+        }
     }
 
     override fun draw(sketch: PApplet) {

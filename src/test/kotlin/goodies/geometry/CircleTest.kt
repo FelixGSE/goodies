@@ -26,7 +26,7 @@ internal class CircleTest {
             // Then
             assertThat(result)
                 .isInstanceOf(IllegalArgumentException().javaClass)
-                .hasMessageContaining("A circle can only have two dimensions")
+                .hasMessageContaining("Circle needs a 2D center")
         }
     }
 

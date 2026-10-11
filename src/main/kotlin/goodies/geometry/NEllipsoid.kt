@@ -23,8 +23,8 @@ open class NEllipsoid(
         get() = centerPoint.copy()
 
     init {
-        require(dimensions >= 2) { "Can only construct ellipse like objects with at least two dimensions" }
-        require(dimensions == axes.size) { "Provided list of radia does not match the point dimensions" }
+        require(dimensions >= 2) { "NEllipsoid needs 2 or more dimensions, got $dimensions" }
+        require(dimensions == axes.size) { "Need $dimensions semi-axes, got ${axes.size}" }
     }
 
     override val centroid: Point

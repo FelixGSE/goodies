@@ -9,7 +9,9 @@ class Circle(
 ) : NSphere(center, radius),
     Native2D {
     init {
-        require(dimensions == 2) { "A circle can only have two dimensions" }
+        require(dimensions == 2) {
+            "Circle needs a 2D center, got ${dimensions}D. Use Sphere, or NSphere for any dimension"
+        }
     }
 
     override fun toString(): String = "Circle{center=${center}radius=$radius}"

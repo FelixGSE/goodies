@@ -50,7 +50,7 @@ open class GMatrix(
 
     val inverse: GMatrix
         get() {
-            require(isSquare) { NOT_SQUARE }
+            require(isSquare) { notSquare("inverse", size) }
             return GMatrix(LUDecomposition(matrix).solver.inverse)
         }
 
@@ -83,13 +83,13 @@ open class GMatrix(
 
     val trace: Float
         get() {
-            require(isSquare) { NOT_SQUARE }
+            require(isSquare) { notSquare("trace", size) }
             return matrix.trace.toFloat()
         }
 
     override val determinant: Float
         get() {
-            require(isSquare) { NOT_SQUARE }
+            require(isSquare) { notSquare("determinant", size) }
             return LUDecomposition(matrix).determinant.toFloat()
         }
 
@@ -111,13 +111,13 @@ open class GMatrix(
 
     val eigenValues: List<Float>
         get() {
-            require(isSquare) { NOT_SQUARE }
+            require(isSquare) { notSquare("eigenValues", size) }
             return EigenDecomposition(matrix).realEigenvalues.map { it.toFloat() }
         }
 
     val eigenVectors: List<Point>
         get() {
-            require(isSquare) { NOT_SQUARE }
+            require(isSquare) { notSquare("eigenVectors", size) }
             return GMatrix(EigenDecomposition(matrix).v).columns
         }
 
@@ -325,6 +325,10 @@ operator fun Number.times(gMatrix: GMatrix): GMatrix = gMatrix * this
 /** Returns [gMatrix] with every entry divided by this number, not this number divided by each entry. */
 operator fun Number.div(gMatrix: GMatrix): GMatrix = gMatrix / this
 
-private const val NOT_SQUARE = "Matrix must be square"
+private fun notSquare(
+    operation: String,
+    size: Pair<Int, Int>,
+): String = "$operation needs a square matrix, got ${size.first}x${size.second}"
+
 private const val ROW = "row"
 private const val COLUMN = "column"

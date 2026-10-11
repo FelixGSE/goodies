@@ -73,7 +73,9 @@ class ConversionsTest {
             val throwable = catchThrowable { Conversions.realVectorToPVector(realVector) }
 
             // Then
-            assertThat(throwable).isInstanceOf(IllegalArgumentException::class.java)
+            assertThat(throwable)
+                .isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessageContaining("PVector needs 2 or 3 values, got 1")
         }
     }
 
@@ -136,7 +138,9 @@ class ConversionsTest {
             val throwable = catchThrowable { Conversions.PVectorToDoubleArray(pVector, 4) }
 
             // Then
-            assertThat(throwable).isInstanceOf(IllegalArgumentException::class.java)
+            assertThat(throwable)
+                .isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessageContaining("PVector has 2 or 3 dimensions, got 4")
         }
     }
 

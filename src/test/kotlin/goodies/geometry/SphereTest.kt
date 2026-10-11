@@ -30,7 +30,7 @@ internal class SphereTest {
             // Then
             assertThat(result)
                 .isInstanceOf(IllegalArgumentException().javaClass)
-                .hasMessageContaining("A sphere can only have three dimensions")
+                .hasMessageContaining("Sphere needs a 3D center")
         }
 
         private fun constructorInvalidDimensionsCases(): Stream<Point> =
