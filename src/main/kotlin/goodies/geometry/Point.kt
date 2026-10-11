@@ -412,7 +412,7 @@ class Point(
         /**
          * Returns the 2D unit point at [angle] radians from the positive y axis towards positive x, unlike Processing.
          *
-         * DESIGN: ANG-3.
+         * DESIGN: ANG-3 asks for degrees.
          */
         fun fromAngle(angle: Number): Point = NSphere.unitNSphere(2).pointOnSurface(angle)
 

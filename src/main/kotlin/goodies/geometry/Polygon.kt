@@ -178,6 +178,8 @@ open class Polygon(
      *
      * The result has [iterations] + 1 entries, innermost first; the innermost appears twice and this polygon is not
      * included.
+     *
+     * Costs O(k² + k·n) for k [iterations] on n vertices: each level copies the list of the levels below it.
      */
     fun polygonSpiral(
         iterations: Int,

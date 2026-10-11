@@ -2,7 +2,7 @@ package goodies.geometry
 
 import goodies.geometry.interfaces.Native2D
 
-/** Circle: an [NSphere] in two dimensions. Throws IllegalArgumentException for any other dimension. */
+/** An [NSphere] in two dimensions. Throws IllegalArgumentException for any other dimension. */
 class Circle(
     center: Point,
     radius: Number,

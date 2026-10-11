@@ -51,7 +51,8 @@ open class Quadrilateral(
      * Splits this quadrilateral [depth] times, each time across its longest edge and the opposite edge at their
      * [Line.goldenRatioSplit] points.
      *
-     * Returns the tree of all pieces; the leaves are the final ones.
+     * Returns the tree of all pieces; the leaves are the final ones. Costs O(2^depth) time and memory: the tree has
+     * 2^(depth + 1) - 1 nodes.
      */
     fun goldenRatioSubdivide(depth: Int): ShapeTree<Quadrilateral> =
         ShapeTree(quadSubdivide(this, depth, ::goldenRationSplit))
