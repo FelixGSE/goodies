@@ -22,10 +22,6 @@
     <ID>NamedArguments:RotationMatrixTest.kt:RotationMatrixTest.Properties$RotationMatrix(1, 3, 4, 0.5)</ID>
     <ID>NamedArguments:RotationMatrixTest.kt:RotationMatrixTest.Properties$RotationMatrix(2, 3, 4, 0.5)</ID>
     <ID>NamedArguments:SignCurveGeneratorTest.kt:SignCurveGeneratorTest$signCurve(xStart, xEnd, stepSize, amplitude, ordinaryFrequency, phase, shift)</ID>
-    <ID>UnderscoresInNumericLiterals:ColorPaletteTest.kt:ColorPaletteTest.PaletteATests$1258318</ID>
-    <ID>UnderscoresInNumericLiterals:ColorPaletteTest.kt:ColorPaletteTest.PaletteATests$2181461</ID>
-    <ID>UnderscoresInNumericLiterals:ColorPaletteTest.kt:ColorPaletteTest.PaletteATests$5476216</ID>
-    <ID>UnderscoresInNumericLiterals:ColorPaletteTest.kt:ColorPaletteTest.PaletteATests$661305</ID>
     <ID>UnnamedParameterUse:DeJongAttractorTest.kt:DeJongAttractorTest.Construction$DeJongAttractor</ID>
     <ID>UnnamedParameterUse:DeJongAttractorTest.kt:DeJongAttractorTest.Iteration$DeJongAttractor</ID>
     <ID>UnnamedParameterUse:DeJongAttractorTest.kt:DeJongAttractorTest.Properties$DeJongAttractor</ID>
