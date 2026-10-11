@@ -75,7 +75,7 @@ fun getBoundingBoxHeightAndWidth(points: List<Point>): List<Float> {
     return listOf(maxX - minX, maxY - minY)
 }
 
-val unitVertices =
+val unitVertices: List<Point> =
     listOf(
         Point(0, 0),
         Point(1, 0),

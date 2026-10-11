@@ -19,9 +19,9 @@ class SimpleFont(
             Line(PVector(0F, 0F), PVector(0F, 1F)),
         ).map { scaleLines(it, baseScaleUpperX, baseScaleUpperY) }
 
-    val upperXMin = 0
-    val upperXMax = 1 * baseScaleUpperX.toFloat()
-    val upperYMin = 0
+    val upperXMin: Int = 0
+    val upperXMax: Float = 1 * baseScaleUpperX.toFloat()
+    val upperYMin: Int = 0
     private val upperYMax = 1 * baseScaleUpperY.toFloat()
 
     private val lowerLines =

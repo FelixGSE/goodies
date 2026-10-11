@@ -11,7 +11,7 @@ abstract class GoodiesSketch : PApplet() {
     private val noiseSeedValue = Random.nextLong()
     private val randomSeedValue = Random.nextLong()
     private val sketchRenderer = P2D
-    val outputFolder = getDesktopPath()
+    val outputFolder: String = getDesktopPath()
     private val outputFormat = "png"
     private val defaultStrokeWeight = 1F
     private val defaultStrokeColor = 0

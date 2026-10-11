@@ -98,31 +98,9 @@
     <ID>FunctionNaming:Conversions.kt:Conversions$@Suppress("ktlint:standard:function-naming") @JvmStatic fun PVectorToDoubleArray: DoubleArray</ID>
     <ID>ImplicitDefaultLocale:GeneralUtils.kt:String.format("%02x", byte)</ID>
     <ID>ImplicitUnitReturnType:Line.kt:Line$override fun draw</ID>
-    <ID>ImplicitUnitReturnType:Point.kt:Point$fun draw</ID>
     <ID>LargeClass:SimpleFont.kt:SimpleFont : Font</ID>
     <ID>LargeClass:SimpleFont2.kt:SimpleFont2 : Font</ID>
-    <ID>LibraryCodeMustSpecifyReturnType:Constants.kt:const val BRONZE_RATIO = 1.730508F</ID>
-    <ID>LibraryCodeMustSpecifyReturnType:Constants.kt:const val GOLDEN_ANGLE = 2.3999631F</ID>
-    <ID>LibraryCodeMustSpecifyReturnType:Constants.kt:const val GOLDEN_RATIO = 1.618034F</ID>
-    <ID>LibraryCodeMustSpecifyReturnType:Constants.kt:const val GOLDEN_RATIO_INVERSE = 1 / GOLDEN_RATIO</ID>
-    <ID>LibraryCodeMustSpecifyReturnType:Constants.kt:const val PLASTIC_NUMBER = 1.322472F</ID>
-    <ID>LibraryCodeMustSpecifyReturnType:Constants.kt:const val SILVER_RATIO = 2.414214F</ID>
-    <ID>LibraryCodeMustSpecifyReturnType:Constants.kt:const val SQUARE_ROOT_TWO = 1.414214F</ID>
-    <ID>LibraryCodeMustSpecifyReturnType:GoodiesSketch.kt:GoodiesSketch$val outputFolder = getDesktopPath()</ID>
     <ID>LibraryCodeMustSpecifyReturnType:Line.kt:Line$override fun draw</ID>
-    <ID>LibraryCodeMustSpecifyReturnType:NEllipsoid.kt:NEllipsoid$val dimensions = centerPoint.dimensions</ID>
-    <ID>LibraryCodeMustSpecifyReturnType:NSphere.kt:NSphere$val diameter = 2 * radius.toFloat()</ID>
-    <ID>LibraryCodeMustSpecifyReturnType:NSphere.kt:NSphere$val radius = radius.toFloat()</ID>
-    <ID>LibraryCodeMustSpecifyReturnType:Point.kt:Point$fun draw</ID>
-    <ID>LibraryCodeMustSpecifyReturnType:Point.kt:Point$val dimensions = coordinates.size</ID>
-    <ID>LibraryCodeMustSpecifyReturnType:RandomUtils.kt:/** Probabilities given as `Float` are off by up to ~1e-7 each; the tolerance admits them. */ const val PROBABILITY_SUM_TOLERANCE = 1e-6</ID>
-    <ID>LibraryCodeMustSpecifyReturnType:SimpleFont.kt:SimpleFont$val upperXMax = 1 * baseScaleUpperX.toFloat()</ID>
-    <ID>LibraryCodeMustSpecifyReturnType:SimpleFont.kt:SimpleFont$val upperXMin = 0</ID>
-    <ID>LibraryCodeMustSpecifyReturnType:SimpleFont.kt:SimpleFont$val upperYMin = 0</ID>
-    <ID>LibraryCodeMustSpecifyReturnType:SimpleFont2.kt:SimpleFont2$val upperXMax = 1 * baseScaleUpperX.toFloat()</ID>
-    <ID>LibraryCodeMustSpecifyReturnType:SimpleFont2.kt:SimpleFont2$val upperXMin = 0</ID>
-    <ID>LibraryCodeMustSpecifyReturnType:SimpleFont2.kt:SimpleFont2$val upperYMin = 0</ID>
-    <ID>LibraryCodeMustSpecifyReturnType:Utils.kt:val unitVertices = listOf( Point(0, 0), Point(1, 0), Point(1, 1), Point(0, 1), )</ID>
     <ID>LongMethod:GaussBrush.kt:GaussBrush.Companion$fun initBrush: GaussBrush</ID>
     <ID>LongMethod:MapUtils.kt:fun map2: Float</ID>
     <ID>LongMethod:NewGaussBrush.kt:NewGaussBrush.Companion$fun initBrush: NewGaussBrush</ID>

@@ -16,7 +16,7 @@ open class NEllipsoid(
 ) : ParametricShape,
     EllipsoidLike,
     ClosedShape {
-    val dimensions = centerPoint.dimensions
+    val dimensions: Int = centerPoint.dimensions
 
     val center: Point
         get() = centerPoint.copy()

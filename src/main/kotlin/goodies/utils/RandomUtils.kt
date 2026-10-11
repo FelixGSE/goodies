@@ -25,7 +25,7 @@ fun <T> sampleWithReplacementFromList(
 ): List<T> = List(n) { input.random() }
 
 /** Probabilities given as `Float` are off by up to ~1e-7 each; the tolerance admits them. */
-const val PROBABILITY_SUM_TOLERANCE = 1e-6
+const val PROBABILITY_SUM_TOLERANCE: Double = 1e-6
 
 /**
  * Draws one of [items], item `i` with probability `weights[i]`.

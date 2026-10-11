@@ -19,7 +19,7 @@ class Point(
 ) : Iterable<Float>,
     Graphics {
     private val coordinates = MatrixUtils.createRealVector(coordinates.map { it.toDouble() }.toDoubleArray())
-    val dimensions = coordinates.size
+    val dimensions: Int = coordinates.size
 
     constructor(coordinates: List<Number>) : this(*coordinates.toTypedArray())
     constructor(coordinates: RealVector) : this(*coordinates.toArray().toTypedArray())
@@ -365,20 +365,13 @@ class Point(
             }
         }
 
-    fun draw(sketch: PApplet) =
+    fun draw(sketch: PApplet) {
         when (dimensions) {
-            2 -> {
-                sketch.point(this[0], this[1])
-            }
-
-            3 -> {
-                sketch.point(this[0], this[1], this[2])
-            }
-
-            else -> {
-                throw IllegalArgumentException("Can't convert Point to PVector - Too many dimensions")
-            }
+            2 -> sketch.point(this[0], this[1])
+            3 -> sketch.point(this[0], this[1], this[2])
+            else -> throw IllegalArgumentException("Can't convert Point to PVector - Too many dimensions")
         }
+    }
 
     companion object {
         fun zeros(dimensions: Int): Point = Point(List(dimensions) { 0 })
