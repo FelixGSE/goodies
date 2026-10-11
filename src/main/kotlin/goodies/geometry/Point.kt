@@ -297,8 +297,9 @@ class Point(
 
     /** Returns a copy if at most [length] long, else rescaled to [length]. Requires [length] >= 0. */
     fun limit(length: Number): Point {
-        require(!(length.toFloat() < 0.0f)) { "Length must not be negative, got $length" }
-        return if (length.toFloat() >= this.magnitude()) {
+        val limit = length.toFloat()
+        require(limit >= 0f || limit.isNaN()) { "Length must not be negative, got $length" }
+        return if (limit >= this.magnitude()) {
             copy()
         } else {
             Point(coordinates.unitVector().map { it * length.toDouble() })
