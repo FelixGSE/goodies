@@ -45,7 +45,7 @@ open class GMatrix(
 
     val inverse: GMatrix
         get() {
-            require(isSquare) { "Matrix must be square" }
+            require(isSquare) { NOT_SQUARE }
             return GMatrix(LUDecomposition(matrix).solver.inverse)
         }
 
@@ -78,13 +78,13 @@ open class GMatrix(
 
     val trace: Float
         get() {
-            require(isSquare) { "Matrix must be square" }
+            require(isSquare) { NOT_SQUARE }
             return matrix.trace.toFloat()
         }
 
     override val determinant: Float
         get() {
-            require(isSquare) { "Matrix must be square" }
+            require(isSquare) { NOT_SQUARE }
             return LUDecomposition(matrix).determinant.toFloat()
         }
 
@@ -106,13 +106,13 @@ open class GMatrix(
 
     val eigenValues: List<Float>
         get() {
-            require(isSquare) { "Matrix must be square" }
+            require(isSquare) { NOT_SQUARE }
             return EigenDecomposition(matrix).realEigenvalues.map { it.toFloat() }
         }
 
     val eigenVectors: List<Point>
         get() {
-            require(isSquare) { "Matrix must be square" }
+            require(isSquare) { NOT_SQUARE }
             return GMatrix(EigenDecomposition(matrix).v).columns
         }
 
@@ -154,10 +154,10 @@ open class GMatrix(
         ),
     )
 
-    constructor(values: List<Point>, orientation: String = "row") : this(
+    constructor(values: List<Point>, orientation: String = ROW) : this(
         when (orientation) {
-            "column" -> MatrixUtils.createRealMatrix(values.map { it.toDoubleArray() }.toTypedArray())
-            "row" -> MatrixUtils.createRealMatrix(values.map { it.toDoubleArray() }.toTypedArray())
+            COLUMN -> MatrixUtils.createRealMatrix(values.map { it.toDoubleArray() }.toTypedArray())
+            ROW -> MatrixUtils.createRealMatrix(values.map { it.toDoubleArray() }.toTypedArray())
             else -> throw IllegalArgumentException("Orientation must be either 'column' or 'row'")
         },
     )
@@ -198,9 +198,9 @@ open class GMatrix(
     override fun makeAffine(): GMatrix =
         GMatrix(columns.map { it.extend(0) } + listOf(Point(List(size.first) { 0 } + 1)))
 
-    fun center(): GMatrix = GMatrix(columns.map { it - it.average() }, orientation = "column")
+    fun center(): GMatrix = GMatrix(columns.map { it - it.average() }, orientation = COLUMN)
 
-    fun normalize(): GMatrix = GMatrix(columns.map { it.normalize() }, orientation = "column")
+    fun normalize(): GMatrix = GMatrix(columns.map { it.normalize() }, orientation = COLUMN)
 
     fun rowMean(): Point = Point(rows.map { it.average() })
 
@@ -268,3 +268,7 @@ operator fun Number.minus(gMatrix: GMatrix): GMatrix = gMatrix + -1.0 * this.toD
 operator fun Number.times(gMatrix: GMatrix): GMatrix = gMatrix * this
 
 operator fun Number.div(gMatrix: GMatrix): GMatrix = gMatrix / this
+
+private const val NOT_SQUARE = "Matrix must be square"
+private const val ROW = "row"
+private const val COLUMN = "column"

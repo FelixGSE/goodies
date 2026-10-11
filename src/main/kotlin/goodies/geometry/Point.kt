@@ -23,19 +23,19 @@ class Point(
 
     val x: Float
         get() {
-            require(dimensions > 0) { "Point does not have enough dimensions" }
+            require(dimensions > 0) { TOO_FEW_DIMENSIONS }
             return this[0]
         }
 
     val y: Float
         get() {
-            require(dimensions > 1) { "Point does not have enough dimensions" }
+            require(dimensions > 1) { TOO_FEW_DIMENSIONS }
             return this[1]
         }
 
     val z: Float
         get() {
-            require(dimensions > 2) { "Point does not have enough dimensions" }
+            require(dimensions > 2) { TOO_FEW_DIMENSIONS }
             return this[2]
         }
 
@@ -183,17 +183,17 @@ class Point(
     }
 
     fun rotateZ(angle: Number): Point {
-        require(dimensions >= 3) { "Invalid dimensions. Point must have at least 3 dimensions for this method" }
+        require(dimensions >= 3) { NOT_SPATIAL }
         return rotateAxis(i = 0, j = 1, angle = angle.toFloat())
     }
 
     fun rotateY(angle: Number): Point {
-        require(dimensions >= 3) { "Invalid dimensions. Point must have at least 3 dimensions for this method" }
+        require(dimensions >= 3) { NOT_SPATIAL }
         return rotateAxis(i = 0, j = 2, angle = angle.toFloat())
     }
 
     fun rotateX(angle: Number): Point {
-        require(dimensions >= 3) { "Invalid dimensions. Point must have at least 3 dimensions for this method" }
+        require(dimensions >= 3) { NOT_SPATIAL }
         return rotateAxis(i = 1, j = 2, angle = angle.toFloat())
     }
 
@@ -376,6 +376,8 @@ class Point(
 }
 
 private const val TRANSLATION_DIMENSION_MISMATCH = "Translation does not match point dimension"
+private const val TOO_FEW_DIMENSIONS = "Point does not have enough dimensions"
+private const val NOT_SPATIAL = "Invalid dimensions. Point must have at least 3 dimensions for this method"
 
 fun RealMatrix.multiplyPoint(point: Point): Point = Point(this.preMultiply(point.toRealVector()))
 

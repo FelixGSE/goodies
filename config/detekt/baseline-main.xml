@@ -81,10 +81,6 @@
     <ID>SpreadOperator:Point.kt:Point$(*coordinates.toTypedArray())</ID>
     <ID>SpreadOperator:Point.kt:Point$(*pVector.array().toTypedArray())</ID>
     <ID>SpreadOperator:Point.kt:Point.Companion$(*drawPointOnUnitNSphere(dimensions).toArray().toTypedArray())</ID>
-    <ID>StringLiteralDuplication:GMatrix.kt:GMatrix$"Matrix must be square"</ID>
-    <ID>StringLiteralDuplication:GMatrix.kt:GMatrix$"column"</ID>
-    <ID>StringLiteralDuplication:Point.kt:Point$"Invalid dimensions. Point must have at least 3 dimensions for this method"</ID>
-    <ID>StringLiteralDuplication:Point.kt:Point$"Point does not have enough dimensions"</ID>
     <ID>TooManyFunctions:GMatrix.kt:GMatrix : IterableGraphicsMatrix</ID>
     <ID>TooManyFunctions:Line.kt:Line : DiscreteShapeOpenShapeGeomDrawable</ID>
     <ID>TooManyFunctions:Point.kt:Point : IterableGraphics</ID>
