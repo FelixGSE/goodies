@@ -98,7 +98,7 @@ open class Polygon(
         }
 
         val hull = mutableListOf<Point>()
-        val startPoint = vertices.minWith(compareBy<Point>({ it.x }, { it.y }))
+        val startPoint = startVertex()
         var currentVertex = startPoint
         do {
             hull.add(currentVertex)
@@ -107,6 +107,12 @@ open class Polygon(
 
         return Polygon(hull)
     }
+
+    private fun startVertex(): Point =
+        vertices.reduce { start, vertex ->
+            val isLowerOnSameX = vertex.x == start.x && vertex.y < start.y
+            if (vertex.x < start.x || isLowerOnSameX) vertex else start
+        }
 
     private fun nextHullVertex(current: Point): Point {
         var next = vertices[0]
