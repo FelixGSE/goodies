@@ -133,6 +133,19 @@ class PolygonTest {
             // Then
             Assertions.assertThat(result).isEqualTo(expected)
         }
+
+        @Test
+        fun `convexHull should start at the minimum vertex once when the minimum vertex is repeated`() {
+            // Given
+            val polygon = Polygon(Point(2, 2), Point(0, 0), Point(2, 0), Point(0, 0), Point(0, 2), Point(1, 1))
+            val expected = Polygon(Point(0, 0), Point(2, 0), Point(2, 2), Point(0, 2))
+
+            // When
+            val result = polygon.convexHull()
+
+            // Then
+            Assertions.assertThat(result).isEqualTo(expected)
+        }
     }
 
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
