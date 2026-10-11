@@ -106,6 +106,32 @@ class PolygonTest {
         Assertions.assertThat(result).isEqualTo(expectedConvexHull)
     }
 
+    @Test
+    fun `convexHull should drop a vertex that lies on a hull edge when vertices are collinear`() {
+        // Given
+        val polygon = Polygon(Point(0, 0), Point(1, 0), Point(2, 0), Point(2, 2), Point(0, 2))
+        val expected = Polygon(Point(0, 0), Point(2, 0), Point(2, 2), Point(0, 2))
+
+        // When
+        val result = polygon.convexHull()
+
+        // Then
+        Assertions.assertThat(result).isEqualTo(expected)
+    }
+
+    @Test
+    fun `convexHull should keep a repeated vertex once when the polygon has duplicate vertices`() {
+        // Given
+        val polygon = Polygon(Point(0, 0), Point(2, 0), Point(2, 0), Point(2, 2), Point(0, 2), Point(1, 1))
+        val expected = Polygon(Point(0, 0), Point(2, 0), Point(2, 2), Point(0, 2))
+
+        // When
+        val result = polygon.convexHull()
+
+        // Then
+        Assertions.assertThat(result).isEqualTo(expected)
+    }
+
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     @Nested
     inner class IsConvexTests {

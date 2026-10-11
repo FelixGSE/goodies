@@ -68,6 +68,32 @@ class WaterColorBlobTest {
         }
 
         @Test
+        fun `deform should give every edge two to the power of depth vertices`() {
+            // Given
+            val depth = 3
+            val expected = 32
+
+            // When
+            val result = WaterColorBlob.deform(square, depth)
+
+            // Then
+            assertThat(result.vertices).hasSize(expected)
+        }
+
+        @Test
+        fun `deform should keep the base vertices at the start of each edge run`() {
+            // Given
+            val depth = 3
+            val expected = square.vertices
+
+            // When
+            val result = WaterColorBlob.deform(square, depth)
+
+            // Then
+            assertThat(result.vertices.filterIndexed { index, _ -> index % 8 == 0 }).isEqualTo(expected)
+        }
+
+        @Test
         fun `deformed polygon should not equal base polygon`() {
             // Given / When
             val deformed = WaterColorBlob.deform(square, 2)
