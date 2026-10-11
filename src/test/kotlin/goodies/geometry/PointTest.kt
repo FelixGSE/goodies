@@ -670,7 +670,7 @@ internal class PointTest {
             // Then
             assertThat(result)
                 .isInstanceOf(IllegalArgumentException().javaClass)
-                .hasMessageContaining("Length must be a positive number")
+                .hasMessageContaining("Length must not be negative")
         }
     }
 

@@ -271,7 +271,7 @@ class Point(
 
     /** Returns this point projected down to 3D by repeated [projectDown]. Requires 3D or more. */
     fun projectDownTo3D(distance: Float = 1.0f): Point {
-        require(dimensions >= SPATIAL_DIMENSIONS) { "Point must have dimension 4 to be projected down to 3D" }
+        require(dimensions >= SPATIAL_DIMENSIONS) { "projectDownTo3D needs 3 or more dimensions, got $dimensions" }
         var point = this.copy()
         repeat(dimensions - SPATIAL_DIMENSIONS) {
             point = point.projectDown(distance)
@@ -293,7 +293,7 @@ class Point(
 
     /** Returns a copy if at most [length] long, else rescaled to [length]. Requires [length] >= 0. */
     fun limit(length: Number): Point {
-        require(!(length.toFloat() < 0.0f)) { "Length must be a positive number" }
+        require(!(length.toFloat() < 0.0f)) { "Length must not be negative, got $length" }
         return if (length.toFloat() >= this.magnitude()) {
             copy()
         } else {

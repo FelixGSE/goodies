@@ -39,7 +39,7 @@ object Conversions {
         return when (arr.size) {
             2 -> PVector(arr[0].toFloat(), arr[1].toFloat())
             SPATIAL_DIMENSIONS -> PVector(arr[0].toFloat(), arr[1].toFloat(), arr[2].toFloat())
-            else -> throw IllegalArgumentException("Can only convert 2 and 3 dimensional values to PVector")
+            else -> throw IllegalArgumentException("PVector needs 2 or 3 values, got ${arr.size}")
         }
     }
 
@@ -63,7 +63,7 @@ object Conversions {
         when (listOfFloats.size) {
             2 -> PVector(listOfFloats[0], listOfFloats[1])
             SPATIAL_DIMENSIONS -> PVector(listOfFloats[0], listOfFloats[1], listOfFloats[2])
-            else -> throw IllegalArgumentException("Can only convert 2 and 3 dimensional values to PVector")
+            else -> throw IllegalArgumentException("PVector needs 2 or 3 values, got ${listOfFloats.size}")
         }
 
     @JvmStatic
@@ -79,7 +79,7 @@ object Conversions {
         when (value.size) {
             2 -> PVector(value[0].toFloat(), value[1].toFloat())
             SPATIAL_DIMENSIONS -> PVector(value[0].toFloat(), value[1].toFloat(), value[2].toFloat())
-            else -> throw IllegalArgumentException("Can only convert 2 and three dimensional Arrays to PVector")
+            else -> throw IllegalArgumentException("PVector needs 2 or 3 values, got ${value.size}")
         }
 
     @JvmStatic

@@ -60,7 +60,9 @@ open class NEllipsoid(
      */
     fun pointOnSurface(angles: List<Number>): Point {
         val angleAsListOfDoubles = angles.map { it.toDouble() }
-        require(angles.size == dimensions - 1) { "Number of angles must have be equal to dimensions - 1" }
+        require(angles.size == dimensions - 1) {
+            "Need ${dimensions - 1} angles for $dimensions dimensions, got ${angles.size}"
+        }
         var result = Point(axes)
         val numberOfAngles = angles.size
 
