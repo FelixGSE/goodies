@@ -59,8 +59,10 @@ open class Polygon(
 
     override fun normalize(): Polygon = Polygon(GMatrix(vertices).normalize().rows)
 
+    /** Returns this polygon moved by [translation]. */
     fun translate(translation: Point): Polygon = Polygon(vertices.map { it + translation })
 
+    /** Returns this 2D polygon rotated by [angle] degrees around [referencePoint]. */
     fun rotateAroundReferencePoint(
         angle: Number,
         referencePoint: Point,
@@ -71,13 +73,25 @@ open class Polygon(
             },
         ).rotate(angle).translate(referencePoint)
 
+    /** Returns this 2D polygon with every vertex rotated by [angle] degrees around the origin, as [Point.rotate]. */
     fun rotate(angle: Number): Polygon = Polygon(vertices.map { it.rotate(angle) })
 
+    /**
+     * Returns a random point on the boundary: an edge drawn with probability proportional to its length, then a uniform
+     * point on it.
+     */
     fun randomPointOn(): Point {
         val weights = edges.map { it.length / perimeter }
         return weightedSample(edges, weights).randomPointOn()
     }
 
+    /**
+     * Returns the convex hull of the 2D vertices by gift wrapping (Jarvis march), O(n h) for n vertices and h hull
+     * vertices.
+     *
+     * The hull starts at the vertex with the smallest x, then smallest y, and keeps neither collinear nor repeated
+     * vertices. A polygon with at most three vertices is returned as it is.
+     */
     fun convexHull(): Polygon {
         if (vertices.size <= TRIANGLE_VERTICES) {
             return Polygon(vertices.toList())
@@ -119,6 +133,10 @@ open class Polygon(
         return cross > 0 || isCollinearAndFarther
     }
 
+    /**
+     * Returns the unsigned angle in radians at each vertex, starting with the second one; a reflex angle comes out as
+     * its complement to a full turn.
+     */
     fun interiorAngles(): List<Float> {
         val n = vertices.size
         val angles = mutableListOf<Float>()
@@ -137,6 +155,7 @@ open class Polygon(
         return angles
     }
 
+    /** Draws this 2D polygon on [sketch] as one closed shape. */
     fun draw(sketch: PApplet) {
         sketch.beginShape()
         for (vertex in vertices) {
@@ -145,6 +164,13 @@ open class Polygon(
         sketch.endShape(CLOSE)
     }
 
+    /**
+     * Returns nested polygons, each through points at a random fraction in [lower, upper] along the edges of the one
+     * before.
+     *
+     * The result has [iterations] + 1 entries, innermost first; the innermost appears twice and this polygon is not
+     * included.
+     */
     fun polygonSpiral(
         iterations: Int,
         lower: Number = 0.1,

@@ -67,6 +67,7 @@ class Line(
 
     override fun toString(): String = "Line(a=$a, b=$b)"
 
+    /** Returns a segment with copies of both ends. */
     fun copy(): Line = Line(a = start, b = end)
 
     override fun addDimensions(vararg dimension: Number): Line =
@@ -90,6 +91,7 @@ class Line(
             b = b.translate(*translation),
         )
 
+    /** Returns this segment moved by [translation], one value per axis. */
     fun translate(translation: List<Number>): Line =
         Line(
             a = a.translate(*translation.toTypedArray()),
@@ -104,14 +106,24 @@ class Line(
 
     override fun scale(factor: Number): Line = Line(a = a.scale(factor), b = b.scale(factor))
 
+    /** Returns the segment from start to `start + factor · (end - start)`. */
     fun scaleFromStart(factor: Number): Line = Line(a = start, b = start + factor * (end - start))
 
+    /** Returns the segment from `end + factor · (start - end)` to end. */
     fun scaleFromEnd(factor: Number): Line = reversed.scaleFromStart(factor).reversed
 
+    /** Returns [center] scaled by [factor] and moved by the x and y of [midpoint]; two dimensions only. */
     fun scaleFromBothSides(factor: Number): Line = center().scale(factor).translate(midpoint.x, midpoint.y)
 
+    /** Returns a uniformly random point on the segment, drawn with `Math.random`. */
     fun randomPointOn(): Point = scaleFromStart(Math.random()).end
 
+    /**
+     * Returns two segments that meet at `scaleFromStart(length / GOLDEN_RATIO).end`.
+     *
+     * The factor is not divided by the length, so the split point leaves the segment once the length exceeds the golden
+     * ratio.
+     */
     fun goldenRatioSplit(): List<Line> {
         val split = length / GOLDEN_RATIO
         val splitPoint = scaleFromStart(split).end
@@ -121,6 +133,7 @@ class Line(
         )
     }
 
+    /** Returns the n + 1 segments from start to `k / n` of the way to end, for k = 0 to n. */
     fun divideInEqualParts(n: Int): List<Line> {
         val a = 1.0 / n
 
@@ -135,11 +148,13 @@ class Line(
         return outputs
     }
 
+    /** Returns n - 1 segments from start to random fractions of the way to end, shortest first. */
     fun divideLineInRandomParts(n: Int): List<Line> =
         randomFloats(n - 1)
             .sorted()
             .map { scaleFromStart(it) }
 
+    /** Returns this segment with its end moved by [addOn] along the segment. */
     fun increaseByLength(addOn: Number): Line {
         val scalingFactor = 1 + addOn.toFloat() / length
         val newEnd = scaleFromStart(scalingFactor).end
@@ -156,18 +171,25 @@ class Line(
 
     /** Builders for lines. */
     companion object {
+        /** Returns the 2D segment between the x and y of [start] and [end]. */
         fun fromPVector2D(
             start: PVector,
             end: PVector,
         ): Line = Line(a = Point(start.x, start.y), b = Point(end.x, end.y))
 
+        /** Returns the 3D segment between [start] and [end]. */
         fun fromPVector3D(
             start: PVector,
             end: PVector,
         ): Line = Line(a = Point(start.x, start.y, start.z), b = Point(end.x, end.y, end.z))
 
+        /** Returns the segment from the origin to ([upper], 0). */
         fun makePositiveRealLine(upper: Number): Line = Line(a = Point(0f, 0f), b = Point(upper, 0f))
 
+        /**
+         * Returns the segment from ([lower], 0) to ([upper], 0). Throws IllegalArgumentException when [lower] >
+         * [upper].
+         */
         fun makeRealLine(
             lower: Float,
             upper: Float,
@@ -176,11 +198,13 @@ class Line(
             return Line(a = Point(lower, 0f), b = Point(upper, 0f))
         }
 
+        /** Returns the horizontal segment at [y] across the width of [sketch]. */
         fun hLIne(
             sketch: PApplet,
             y: Float,
         ): Line = Line(a = Point(0f, y), b = Point(sketch.width.toFloat(), y))
 
+        /** Returns the vertical segment at [x] across the height of [sketch]. */
         fun vLine(
             sketch: PApplet,
             x: Float,

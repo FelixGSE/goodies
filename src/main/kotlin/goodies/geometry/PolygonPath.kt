@@ -31,6 +31,7 @@ class PolygonPath(
 
     override fun center(): PolygonPath = PolygonPath(vertexMatrix.center().rows)
 
+    /** Returns this path moved by [translation]. */
     fun translate(translation: Point): PolygonPath = PolygonPath(vertices.map { it + translation })
 
     override fun centerAt(point: Point): Shape = center().translate(point)
@@ -41,6 +42,7 @@ class PolygonPath(
 
     override fun iterator(): Iterator<Point> = vertices.iterator()
 
+    /** Draws every edge on [sketch]. */
     fun draw(sketch: PApplet) {
         for (line in edges) {
             line.draw(sketch)

@@ -10,5 +10,6 @@ interface DiscreteShape {
     val vertexCount: Int get() = vertices.size
     val vertexMatrix: GMatrix get() = GMatrix(vertices, orientation = "row")
 
+    /** Returns this shape with [dimension] appended to the coordinates of every vertex. */
     fun addDimensions(vararg dimension: Number): Shape
 }

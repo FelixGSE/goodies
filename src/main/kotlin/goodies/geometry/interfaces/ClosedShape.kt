@@ -8,7 +8,9 @@ interface ClosedShape : Shape {
     override val isClosed: Boolean get() = true
     val isConvex: Boolean
 
+    /** Returns true when [point] lies inside this shape. */
     fun contains(point: Point): Boolean
 
+    /** Returns true when every point in [point] lies inside this shape. */
     fun containsAll(point: List<Point>): Boolean = point.all { contains(it) }
 }

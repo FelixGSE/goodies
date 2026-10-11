@@ -13,6 +13,7 @@ open class NSphere(
 
     /** Builders for spheres. */
     companion object {
+        /** Returns the unit sphere around the origin in [dimensions] dimensions. */
         fun unitNSphere(dimensions: Int): NEllipsoid = NSphere(Point(List(dimensions) { 0 }), 1)
     }
 }

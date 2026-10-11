@@ -49,8 +49,15 @@ open class NEllipsoid(
 
     override fun contains(point: Point): Boolean = (point - center / Point(axes)).pow(2).sum() <= 1.0
 
+    /** Returns [pointOnSurface] for the given angles. */
     fun pointOnSurface(vararg angles: Number): Point = pointOnSurface(angles.map { it.toDouble() }.toList())
 
+    /**
+     * Returns the surface point for n - 1 hyperspherical [angles] in radians, scaled by the semi-axes.
+     *
+     * The centre is ignored: the point is relative to the origin. In 2D the angle runs from the positive y axis towards
+     * the positive x axis. Throws IllegalArgumentException for a wrong number of angles.
+     */
     fun pointOnSurface(angles: List<Number>): Point {
         val angleAsListOfDoubles = angles.map { it.toDouble() }
         require(angles.size == dimensions - 1) { "Number of angles must have be equal to dimensions - 1" }
@@ -73,6 +80,10 @@ open class NEllipsoid(
         return result
     }
 
+    /**
+     * Returns the n - 1 hyperspherical angles in radians of [point] seen from the origin, the inverse of
+     * [pointOnSurface] on the unit sphere.
+     */
     fun anglesForPointOnSurface(point: Point): List<Float> {
         val angles = mutableListOf<Float>()
         for (i in 0 until dimensions - 1) {

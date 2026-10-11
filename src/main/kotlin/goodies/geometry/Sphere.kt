@@ -19,6 +19,7 @@ class Sphere(
 
     /** Builders for spheres. */
     companion object {
+        /** Returns the unit sphere around the origin. */
         fun unitSphere(): NEllipsoid = unitNSphere(SPATIAL_DIMENSIONS)
     }
 }

@@ -47,6 +47,12 @@ open class Quadrilateral(
         return Triple(first = longestSideIndex, second = pointOnSide, third = pointOnOppositeSite)
     }
 
+    /**
+     * Splits this quadrilateral [depth] times, each time across its longest edge and the opposite edge at their
+     * [Line.goldenRatioSplit] points.
+     *
+     * Returns the tree of all pieces; the leaves are the final ones.
+     */
     fun goldenRatioSubdivide(depth: Int): ShapeTree<Quadrilateral> =
         ShapeTree(quadSubdivide(this, depth, ::goldenRationSplit))
 
@@ -110,6 +116,7 @@ open class Quadrilateral(
 
     /** Builders for quadrilaterals. */
     companion object {
+        /** Returns the rectangle that covers [sketch]. */
         fun fromSketch(sketch: PApplet): Quadrilateral =
             Quadrilateral(
                 listOf(
