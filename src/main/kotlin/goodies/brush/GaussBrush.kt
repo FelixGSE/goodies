@@ -23,7 +23,7 @@ class GaussBrush(
         sketch: PApplet,
         path: PolygonPath,
     ) {
-        var currentPositions = brushPins.toMutableList()
+        val currentPositions = brushPins.toMutableList()
         for (direction in path.directions) {
             for (i in 0 until numberOfPoints) {
                 val currentPosition = currentPositions[i]

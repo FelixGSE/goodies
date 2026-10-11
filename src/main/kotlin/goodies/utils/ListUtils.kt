@@ -19,7 +19,7 @@ fun cartesianProduct(
     val sets = next.map { it.toList() }
     return listOf(a, b)
         .plus(sets)
-        .fold(listOf(listOf<Number>())) { acc, set ->
+        .fold(listOf(emptyList<Number>())) { acc, set ->
             acc.flatMap { list -> set.map { element -> list + element } }
         }.toList()
 }

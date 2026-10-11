@@ -26,7 +26,7 @@ class Grid2D(
         nCols = columnSpace.size
         gridPoints = cartesian(rowSpace, columnSpace)
         cells = getCells(gridPoints, nRows, nCols)
-        nCells = cells.flatten().size
+        nCells = cells.sumOf { it.size }
     }
 
     operator fun get(

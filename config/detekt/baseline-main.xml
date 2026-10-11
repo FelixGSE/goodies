@@ -15,9 +15,7 @@
     <ID>CyclomaticComplexMethod:Polygon.kt:Polygon$fun convexHull: Polygon</ID>
     <ID>CyclomaticComplexMethod:SimpleFont.kt:SimpleFont$fun drawLetter</ID>
     <ID>CyclomaticComplexMethod:SimpleFont2.kt:SimpleFont2$fun drawLetter</ID>
-    <ID>DoubleMutabilityForCollection:GaussBrush.kt:GaussBrush$var currentPositions = brushPins.toMutableList()</ID>
     <ID>EmptyFunctionBlock:StreamLineIntegrator.kt:StreamLineIntegrator${ }</ID>
-    <ID>ExplicitCollectionElementAccessMethod:PolygonPath.kt:PolygonPath$super.get(index)</ID>
     <ID>ForbiddenComment:RotationMatrix.kt:RotationMatrix.Companion$// TODO: -1 correct?</ID>
     <ID>ForbiddenMethodCall:Point.kt:Point$println( "[WARNING] setMag() returns a new Vector instead of modifying the old one. Overwrite you variable " + "with the result of setMag()", )</ID>
     <ID>FunctionNameMaxLength:Conversions.kt:Conversions$@JvmStatic fun listOfListOfFloatsToDoubleArrays: Array&lt;DoubleArray></ID>
@@ -25,7 +23,6 @@
     <ID>FunctionNaming:Conversions.kt:Conversions$@Suppress("ktlint:standard:function-naming") @JvmStatic fun PVector2DToRealVector: RealVector</ID>
     <ID>FunctionNaming:Conversions.kt:Conversions$@Suppress("ktlint:standard:function-naming") @JvmStatic fun PVector3DToRealVector: RealVector</ID>
     <ID>FunctionNaming:Conversions.kt:Conversions$@Suppress("ktlint:standard:function-naming") @JvmStatic fun PVectorToDoubleArray: DoubleArray</ID>
-    <ID>ImplicitDefaultLocale:GeneralUtils.kt:String.format("%02x", byte)</ID>
     <ID>LargeClass:SimpleFont.kt:SimpleFont : Font</ID>
     <ID>LargeClass:SimpleFont2.kt:SimpleFont2 : Font</ID>
     <ID>LongMethod:GaussBrush.kt:GaussBrush.Companion$fun initBrush: GaussBrush</ID>
@@ -305,8 +302,5 @@
     <ID>UnusedParameter:Utils.kt:margin: Number</ID>
     <ID>UnusedPrivateProperty:OrthogonalProjectionMatrix.kt:OrthogonalProjectionMatrix$targetDimensions: Int</ID>
     <ID>UseDataClass:ShapeTreeNode.kt:ShapeTreeNode&lt;T></ID>
-    <ID>UseEmptyCounterpart:ListUtils.kt:listOf&lt;Number>()</ID>
-    <ID>UseSumOfInsteadOfFlatMapSize:Grid2D.kt:Grid2D$flatten()</ID>
-    <ID>VarCouldBeVal:GaussBrush.kt:GaussBrush$var currentPositions = brushPins.toMutableList()</ID>
   </CurrentIssues>
 </SmellBaseline>
