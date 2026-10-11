@@ -19,7 +19,7 @@ open class Quadrilateral(
     val c: Point
         get() = vertices[2]
     val d: Point
-        get() = vertices.last()
+        get() = vertices[3]
 
     constructor(vararg vertices: Point) : this(vertices.toList())
 
