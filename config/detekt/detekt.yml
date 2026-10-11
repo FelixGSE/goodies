@@ -48,6 +48,8 @@ complexity:
     allowedFunctionsPerEnum: 15
 
 naming:
+  BooleanPropertyNaming:
+    allowedPattern: '^(is|has|are)|^result$'
   FunctionNameMinLength:
     minimumFunctionNameLength: 2
   FunctionNameMaxLength:

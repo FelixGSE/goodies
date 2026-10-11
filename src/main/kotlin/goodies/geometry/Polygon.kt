@@ -165,7 +165,7 @@ open class Polygon(
     }
 
     override fun contains(point: Point): Boolean {
-        var inside = false
+        var isInside = false
         var i = 0
         var j = vertices.size - 1
         while (i < vertices.size) {
@@ -174,10 +174,10 @@ open class Polygon(
                 (vertices[j].x - vertices[i].x) * (point.y - vertices[i].y) / (vertices[j].y - vertices[i].y) +
                 vertices[i].x
             ) {
-                inside = !inside
+                isInside = !isInside
             }
             j = i++
         }
-        return inside
+        return isInside
     }
 }

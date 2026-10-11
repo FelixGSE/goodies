@@ -136,10 +136,10 @@ open class GMatrix(
 
     val isIndefinite: Boolean
         get() {
-            val containsPositive = eigenValues.any { it > 0 }
-            val containsNegative = eigenValues.any { it < 0 }
+            val hasPositive = eigenValues.any { it > 0 }
+            val hasNegative = eigenValues.any { it < 0 }
 
-            return containsPositive && containsNegative
+            return hasPositive && hasNegative
         }
 
     constructor(values: List<List<Number>>) : this(

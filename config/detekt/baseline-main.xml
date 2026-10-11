@@ -3,9 +3,6 @@
   <ManuallySuppressedIssues/>
   <CurrentIssues>
     <ID>AbstractClassCanBeConcreteClass:GoodiesSketch.kt:GoodiesSketch$GoodiesSketch</ID>
-    <ID>BooleanPropertyNaming:GMatrix.kt:GMatrix$val containsNegative = eigenValues.any { it &lt; 0 }</ID>
-    <ID>BooleanPropertyNaming:GMatrix.kt:GMatrix$val containsPositive = eigenValues.any { it > 0 }</ID>
-    <ID>BooleanPropertyNaming:Polygon.kt:Polygon$var inside = false</ID>
     <ID>CascadingCallWrapping:ListUtils.kt:toList()</ID>
     <ID>CognitiveComplexMethod:ChaikinCurve.kt:ChaikinCurve.Companion$private fun fitChaikinCurve: PolygonLikeShape</ID>
     <ID>CognitiveComplexMethod:MapUtils.kt:fun map2: Float</ID>
