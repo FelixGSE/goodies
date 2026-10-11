@@ -19,7 +19,7 @@ open class GMatrix(
     Graphics,
     Matrix {
     val size: Pair<Int, Int>
-        get() = Pair(first = matrix.rowDimension, second = matrix.columnDimension)
+        get() = matrix.rowDimension to matrix.columnDimension
 
     val isSquare: Boolean
         get() = matrix.isSquare

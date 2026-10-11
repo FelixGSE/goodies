@@ -68,7 +68,7 @@ class RotationMatrix(
             for (i in 0 until dimensions - 1) {
                 for (j in i + 1 until dimensions) {
                     if (currentIndex == index) {
-                        return Pair(first = i, second = j)
+                        return i to j
                     }
                     currentIndex++
                 }
