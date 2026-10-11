@@ -3,7 +3,6 @@ package goodies.grid
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import utils.linSpace
 
 class Grid2DTest {
     @Nested

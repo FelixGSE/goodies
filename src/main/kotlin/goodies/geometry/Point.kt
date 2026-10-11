@@ -136,10 +136,7 @@ class Point(
     }
 
     fun translate(vararg translation: Number): Point {
-        if (translation.size != dimensions) {
-            throw java.lang.IllegalArgumentException("Translation does not match point dimension")
-        }
-
+        require(translation.size == dimensions) { TRANSLATION_DIMENSION_MISMATCH }
         return Point(*(0 until dimensions).map { this[it] + translation[it].toDouble() }.toTypedArray())
     }
 
@@ -152,9 +149,7 @@ class Point(
         )
 
     fun translate(translation: Point): Point {
-        if (translation.dimensions != dimensions) {
-            throw java.lang.IllegalArgumentException("Translation does not match point dimension")
-        }
+        require(translation.dimensions == dimensions) { TRANSLATION_DIMENSION_MISMATCH }
         return Point(*(0 until dimensions).map { this[it] + translation[it].toDouble() }.toTypedArray())
     }
 
@@ -387,9 +382,7 @@ class Point(
             }
 
             else -> {
-                throw java.lang.IllegalArgumentException(
-                    "Can't convert Point to PVector - Invalid number of dimensions",
-                )
+                throw IllegalArgumentException("Can't convert Point to PVector - Invalid number of dimensions")
             }
         }
 
@@ -404,7 +397,7 @@ class Point(
             }
 
             else -> {
-                throw java.lang.IllegalArgumentException("Can't convert Point to PVector - Too many dimensions")
+                throw IllegalArgumentException("Can't convert Point to PVector - Too many dimensions")
             }
         }
 
@@ -438,6 +431,8 @@ class Point(
         fun fromPVector3D(pVector: PVector): Point = Point(pVector.x, pVector.y)
     }
 }
+
+private const val TRANSLATION_DIMENSION_MISMATCH = "Translation does not match point dimension"
 
 fun RealMatrix.multiplyPoint(point: Point): Point = Point(this.preMultiply(point.toRealVector()))
 

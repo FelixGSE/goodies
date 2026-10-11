@@ -1,7 +1,9 @@
 package goodies.geometry
 
+import kotlin.math.sqrt
+
 fun isPerfectSquare(number: Int): Boolean {
-    val sqrt = kotlin.math.sqrt(number.toDouble()).toInt()
+    val sqrt = sqrt(number.toDouble()).toInt()
     return sqrt * sqrt == number
 }
 

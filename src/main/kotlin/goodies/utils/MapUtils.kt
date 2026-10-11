@@ -1,10 +1,10 @@
 package goodies.utils
 
-import processing.core.PApplet.PI
 import processing.core.PApplet.cos
 import processing.core.PApplet.pow
 import processing.core.PApplet.sin
 import processing.core.PApplet.sqrt
+import processing.core.PConstants.PI
 
 // Taken from https://github.com/sighack/easing-functions/blob/master/code/easing/easing.pde
 

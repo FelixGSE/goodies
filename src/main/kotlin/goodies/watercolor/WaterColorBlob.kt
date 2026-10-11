@@ -4,6 +4,7 @@ import goodies.geometry.Line
 import goodies.geometry.Point
 import goodies.geometry.Polygon
 import processing.core.PApplet
+import java.util.Random
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
@@ -29,7 +30,7 @@ class WaterColorBlob(
     }
 
     companion object {
-        private val rng = java.util.Random()
+        private val rng = Random()
 
         fun deform(
             polygon: Polygon,

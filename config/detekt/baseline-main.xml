@@ -479,11 +479,6 @@
     <ID>UnnamedParameterUse:WaterColorBlob.kt:WaterColorBlob.Companion$atan2</ID>
     <ID>UnnamedParameterUse:WaterColorBlob.kt:WaterColorBlob.Companion$subdivide</ID>
     <ID>UnnecessaryFullyQualifiedName:GMatrix.kt:GMatrix.&lt;no name provided>$org.apache.commons.math3.linear.DefaultRealMatrixChangingVisitor</ID>
-    <ID>UnnecessaryFullyQualifiedName:Point.kt:Point$java.lang.IllegalArgumentException( "Can't convert Point to PVector - Invalid number of dimensions", )</ID>
-    <ID>UnnecessaryFullyQualifiedName:Point.kt:Point$java.lang.IllegalArgumentException("Can't convert Point to PVector - Too many dimensions")</ID>
-    <ID>UnnecessaryFullyQualifiedName:Point.kt:Point$java.lang.IllegalArgumentException("Translation does not match point dimension")</ID>
-    <ID>UnnecessaryFullyQualifiedName:Utils.kt:kotlin.math.sqrt(number.toDouble())</ID>
-    <ID>UnnecessaryFullyQualifiedName:WaterColorBlob.kt:WaterColorBlob.Companion$java.util.Random()</ID>
     <ID>UnnecessaryParentheses:GMatrix.kt:(-1.0 * this.toDouble())</ID>
     <ID>UnnecessaryParentheses:ListUtils.kt:(listOf(a, b).plus(sets))</ID>
     <ID>UnnecessaryParentheses:MapUtils.kt:(1 - t)</ID>
@@ -500,7 +495,6 @@
     <ID>UnnecessaryParentheses:SimpleFont.kt:SimpleFont$(offset.toFloat() * i)</ID>
     <ID>UnnecessaryParentheses:SimpleFont2.kt:SimpleFont2$(offset.toFloat() * i)</ID>
     <ID>UnnecessaryParentheses:WaterColorBlob.kt:WaterColorBlob.Companion$(depth.coerceAtLeast(1))</ID>
-    <ID>UnusedImport:MapUtils.kt:import processing.core.PApplet.PI</ID>
     <ID>UnusedParameter:Utils.kt:margin: Number</ID>
     <ID>UnusedPrivateFunction:GoodiesSketch.kt:GoodiesSketch$private fun saveAndExit</ID>
     <ID>UnusedPrivateProperty:GoodiesSketch.kt:GoodiesSketch$private val availableSketchRenderer = listOf(P2D, P3D)</ID>
@@ -529,7 +523,6 @@
     <ID>UseRequire:Point.kt:Point$throw IllegalArgumentException("Point must have dimension 4 to be projected down to 3D")</ID>
     <ID>UseRequire:Point.kt:Point$throw IllegalArgumentException("Points dimension do not match")</ID>
     <ID>UseRequire:Point.kt:Point$throw IllegalArgumentException("Points must have dimension equal to 3 for this method")</ID>
-    <ID>UseRequire:Point.kt:Point$throw java.lang.IllegalArgumentException("Translation does not match point dimension")</ID>
     <ID>UseRequire:Point.kt:Point.Companion$throw IllegalArgumentException("Dimensions must greater or equal than zero")</ID>
     <ID>UseRequire:Sphere.kt:Sphere$throw IllegalArgumentException("A sphere can only have three dimensions")</ID>
     <ID>UseSumOfInsteadOfFlatMapSize:Grid2D.kt:Grid2D$flatten()</ID>
