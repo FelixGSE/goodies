@@ -229,7 +229,11 @@ class Point(
         return rotation.multiplyPoint(this)
     }
 
-    /** Returns this point rotated by [angle] radians in plane [i] of [RotationMatrix.getCoordinates]. */
+    /**
+     * Returns this point rotated by [angle] radians in plane [i] of [RotationMatrix.getCoordinates].
+     *
+     * DESIGN: ANG-3 asks for degrees, as the other overload takes.
+     */
     fun rotateAxis(
         i: Int,
         angle: Number,
@@ -401,10 +405,9 @@ class Point(
         fun random3D(): Point = Point.randomPoint(SPATIAL_DIMENSIONS)
 
         /**
-         * Generate a 2D GVector from an angle. For compliance with Processing PVector class
+         * Returns the 2D unit point at [angle] radians from the positive y axis towards positive x, unlike Processing.
          *
-         * @param angle The angle is in radians.
-         * @return The GVector with magnitude 1 for the corresponding angle.
+         * DESIGN: ANG-3.
          */
         fun fromAngle(angle: Number): Point = NSphere.unitNSphere(2).pointOnSurface(angle)
 
