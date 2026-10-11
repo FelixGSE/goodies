@@ -17,7 +17,7 @@ internal class SphereTest {
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     @Nested
     inner class Construction {
-        @ParameterizedTest
+        @ParameterizedTest(name = "{displayName} [{index}] {0}")
         @MethodSource("constructorInvalidDimensionsCases")
         fun `Initialization of a Sphere should throw IllegalArgumentException when dimension is not equal to three`(
             center: Point,
@@ -43,7 +43,7 @@ internal class SphereTest {
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     @Nested
     inner class Basics {
-        @ParameterizedTest
+        @ParameterizedTest(name = "{displayName} [{index}] {0}")
         @MethodSource("pointOnSurfaceZeroAzimuthCases")
         fun `pointOnSurface should compute the point on a unit sphere when azimuth is zero`(
             angles: List<Double>,
@@ -68,7 +68,7 @@ internal class SphereTest {
                 Arguments.of(listOf(0.0, 135.0), Point(0, piQuarter, -piQuarter)),
             )
 
-        @ParameterizedTest
+        @ParameterizedTest(name = "{displayName} [{index}] {0}")
         @MethodSource("pointOnSurfaceEasternAzimuthCases")
         fun `pointOnSurface should compute the point on a unit sphere when azimuth is 45 to 135 degrees`(
             angles: List<Double>,
@@ -98,7 +98,7 @@ internal class SphereTest {
                 Arguments.of(listOf(135.0, 135.0), Point(0.5, -0.5, -piQuarter)),
             )
 
-        @ParameterizedTest
+        @ParameterizedTest(name = "{displayName} [{index}] {0}")
         @MethodSource("pointOnSurfaceWesternAzimuthCases")
         fun `pointOnSurface should compute the point on a unit sphere when azimuth is 180 to 315 degrees`(
             angles: List<Double>,
@@ -167,7 +167,7 @@ internal class SphereTest {
                 Arguments.of(listOf(315.0, 180.0), Point(0, 0, -1)),
             )
 
-        @ParameterizedTest
+        @ParameterizedTest(name = "{displayName} [{index}] {0}")
         @MethodSource("anglesForPointOnSurfaceZeroAzimuthCases")
         fun `anglesForPointOnSurface should compute the angles on a unit sphere when azimuth is zero`(
             angle: List<Double>,
@@ -196,7 +196,7 @@ internal class SphereTest {
                 Arguments.of(listOf(0.0, 180.0), Point(0, 0, -1)),
             )
 
-        @ParameterizedTest
+        @ParameterizedTest(name = "{displayName} [{index}] {0}")
         @MethodSource("anglesForPointOnSurfaceEasternAzimuthCases")
         fun `anglesForPointOnSurface should compute the angles on a unit sphere when azimuth is 45 to 135 degrees`(
             angle: List<Double>,
@@ -229,7 +229,7 @@ internal class SphereTest {
                 Arguments.of(listOf(135.0, 135.0), Point(0.5, -0.5, -piQuarter)),
             )
 
-        @ParameterizedTest
+        @ParameterizedTest(name = "{displayName} [{index}] {0}")
         @MethodSource("anglesForPointOnSurfaceWesternAzimuthCases")
         fun `anglesForPointOnSurface should compute the angles on a unit sphere when azimuth is 180 to 315 degrees`(
             angle: List<Double>,
