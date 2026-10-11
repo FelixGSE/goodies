@@ -63,12 +63,12 @@ style:
   ForbiddenComment:
     comments:
       - value: 'TODO'
-        reason: 'A TODO names its story, TODO(E1.4), or its rule, DESIGN: X-n (CODE-8b).'
+        reason: 'A TODO names its rule: TODO DESIGN: X-n (CODE-8b).'
       - value: 'FIXME'
-        reason: 'A FIXME names its story, FIXME(E1.4), or its rule, DESIGN: X-n (CODE-8b).'
+        reason: 'A FIXME names its rule: FIXME DESIGN: X-n (CODE-8b).'
       - value: 'STOPSHIP'
         reason: 'Fix it before it ships.'
-    allowedPatterns: '(TODO|FIXME)\([A-Z][0-9]*\.[0-9]+[a-z]?\)|DESIGN: [A-Z]+(-[A-Z]+)*-[0-9]+[a-z]?'
+    allowedPatterns: 'DESIGN: [A-Z]+(-[A-Z]+)*-[0-9]+[a-z]?'
   MagicNumber:
     ignoreNumbers:
       - '-1'
