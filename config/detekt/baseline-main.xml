@@ -27,9 +27,7 @@
     <ID>NotImplementedDeclaration:GoodiesSketch.kt:GoodiesSketch$throw NotImplementedError("draw() must be implemented in subclasses.")</ID>
     <ID>NotImplementedDeclaration:GoodiesSketch.kt:GoodiesSketch$throw NotImplementedError("setup() must be implemented in subclasses.")</ID>
     <ID>NotImplementedDeclaration:Polygon.kt:Polygon$TODO("Not yet implemented")</ID>
-    <ID>SpreadOperator:GaussBrush.kt:GaussBrush.Companion$(*it)</ID>
     <ID>SpreadOperator:Line.kt:Line$(*translation.toTypedArray())</ID>
-    <ID>SpreadOperator:NewGaussBrush.kt:NewGaussBrush.Companion$(*it)</ID>
     <ID>SpreadOperator:Point.kt:Point$(*coordinates.toArray().toTypedArray())</ID>
     <ID>SpreadOperator:Point.kt:Point$(*coordinates.toTypedArray())</ID>
     <ID>SpreadOperator:Point.kt:Point$(*pVector.array().toTypedArray())</ID>

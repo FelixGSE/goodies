@@ -4,10 +4,7 @@ import extensions.modules.shapes.Line
 import goodies.algebra.DiagonalMatrix
 import goodies.geometry.Point
 import goodies.geometry.PolygonPath
-import org.apache.commons.math3.distribution.MultivariateNormalDistribution
-import org.apache.commons.math3.distribution.NormalDistribution
 import processing.core.PApplet
-import kotlin.math.abs
 
 class NewGaussBrush(
     private val brushPins: List<Point>,
@@ -78,20 +75,5 @@ class NewGaussBrush(
                 color = color,
             )
         }
-
-        private fun samplePins(
-            mean: DoubleArray,
-            covariance: Array<DoubleArray>,
-            count: Int,
-        ): List<Point> =
-            List(count) {
-                MultivariateNormalDistribution(mean, covariance).sample().toTypedArray()
-            }.map { Point(*it) }
-
-        private fun absoluteNormalSamples(
-            mean: Number,
-            std: Number,
-            count: Int,
-        ): List<Float> = List(count) { abs(NormalDistribution(mean.toDouble(), std.toDouble()).sample()).toFloat() }
     }
 }
