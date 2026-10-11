@@ -37,18 +37,14 @@ class WaterColorBlob(
             depth: Int,
         ): Polygon {
             val points = mutableListOf<Point>()
+            val initialVariance = BASE_VARIANCE / (depth + 1)
             for (edge in polygon.edges) {
                 points.add(edge.start)
                 subdivide(
                     points = points,
                     line = edge,
                     depth = depth - 1,
-                    variance =
-                        SubdivisionVariance(
-                            length = BASE_VARIANCE / (depth + 1),
-                            angle =
-                                BASE_VARIANCE / (depth + 1),
-                        ),
+                    variance = SubdivisionVariance(length = initialVariance, angle = initialVariance),
                 )
             }
             return Polygon(points)
