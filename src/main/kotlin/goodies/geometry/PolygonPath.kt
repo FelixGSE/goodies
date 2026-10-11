@@ -38,8 +38,6 @@ class PolygonPath(
 
     override fun normalize(): PolygonPath = PolygonPath(vertexMatrix.normalize().rows)
 
-    override fun get(index: Int): Point = super[index]
-
     override fun iterator(): Iterator<Point> = vertices.iterator()
 
     /** Draws every edge on [sketch]. */
