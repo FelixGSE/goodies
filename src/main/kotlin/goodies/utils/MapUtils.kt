@@ -9,15 +9,211 @@ import processing.core.PConstants.PI
 // Taken from https://github.com/sighack/easing-functions/blob/master/code/easing/easing.pde
 
 enum class EaseFunctionType {
-    LINEAR,
-    QUADRATIC,
-    CUBIC,
-    QUARTIC,
-    QUINTIC,
-    SINUSOIDAL,
-    EXPONENTIAL,
-    CIRCULAR,
-    SQRT,
+    LINEAR {
+        override fun ease(
+            c: Float,
+            t: Float,
+            d: Float,
+            easingType: EasingType,
+        ): Float = c * t / d
+    },
+
+    QUADRATIC {
+        override fun ease(
+            c: Float,
+            t: Float,
+            d: Float,
+            easingType: EasingType,
+        ): Float =
+            when (easingType) {
+                EasingType.EASE_IN -> {
+                    c * (t / d) * (t / d)
+                }
+
+                EasingType.EASE_OUT -> {
+                    -c * (t / d) * (t / d - 2)
+                }
+
+                EasingType.EASE_IN_OUT -> {
+                    val s = t / (d / 2)
+                    if (s < 1) c / 2 * s * s else -c / 2 * ((s - 1) * (s - 1 - 2) - 1)
+                }
+            }
+    },
+
+    CUBIC {
+        override fun ease(
+            c: Float,
+            t: Float,
+            d: Float,
+            easingType: EasingType,
+        ): Float =
+            when (easingType) {
+                EasingType.EASE_IN -> {
+                    c * (t / d) * (t / d) * (t / d)
+                }
+
+                EasingType.EASE_OUT -> {
+                    val s = t / d - 1
+                    c * (s * s * s + 1)
+                }
+
+                EasingType.EASE_IN_OUT -> {
+                    val s = t / (d / 2)
+                    if (s < 1) c / 2 * s * s * s else c / 2 * ((s - 2f) * (s - 2f) * (s - 2f) + 2)
+                }
+            }
+    },
+
+    QUARTIC {
+        override fun ease(
+            c: Float,
+            t: Float,
+            d: Float,
+            easingType: EasingType,
+        ): Float =
+            when (easingType) {
+                EasingType.EASE_IN -> {
+                    c * (t / d) * (t / d) * (t / d) * (t / d)
+                }
+
+                EasingType.EASE_OUT -> {
+                    val s = t / d - 1
+                    -c * (s * s * s * s - 1)
+                }
+
+                EasingType.EASE_IN_OUT -> {
+                    val s = t / (d / 2)
+                    if (s < 1) c / 2 * s * s * s * s else -c / 2 * ((s - 2f) * (s - 2f) * (s - 2f) * (s - 2f) - 2)
+                }
+            }
+    },
+
+    QUINTIC {
+        override fun ease(
+            c: Float,
+            t: Float,
+            d: Float,
+            easingType: EasingType,
+        ): Float =
+            when (easingType) {
+                EasingType.EASE_IN -> {
+                    c * (t / d) * (t / d) * (t / d) * (t / d) * (t / d)
+                }
+
+                EasingType.EASE_OUT -> {
+                    val s = t / d - 1
+                    c * (s * s * s * s * s + 1)
+                }
+
+                EasingType.EASE_IN_OUT -> {
+                    val s = t / (d / 2)
+                    val u = s - 2f
+                    if (s < 1) c / 2 * s * s * s * s * s else c / 2 * (u * u * u * u * u + 2)
+                }
+            }
+    },
+
+    SINUSOIDAL {
+        override fun ease(
+            c: Float,
+            t: Float,
+            d: Float,
+            easingType: EasingType,
+        ): Float =
+            when (easingType) {
+                EasingType.EASE_IN -> -c * cos(t / d * (PI / 2)) + c
+                EasingType.EASE_OUT -> c * sin(t / d * (PI / 2))
+                EasingType.EASE_IN_OUT -> -c / 2 * (cos(PI * t / d) - 1)
+            }
+    },
+
+    EXPONENTIAL {
+        override fun ease(
+            c: Float,
+            t: Float,
+            d: Float,
+            easingType: EasingType,
+        ): Float =
+            when (easingType) {
+                EasingType.EASE_IN -> {
+                    c * pow(2F, EXPONENT_SCALE * (t / d - 1))
+                }
+
+                EasingType.EASE_OUT -> {
+                    c * (-pow(2F, -EXPONENT_SCALE * t / d) + 1)
+                }
+
+                EasingType.EASE_IN_OUT -> {
+                    val s = t / (d / 2)
+                    if (s <
+                        1
+                    ) {
+                        c / 2 * pow(2F, EXPONENT_SCALE * (s - 1))
+                    } else {
+                        c / 2 *
+                            (-pow(2F, -EXPONENT_SCALE * (s - 1)) + 2)
+                    }
+                }
+            }
+    },
+
+    CIRCULAR {
+        override fun ease(
+            c: Float,
+            t: Float,
+            d: Float,
+            easingType: EasingType,
+        ): Float =
+            when (easingType) {
+                EasingType.EASE_IN -> {
+                    val s = t / d
+                    -c * (sqrt(1 - s * s) - 1)
+                }
+
+                EasingType.EASE_OUT -> {
+                    val s = t / d - 1
+                    c * sqrt(1 - s * s)
+                }
+
+                EasingType.EASE_IN_OUT -> {
+                    val s = t / (d / 2)
+                    val u = s - 2f
+                    if (s < 1) -c / 2 * (sqrt(1 - s * s) - 1) else c / 2 * (sqrt(1 - u * u) + 1)
+                }
+            }
+    },
+
+    SQRT {
+        override fun ease(
+            c: Float,
+            t: Float,
+            d: Float,
+            easingType: EasingType,
+        ): Float =
+            when (easingType) {
+                EasingType.EASE_IN -> {
+                    c * pow(t / d, SQRT_EXPONENT)
+                }
+
+                EasingType.EASE_OUT -> {
+                    c * (1 - pow(1 - t / d, SQRT_EXPONENT))
+                }
+
+                EasingType.EASE_IN_OUT -> {
+                    val s = t / (d / 2)
+                    if (s < 1) c / 2 * pow(s, SQRT_EXPONENT) else c / 2 * (2 - pow(2 - s, SQRT_EXPONENT))
+                }
+            }
+    },
+    ;
+
+    internal abstract fun ease(
+        c: Float,
+        t: Float,
+        d: Float,
+        easingType: EasingType,
+    ): Float
 }
 
 enum class EasingType {
@@ -38,191 +234,10 @@ fun map2(
     val c = stop2 - start2
     val t = value - start1
     val d = stop1 - start1
-    return easings.getValue(type)(c, t, d, easingType) + start2
+    return type.ease(c = c, t = t, d = d, easingType = easingType) + start2
 }
 
-private typealias Easing = (c: Float, t: Float, d: Float, easingType: EasingType) -> Float
-
-private val easings: Map<EaseFunctionType, Easing> =
-    mapOf(
-        EaseFunctionType.LINEAR to { c, t, d, _ -> c * t / d },
-        EaseFunctionType.SQRT to ::easeSqrt,
-        EaseFunctionType.QUADRATIC to ::easeQuadratic,
-        EaseFunctionType.CUBIC to ::easeCubic,
-        EaseFunctionType.QUARTIC to ::easeQuartic,
-        EaseFunctionType.QUINTIC to ::easeQuintic,
-        EaseFunctionType.SINUSOIDAL to ::easeSinusoidal,
-        EaseFunctionType.EXPONENTIAL to ::easeExponential,
-        EaseFunctionType.CIRCULAR to ::easeCircular,
-    )
-
 private const val SQRT_EXPONENT = 0.5f
-
-private fun easeSqrt(
-    c: Float,
-    t: Float,
-    d: Float,
-    easingType: EasingType,
-): Float =
-    when (easingType) {
-        EasingType.EASE_IN -> {
-            c * pow(t / d, SQRT_EXPONENT)
-        }
-
-        EasingType.EASE_OUT -> {
-            c * (1 - pow(1 - t / d, SQRT_EXPONENT))
-        }
-
-        EasingType.EASE_IN_OUT -> {
-            val s = t / (d / 2)
-            if (s < 1) c / 2 * pow(s, SQRT_EXPONENT) else c / 2 * (2 - pow(2 - s, SQRT_EXPONENT))
-        }
-    }
-
-private fun easeQuadratic(
-    c: Float,
-    t: Float,
-    d: Float,
-    easingType: EasingType,
-): Float =
-    when (easingType) {
-        EasingType.EASE_IN -> {
-            c * (t / d) * (t / d)
-        }
-
-        EasingType.EASE_OUT -> {
-            -c * (t / d) * (t / d - 2)
-        }
-
-        EasingType.EASE_IN_OUT -> {
-            val s = t / (d / 2)
-            if (s < 1) c / 2 * s * s else -c / 2 * ((s - 1) * (s - 1 - 2) - 1)
-        }
-    }
-
-private fun easeCubic(
-    c: Float,
-    t: Float,
-    d: Float,
-    easingType: EasingType,
-): Float =
-    when (easingType) {
-        EasingType.EASE_IN -> {
-            c * (t / d) * (t / d) * (t / d)
-        }
-
-        EasingType.EASE_OUT -> {
-            val s = t / d - 1
-            c * (s * s * s + 1)
-        }
-
-        EasingType.EASE_IN_OUT -> {
-            val s = t / (d / 2)
-            if (s < 1) c / 2 * s * s * s else c / 2 * ((s - 2f) * (s - 2f) * (s - 2f) + 2)
-        }
-    }
-
-private fun easeQuartic(
-    c: Float,
-    t: Float,
-    d: Float,
-    easingType: EasingType,
-): Float =
-    when (easingType) {
-        EasingType.EASE_IN -> {
-            c * (t / d) * (t / d) * (t / d) * (t / d)
-        }
-
-        EasingType.EASE_OUT -> {
-            val s = t / d - 1
-            -c * (s * s * s * s - 1)
-        }
-
-        EasingType.EASE_IN_OUT -> {
-            val s = t / (d / 2)
-            if (s < 1) c / 2 * s * s * s * s else -c / 2 * ((s - 2f) * (s - 2f) * (s - 2f) * (s - 2f) - 2)
-        }
-    }
-
-private fun easeQuintic(
-    c: Float,
-    t: Float,
-    d: Float,
-    easingType: EasingType,
-): Float =
-    when (easingType) {
-        EasingType.EASE_IN -> {
-            c * (t / d) * (t / d) * (t / d) * (t / d) * (t / d)
-        }
-
-        EasingType.EASE_OUT -> {
-            val s = t / d - 1
-            c * (s * s * s * s * s + 1)
-        }
-
-        EasingType.EASE_IN_OUT -> {
-            val s = t / (d / 2)
-            val u = s - 2f
-            if (s < 1) c / 2 * s * s * s * s * s else c / 2 * (u * u * u * u * u + 2)
-        }
-    }
-
-private fun easeSinusoidal(
-    c: Float,
-    t: Float,
-    d: Float,
-    easingType: EasingType,
-): Float =
-    when (easingType) {
-        EasingType.EASE_IN -> -c * cos(t / d * (PI / 2)) + c
-        EasingType.EASE_OUT -> c * sin(t / d * (PI / 2))
-        EasingType.EASE_IN_OUT -> -c / 2 * (cos(PI * t / d) - 1)
-    }
-
-private fun easeExponential(
-    c: Float,
-    t: Float,
-    d: Float,
-    easingType: EasingType,
-): Float =
-    when (easingType) {
-        EasingType.EASE_IN -> {
-            c * pow(2F, EXPONENT_SCALE * (t / d - 1))
-        }
-
-        EasingType.EASE_OUT -> {
-            c * (-pow(2F, -EXPONENT_SCALE * t / d) + 1)
-        }
-
-        EasingType.EASE_IN_OUT -> {
-            val s = t / (d / 2)
-            if (s < 1) c / 2 * pow(2F, EXPONENT_SCALE * (s - 1)) else c / 2 * (-pow(2F, -EXPONENT_SCALE * (s - 1)) + 2)
-        }
-    }
-
-private fun easeCircular(
-    c: Float,
-    t: Float,
-    d: Float,
-    easingType: EasingType,
-): Float =
-    when (easingType) {
-        EasingType.EASE_IN -> {
-            val s = t / d
-            -c * (sqrt(1 - s * s) - 1)
-        }
-
-        EasingType.EASE_OUT -> {
-            val s = t / d - 1
-            c * sqrt(1 - s * s)
-        }
-
-        EasingType.EASE_IN_OUT -> {
-            val s = t / (d / 2)
-            val u = s - 2f
-            if (s < 1) -c / 2 * (sqrt(1 - s * s) - 1) else c / 2 * (sqrt(1 - u * u) + 1)
-        }
-    }
 
 /*
  * A map() replacement that allows for specifying easing curves
