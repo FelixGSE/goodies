@@ -31,6 +31,10 @@ coverage: ## Run the tests with coverage, fail below MIN (e.g. make coverage MIN
 	$(GRADLE) test jacocoTestReport jacocoTestCoverageVerification -PcoverageMinimum=$(MIN) $(TEST_FILTER)
 	@echo "Report: build/reports/jacoco/test/html/index.html"
 
+.PHONY: check
+check: ## Every gate Gradle knows: compile, tests, architecture tests
+	$(GRADLE) check
+
 .PHONY: clean
 clean: ## Delete build output
 	$(GRADLE) clean
