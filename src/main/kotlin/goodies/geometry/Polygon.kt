@@ -171,8 +171,10 @@ open class Polygon(
     }
 
     /**
-     * Returns nested polygons, each through points at a random fraction in [lower, upper] along the edges of the one
-     * before.
+     * Returns nested polygons, each through points at a fraction along the edges of the one before.
+     *
+     * Only the first level draws its fraction at random from [lower, upper]; the deeper levels always use 0.1.
+     * DESIGN: CODE-1 asks for [lower, upper] on every level.
      *
      * The result has [iterations] + 1 entries, innermost first; the innermost appears twice and this polygon is not
      * included.
