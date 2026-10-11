@@ -18,7 +18,7 @@ class WaterColorBlob(
         n: Int,
         depth: Int,
     ) {
-        for (i in 0 until n) {
+        repeat(n) {
             deformedPolygons.add(deform(basePolygon, depth))
         }
     }

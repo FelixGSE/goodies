@@ -5,7 +5,6 @@
     <ID>AbstractClassCanBeConcreteClass:GoodiesSketch.kt:GoodiesSketch$GoodiesSketch</ID>
     <ID>BooleanPropertyNaming:GMatrix.kt:GMatrix$val containsNegative = eigenValues.any { it &lt; 0 }</ID>
     <ID>BooleanPropertyNaming:GMatrix.kt:GMatrix$val containsPositive = eigenValues.any { it > 0 }</ID>
-    <ID>BooleanPropertyNaming:GoodiesSketch.kt:GoodiesSketch$private val exitOnSave = true</ID>
     <ID>BooleanPropertyNaming:Polygon.kt:Polygon$var inside = false</ID>
     <ID>CascadingCallWrapping:ListUtils.kt:toList()</ID>
     <ID>CognitiveComplexMethod:ChaikinCurve.kt:ChaikinCurve.Companion$private fun fitChaikinCurve: PolygonLikeShape</ID>
@@ -18,8 +17,6 @@
     <ID>CyclomaticComplexMethod:SimpleFont2.kt:SimpleFont2$fun drawLetter</ID>
     <ID>DoubleMutabilityForCollection:GaussBrush.kt:GaussBrush$var currentPositions = brushPins.toMutableList()</ID>
     <ID>EmptyFunctionBlock:StreamLineIntegrator.kt:StreamLineIntegrator${ }</ID>
-    <ID>EmptyIfBlock:SimpleFont.kt:SimpleFont${ }</ID>
-    <ID>EmptyIfBlock:SimpleFont2.kt:SimpleFont2${ }</ID>
     <ID>ExplicitCollectionElementAccessMethod:PolygonPath.kt:PolygonPath$super.get(index)</ID>
     <ID>ForbiddenComment:RotationMatrix.kt:RotationMatrix.Companion$// TODO: -1 correct?</ID>
     <ID>ForbiddenMethodCall:Point.kt:Point$println( "[WARNING] setMag() returns a new Vector instead of modifying the old one. Overwrite you variable " + "with the result of setMag()", )</ID>
@@ -94,7 +91,6 @@
     <ID>SpreadOperator:Point.kt:Point.Companion$(*drawPointOnUnitNSphere(dimensions).toArray().toTypedArray())</ID>
     <ID>StringLiteralDuplication:GMatrix.kt:GMatrix$"Matrix must be square"</ID>
     <ID>StringLiteralDuplication:GMatrix.kt:GMatrix$"column"</ID>
-    <ID>StringLiteralDuplication:GoodiesSketch.kt:GoodiesSketch$"Desktop"</ID>
     <ID>StringLiteralDuplication:Point.kt:Point$"Invalid dimensions. Point must have at least 3 dimensions for this method"</ID>
     <ID>StringLiteralDuplication:Point.kt:Point$"Point does not have enough dimensions"</ID>
     <ID>TooManyFunctions:GMatrix.kt:GMatrix : IterableGraphicsMatrix</ID>
@@ -307,16 +303,7 @@
     <ID>UndocumentedPublicFunction:Utils.kt:fun sumOfSquares: Float</ID>
     <ID>UnnecessaryParentheses:Polygon.kt:Polygon$( cross == 0.0F &amp;&amp; vertex.distance(currentVertex) > nextVertex.distance( currentVertex, ) )</ID>
     <ID>UnusedParameter:Utils.kt:margin: Number</ID>
-    <ID>UnusedPrivateFunction:GoodiesSketch.kt:GoodiesSketch$private fun saveAndExit</ID>
-    <ID>UnusedPrivateProperty:GoodiesSketch.kt:GoodiesSketch$private val availableSketchRenderer = listOf(P2D, P3D)</ID>
-    <ID>UnusedPrivateProperty:GoodiesSketch.kt:GoodiesSketch$private val defaultStrokeColor = 0</ID>
-    <ID>UnusedPrivateProperty:GoodiesSketch.kt:GoodiesSketch$private val defaultStrokeWeight = 1F</ID>
     <ID>UnusedPrivateProperty:OrthogonalProjectionMatrix.kt:OrthogonalProjectionMatrix$targetDimensions: Int</ID>
-    <ID>UnusedVariable:ChaikinCurve.kt:ChaikinCurve.Companion$i</ID>
-    <ID>UnusedVariable:DeJongAttractor.kt:DeJongAttractor$i</ID>
-    <ID>UnusedVariable:SimpleFont.kt:SimpleFont$val mid = scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).midPoint</ID>
-    <ID>UnusedVariable:SimpleFont2.kt:SimpleFont2$val mid = scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).midPoint</ID>
-    <ID>UnusedVariable:WaterColorBlob.kt:WaterColorBlob$i</ID>
     <ID>UseDataClass:ShapeTreeNode.kt:ShapeTreeNode&lt;T></ID>
     <ID>UseEmptyCounterpart:ListUtils.kt:listOf&lt;Number>()</ID>
     <ID>UseSumOfInsteadOfFlatMapSize:Grid2D.kt:Grid2D$flatten()</ID>

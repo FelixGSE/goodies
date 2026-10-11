@@ -549,8 +549,6 @@ class SimpleFont2(
         val topLeft = scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).start
         val topRight = scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).end
 
-        val mid = scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).midPoint
-
         val offSet = PVector(0F, upperYMax * scale.toFloat())
 
         val bottomLeft =
@@ -899,8 +897,6 @@ class SimpleFont2(
         scale: Number,
     ) {
         for ((i, letter) in letters.withIndex()) {
-            if (letter == 'I') {
-            }
             val pos = Point(position.x + offset.toFloat() * i, position.y)
             drawLetter(sketch = sketch, letter = letter.toString(), position = pos, scale = scale)
         }

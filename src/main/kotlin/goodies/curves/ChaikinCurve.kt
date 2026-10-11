@@ -39,8 +39,8 @@ class ChaikinCurve(
         ): PolygonLikeShape {
             var lines = initialEdges
 
-            for (i in 0..iterations) {
-                val shorts = lines.map { shortenLine(it) }
+            repeat(iterations + 1) {
+                val shorts = lines.map { line -> shortenLine(line) }
 
                 val newLines = mutableListOf<Line>()
                 for (j in 0 until shorts.size - 1) {

@@ -30,7 +30,7 @@ data class DeJongAttractor(
         sketch.pushMatrix()
         sketch.translate(location.x, location.y)
         var current = this
-        for (i in 0..maxIterations) {
+        repeat(maxIterations + 1) {
             current = current.next()
             sketch.point(current.x * scale, current.y * scale)
         }
