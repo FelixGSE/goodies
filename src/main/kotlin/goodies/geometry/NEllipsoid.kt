@@ -19,9 +19,7 @@ open class NEllipsoid(
     val dimensions = centerPoint.dimensions
 
     val center: Point
-        get() {
-            return centerPoint.copy()
-        }
+        get() = centerPoint.copy()
 
     init {
         if (dimensions < 2) {

@@ -16,21 +16,13 @@ open class Quadrilateral(
     }
 
     val a: Point
-        get() {
-            return vertices[0]
-        }
+        get() = vertices[0]
     val b: Point
-        get() {
-            return vertices[1]
-        }
+        get() = vertices[1]
     val c: Point
-        get() {
-            return vertices[2]
-        }
+        get() = vertices[2]
     val d: Point
-        get() {
-            return vertices[3]
-        }
+        get() = vertices[3]
 
     private fun oppositeSideIndex(side: Int): Int =
         when (side) {

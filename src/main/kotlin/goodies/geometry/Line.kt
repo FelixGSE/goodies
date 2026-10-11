@@ -45,39 +45,25 @@ class Line(
     fun copy(): Line = Line(start, end)
 
     val dimensions: Int
-        get() {
-            return a.dimensions
-        }
+        get() = a.dimensions
 
     val direction: Point
-        get() {
-            return b - a
-        }
+        get() = b - a
 
     override val vertices: List<Point>
-        get() {
-            return listOf(start, end)
-        }
+        get() = listOf(start, end)
 
     val start: Point
-        get() {
-            return a.copy()
-        }
+        get() = a.copy()
 
     val end: Point
-        get() {
-            return b.copy()
-        }
+        get() = b.copy()
 
     val reversed: Line
-        get() {
-            return Line(end, start)
-        }
+        get() = Line(end, start)
 
     val length: Float
-        get() {
-            return a.distance(b)
-        }
+        get() = a.distance(b)
 
     override fun addDimensions(vararg dimension: Number): Line = Line(a.extend(*dimension), b.extend(*dimension))
 

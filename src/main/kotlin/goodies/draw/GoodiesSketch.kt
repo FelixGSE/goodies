@@ -18,9 +18,7 @@ abstract class GoodiesSketch : PApplet() {
     private val exitOnSave = true
 
     val center: Point
-        get() {
-            return Point(width / 2, height / 2)
-        }
+        get() = Point(width / 2, height / 2)
 
     override fun settings() {
         fullScreen(sketchRenderer)

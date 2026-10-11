@@ -80,16 +80,7 @@
     <ID>ExpressionBodySyntax:GMatrix.kt:GMatrix$return eigenValues.all { it >= 0.0 }</ID>
     <ID>ExpressionBodySyntax:GMatrix.kt:GMatrix$return matrix.isSquare</ID>
     <ID>ExpressionBodySyntax:GMatrix.kt:GMatrix$return transpose == inverse</ID>
-    <ID>ExpressionBodySyntax:GoodiesSketch.kt:GoodiesSketch$return Point(width / 2, height / 2)</ID>
-    <ID>ExpressionBodySyntax:Line.kt:Line$return Line(end, start)</ID>
-    <ID>ExpressionBodySyntax:Line.kt:Line$return a.copy()</ID>
-    <ID>ExpressionBodySyntax:Line.kt:Line$return a.dimensions</ID>
-    <ID>ExpressionBodySyntax:Line.kt:Line$return a.distance(b)</ID>
-    <ID>ExpressionBodySyntax:Line.kt:Line$return b - a</ID>
-    <ID>ExpressionBodySyntax:Line.kt:Line$return b.copy()</ID>
-    <ID>ExpressionBodySyntax:Line.kt:Line$return listOf(start, end)</ID>
     <ID>ExpressionBodySyntax:Line.kt:Line$return scaleFromStart(0.5).end</ID>
-    <ID>ExpressionBodySyntax:NEllipsoid.kt:NEllipsoid$return centerPoint.copy()</ID>
     <ID>ExpressionBodySyntax:Polygon.kt:Polygon$return Point(GMatrix(vertices).rows.map { it.average() })</ID>
     <ID>ExpressionBodySyntax:Polygon.kt:Polygon$return PolygonPath(directionsForListOfPoints(vertices, isClosed))</ID>
     <ID>ExpressionBodySyntax:Polygon.kt:Polygon$return edges.map { it.length }.sum()</ID>
@@ -97,10 +88,6 @@
     <ID>ExpressionBodySyntax:PolygonLikeShape.kt:PolygonLikeShape$return listOfPointsToListOfLines(vertices, closed = isClosed)</ID>
     <ID>ExpressionBodySyntax:PolygonPath.kt:PolygonPath$return vertices.first()</ID>
     <ID>ExpressionBodySyntax:PolygonPath.kt:PolygonPath$return vertices.last()</ID>
-    <ID>ExpressionBodySyntax:Quadrilateral.kt:Quadrilateral$return vertices[0]</ID>
-    <ID>ExpressionBodySyntax:Quadrilateral.kt:Quadrilateral$return vertices[1]</ID>
-    <ID>ExpressionBodySyntax:Quadrilateral.kt:Quadrilateral$return vertices[2]</ID>
-    <ID>ExpressionBodySyntax:Quadrilateral.kt:Quadrilateral$return vertices[3]</ID>
     <ID>ForbiddenComment:RotationMatrix.kt:RotationMatrix.Companion$// FIXME</ID>
     <ID>ForbiddenComment:RotationMatrix.kt:RotationMatrix.Companion$// TODO: -1 correct?</ID>
     <ID>ForbiddenMethodCall:Point.kt:Point$println( "[WARNING] setMag() returns a new Vector instead of modifying the old one. Overwrite you variable " + "with the result of setMag()", )</ID>
