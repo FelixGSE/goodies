@@ -11,10 +11,10 @@ data class DeJongAttractor(
     val c: Float,
     val d: Float,
 ) {
-    constructor(a: Float, b: Float, c: Float, d: Float) : this(0f, 0f, a, b, c, d)
-
     val location: PVector
         get() = PVector(x, y)
+
+    constructor(a: Float, b: Float, c: Float, d: Float) : this(0f, 0f, a, b, c, d)
 
     fun next(): DeJongAttractor {
         val xNext = PApplet.sin(a * y) - PApplet.cos(b * x)

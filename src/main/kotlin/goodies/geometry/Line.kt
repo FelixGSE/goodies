@@ -18,12 +18,36 @@ class Line(
     OpenShape,
     Geom,
     Drawable {
-    constructor(points: Iterable<Point>) : this(points.first(), points.last()) {
-        require(points.count() == 2) { "Iterable must contain exactly two points" }
-    }
-
     init {
         require(a.dimensions == b.dimensions) { "Points A and B must have equal dimensions" }
+    }
+
+    val dimensions: Int
+        get() = a.dimensions
+
+    val direction: Point
+        get() = b - a
+
+    val start: Point
+        get() = a.copy()
+
+    val end: Point
+        get() = b.copy()
+
+    override val vertices: List<Point>
+        get() = listOf(start, end)
+
+    val reversed: Line
+        get() = Line(a = end, b = start)
+
+    val length: Float
+        get() = a.distance(b)
+
+    val midpoint: Point
+        get() = scaleFromStart(0.5).end
+
+    constructor(points: Iterable<Point>) : this(points.first(), points.last()) {
+        require(points.count() == 2) { "Iterable must contain exactly two points" }
     }
 
     override fun equals(other: Any?): Boolean {
@@ -43,27 +67,6 @@ class Line(
     override fun toString(): String = "Line(a=$a, b=$b)"
 
     fun copy(): Line = Line(a = start, b = end)
-
-    val dimensions: Int
-        get() = a.dimensions
-
-    val direction: Point
-        get() = b - a
-
-    override val vertices: List<Point>
-        get() = listOf(start, end)
-
-    val start: Point
-        get() = a.copy()
-
-    val end: Point
-        get() = b.copy()
-
-    val reversed: Line
-        get() = Line(a = end, b = start)
-
-    val length: Float
-        get() = a.distance(b)
 
     override fun addDimensions(vararg dimension: Number): Line =
         Line(a = a.extend(*dimension), b = b.extend(*dimension))
@@ -99,11 +102,6 @@ class Line(
         )
 
     override fun scale(factor: Number): Line = Line(a = a.scale(factor), b = b.scale(factor))
-
-    val midpoint: Point
-        get() {
-            return scaleFromStart(0.5).end
-        }
 
     fun scaleFromStart(factor: Number): Line = Line(a = start, b = start + factor * (end - start))
 
@@ -147,6 +145,14 @@ class Line(
         return Line(a = start, b = newEnd)
     }
 
+    override fun draw(sketch: PApplet) {
+        when (dimensions) {
+            2 -> sketch.line(a.x, a.y, b.x, b.y)
+            3 -> sketch.line(a.x, a.y, a.z, b.x, b.y, b.z)
+            else -> throw IllegalArgumentException("Can only draw 2D and 3D objects")
+        }
+    }
+
     companion object {
         fun fromPVector2D(
             start: PVector,
@@ -178,19 +184,4 @@ class Line(
             x: Float,
         ): Line = Line(a = Point(x, 0f), b = Point(x, sketch.height.toFloat()))
     }
-
-    override fun draw(sketch: PApplet) =
-        when (dimensions) {
-            2 -> {
-                sketch.line(a.x, a.y, b.x, b.y)
-            }
-
-            3 -> {
-                sketch.line(a.x, a.y, a.z, b.x, b.y, b.z)
-            }
-
-            else -> {
-                throw IllegalArgumentException("Can only draw 2D and 3D objects")
-            }
-        }
 }

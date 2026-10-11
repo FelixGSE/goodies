@@ -7,10 +7,6 @@ import processing.core.PApplet
 open class Quadrilateral(
     vertices: List<Point>,
 ) : Polygon(vertices) {
-    constructor(vararg vertices: Point) : this(vertices.toList())
-
-    constructor(first: Point, second: Point, third: Point, fourth: Point) : this(listOf(first, second, third, fourth))
-
     init {
         require(vertices.size == 4) { "Quadrilateral must have 4 vertices" }
     }
@@ -23,6 +19,10 @@ open class Quadrilateral(
         get() = vertices[2]
     val d: Point
         get() = vertices[3]
+
+    constructor(vararg vertices: Point) : this(vertices.toList())
+
+    constructor(first: Point, second: Point, third: Point, fourth: Point) : this(listOf(first, second, third, fourth))
 
     private fun oppositeSideIndex(side: Int): Int =
         when (side) {

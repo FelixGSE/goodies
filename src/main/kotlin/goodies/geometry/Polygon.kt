@@ -15,6 +15,24 @@ open class Polygon(
 ) : PolygonLikeShape,
     ClosedShape,
     Geom {
+    val directions: PolygonPath
+        get() = PolygonPath(directionsForListOfPoints(vertices, isClosed))
+
+    override val centroid: Point
+        get() = Point(GMatrix(vertices).rows.map { it.average() })
+
+    val perimeter: Float
+        get() = edges.map { it.length }.sum()
+
+    override val isConvex: Boolean
+        get() {
+            if (vertices.size <= 3) {
+                return true
+            }
+
+            return convexHull().vertices.size == vertices.size
+        }
+
     constructor(vararg vertices: Point) : this(vertices.toList())
 
     override fun translate(vararg translation: Number): Polygon {
@@ -33,16 +51,6 @@ open class Polygon(
     }
 
     override fun hashCode(): Int = vertices.hashCode()
-
-    val directions: PolygonPath
-        get() {
-            return PolygonPath(directionsForListOfPoints(vertices, isClosed))
-        }
-
-    override val centroid: Point
-        get() {
-            return Point(GMatrix(vertices).rows.map { it.average() })
-        }
 
     override fun center(): Polygon = Polygon(vertexMatrix.center().rows)
 
@@ -63,11 +71,6 @@ open class Polygon(
         ).rotate(angle).translate(referencePoint)
 
     fun rotate(angle: Number): Polygon = Polygon(vertices.map { it.rotate(angle) })
-
-    val perimeter: Float
-        get() {
-            return edges.map { it.length }.sum()
-        }
 
     fun randomPointOn(): Point {
         val weights = edges.map { it.length / perimeter }
@@ -111,15 +114,6 @@ open class Polygon(
 
         return Polygon(hull)
     }
-
-    override val isConvex: Boolean
-        get() {
-            if (vertices.size <= 3) {
-                return true
-            }
-
-            return convexHull().vertices.size == vertices.size
-        }
 
     fun interiorAngles(): List<Float> {
         val n = vertices.size

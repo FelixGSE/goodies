@@ -10,27 +10,11 @@ class PolygonPath(
 ) : PolygonLikeShape,
     OpenShape,
     Iterable<Point> {
-    constructor(vararg vertices: Point) : this(vertices.toList())
-
-    override fun center(): PolygonPath = PolygonPath(vertexMatrix.center().rows)
-
-    fun translate(translation: Point): PolygonPath = PolygonPath(vertices.map { it + translation })
-
-    override fun centerAt(point: Point): Shape = center().translate(point)
-
-    override fun normalize(): PolygonPath = PolygonPath(vertexMatrix.normalize().rows)
-
     val start: Point
-        get() {
-            return vertices.first()
-        }
+        get() = vertices.first()
 
     val end: Point
-        get() {
-            return vertices.last()
-        }
-
-    override fun get(index: Int): Point = super.get(index)
+        get() = vertices.last()
 
     val directions: PolygonPath
         get() {
@@ -41,6 +25,18 @@ class PolygonPath(
             }
             return PolygonPath(diffs)
         }
+
+    constructor(vararg vertices: Point) : this(vertices.toList())
+
+    override fun center(): PolygonPath = PolygonPath(vertexMatrix.center().rows)
+
+    fun translate(translation: Point): PolygonPath = PolygonPath(vertices.map { it + translation })
+
+    override fun centerAt(point: Point): Shape = center().translate(point)
+
+    override fun normalize(): PolygonPath = PolygonPath(vertexMatrix.normalize().rows)
+
+    override fun get(index: Int): Point = super.get(index)
 
     override fun iterator(): Iterator<Point> = vertices.iterator()
 

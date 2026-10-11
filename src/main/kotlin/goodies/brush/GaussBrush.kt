@@ -19,6 +19,34 @@ class GaussBrush(
 ) : Brush {
     private val numberOfPoints = brushPins.size
 
+    fun draw(
+        sketch: PApplet,
+        path: PolygonPath,
+    ) {
+        var currentPositions = brushPins.toMutableList()
+        for (direction in path.directions) {
+            for (i in 0 until numberOfPoints) {
+                val currentPosition = currentPositions[i]
+                val nextPosition = currentPosition + direction
+                val line = Line(currentPosition.toPVector(), nextPosition.toPVector())
+                val midpoint = line.midPoint
+                val lineThicknessNoise =
+                    PApplet.map(
+                        sketch.noise(midpoint.x * sizeNoiseScale, midpoint.y * sizeNoiseScale),
+                        0F,
+                        1F,
+                        sizeNoiseLowerBound,
+                        sizeNoiseUpperBound,
+                    )
+                val weight = pinSizes[i] + lineThicknessNoise
+                sketch.strokeWeight(pinSizes[i] + weight)
+                sketch.stroke(color, pinOpacity[i])
+                line.draw(sketch)
+                currentPositions[i] = nextPosition
+            }
+        }
+    }
+
     companion object {
         fun initBrush(
             start: Point,
@@ -69,34 +97,6 @@ class GaussBrush(
                 pinOpacity = pinOpacity,
                 color = color,
             )
-        }
-    }
-
-    fun draw(
-        sketch: PApplet,
-        path: PolygonPath,
-    ) {
-        var currentPositions = brushPins.toMutableList()
-        for (direction in path.directions) {
-            for (i in 0 until numberOfPoints) {
-                val currentPosition = currentPositions[i]
-                val nextPosition = currentPosition + direction
-                val line = Line(currentPosition.toPVector(), nextPosition.toPVector())
-                val midpoint = line.midPoint
-                val lineThicknessNoise =
-                    PApplet.map(
-                        sketch.noise(midpoint.x * sizeNoiseScale, midpoint.y * sizeNoiseScale),
-                        0F,
-                        1F,
-                        sizeNoiseLowerBound,
-                        sizeNoiseUpperBound,
-                    )
-                val weight = pinSizes[i] + lineThicknessNoise
-                sketch.strokeWeight(pinSizes[i] + weight)
-                sketch.stroke(color, pinOpacity[i])
-                line.draw(sketch)
-                currentPositions[i] = nextPosition
-            }
         }
     }
 }

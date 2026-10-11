@@ -21,38 +21,29 @@ class Point(
     private val coordinates = MatrixUtils.createRealVector(coordinates.map { it.toDouble() }.toDoubleArray())
     val dimensions: Int = coordinates.size
 
+    val x: Float
+        get() {
+            require(dimensions > 0) { "Point does not have enough dimensions" }
+            return this[0]
+        }
+
+    val y: Float
+        get() {
+            require(dimensions > 1) { "Point does not have enough dimensions" }
+            return this[1]
+        }
+
+    val z: Float
+        get() {
+            require(dimensions > 2) { "Point does not have enough dimensions" }
+            return this[2]
+        }
+
     constructor(coordinates: List<Number>) : this(*coordinates.toTypedArray())
     constructor(coordinates: RealVector) : this(*coordinates.toArray().toTypedArray())
     constructor(pVector: PVector) : this(*pVector.array().toTypedArray())
 
     override fun toString(): String = "Point(dimensions=$dimensions, coordinates=$coordinates)"
-
-    val x: Float
-        get() {
-            if (this.dimensions > 0) {
-                return this[0]
-            } else {
-                throw IllegalArgumentException("Point does not have enough dimensions")
-            }
-        }
-
-    val y: Float
-        get() {
-            if (this.dimensions > 1) {
-                return this[1]
-            } else {
-                throw IllegalArgumentException("Point does not have enough dimensions")
-            }
-        }
-
-    val z: Float
-        get() {
-            if (this.dimensions > 2) {
-                return this[2]
-            } else {
-                throw IllegalArgumentException("Point does not have enough dimensions")
-            }
-        }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

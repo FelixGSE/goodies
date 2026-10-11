@@ -20,6 +20,8 @@ class RotationMatrix(
         angle,
     )
 
+    fun toGMatrix(): GMatrix = GMatrix(toRealMatrix().copy())
+
     companion object {
         fun getRotationMatrixForAxis(
             i: Int,
@@ -61,6 +63,4 @@ class RotationMatrix(
 
         fun getNumberOfRotations(dimensions: Int): Int = (0 until dimensions).sum()
     }
-
-    fun toGMatrix(): GMatrix = GMatrix(toRealMatrix().copy())
 }

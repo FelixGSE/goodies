@@ -1,6 +1,7 @@
 package goodies.algebra
 
 import goodies.geometry.Point
+import org.apache.commons.math3.linear.DefaultRealMatrixChangingVisitor
 import org.apache.commons.math3.linear.EigenDecomposition
 import org.apache.commons.math3.linear.LUDecomposition
 import org.apache.commons.math3.linear.MatrixUtils
@@ -12,6 +13,135 @@ open class GMatrix(
 ) : Iterable<Point>,
     Graphics,
     Matrix {
+    val size: Pair<Int, Int>
+        get() = Pair(first = matrix.rowDimension, second = matrix.columnDimension)
+
+    val isSquare: Boolean
+        get() = matrix.isSquare
+
+    val rows: List<Point>
+        get() {
+            val rowList = mutableListOf<Point>()
+            for (i in 0 until size.first) {
+                rowList.add(Point(matrix.getRowVector(i)))
+            }
+            return rowList.toList()
+        }
+
+    val columns: List<Point>
+        get() {
+            val columnList = mutableListOf<Point>()
+            for (i in 0 until size.first) {
+                columnList.add(Point(matrix.getColumnVector(i)))
+            }
+            return columnList.toList()
+        }
+
+    val copy: GMatrix
+        get() = GMatrix(matrix.copy())
+
+    val transpose: GMatrix
+        get() = GMatrix(matrix.transpose())
+
+    val inverse: GMatrix
+        get() {
+            require(isSquare) { "Matrix must be square" }
+            return GMatrix(LUDecomposition(matrix).solver.inverse)
+        }
+
+    val isSymmetric: Boolean
+        get() = MatrixUtils.isSymmetric(matrix, 0.000_001)
+
+    val isSingular: Boolean
+        get() = LUDecomposition(matrix).solver.isNonSingular
+
+    val isOrthogonal: Boolean
+        get() = transpose == inverse
+
+    val entrySum: Float
+        get() {
+            var sumVal = 0.0
+            matrix.walkInOptimizedOrder(
+                object : DefaultRealMatrixChangingVisitor() {
+                    override fun visit(
+                        row: Int,
+                        column: Int,
+                        value: Double,
+                    ): Double {
+                        sumVal += value
+                        return value
+                    }
+                },
+            )
+            return sumVal.toFloat()
+        }
+
+    val trace: Float
+        get() {
+            require(isSquare) { "Matrix must be square" }
+            return matrix.trace.toFloat()
+        }
+
+    override val determinant: Float
+        get() {
+            require(isSquare) { "Matrix must be square" }
+            return LUDecomposition(matrix).determinant.toFloat()
+        }
+
+    val rank: Int
+        get() {
+            val luDecomposition = LUDecomposition(matrix)
+            val rowEchelonForm = luDecomposition.u
+
+            var rank = 0
+            for (row in 0 until rowEchelonForm.rowDimension) {
+                val rowVector = rowEchelonForm.getRowVector(row)
+                if (rowVector.norm > 0.0) {
+                    rank++
+                }
+            }
+
+            return rank
+        }
+
+    val eigenValues: List<Float>
+        get() {
+            require(isSquare) { "Matrix must be square" }
+            return EigenDecomposition(matrix).realEigenvalues.map { it.toFloat() }
+        }
+
+    val eigenVectors: List<Point>
+        get() {
+            require(isSquare) { "Matrix must be square" }
+            return GMatrix(EigenDecomposition(matrix).v).columns
+        }
+
+    val svd: Triple<GMatrix, GMatrix, GMatrix>
+        get() {
+            val svd = SingularValueDecomposition(matrix)
+            return Triple(first = GMatrix(svd.u), second = GMatrix(svd.s), third = GMatrix(svd.v))
+        }
+
+    val isPositiveDefinite: Boolean
+        get() = eigenValues.all { it > 0.0 }
+
+    val isPositiveSemiDefinite: Boolean
+        get() = eigenValues.all { it >= 0.0 }
+
+    val isNegativeDefinite: Boolean
+        get() = eigenValues.all { it < 0.0 }
+
+    val isNegativeSemiDefinite: Boolean
+        get() = eigenValues.all { it <= 0.0 }
+
+    val isIndefinite: Boolean
+        get() {
+            val containsPositive = eigenValues.any { it > 0 }
+            val containsNegative = eigenValues.any { it < 0 }
+
+            return containsPositive && containsNegative
+        }
+
     constructor(values: List<List<Number>>) : this(
         MatrixUtils.createRealMatrix(
             values.map { it.map { inner -> inner.toDouble() }.toDoubleArray() }.toTypedArray(),
@@ -65,11 +195,6 @@ open class GMatrix(
 
     operator fun div(scalar: Number): GMatrix = GMatrix(matrix.scalarMultiply(1.0 / scalar.toDouble()))
 
-    val copy: GMatrix
-        get() {
-            return GMatrix(matrix.copy())
-        }
-
     override fun makeAffine(): GMatrix =
         GMatrix(columns.map { it.extend(0) } + listOf(Point(List(size.first) { 0 } + 1)))
 
@@ -99,99 +224,6 @@ open class GMatrix(
         return GMatrix(this.columns + matrix.columns)
     }
 
-    val size: Pair<Int, Int>
-        get() {
-            return Pair(matrix.rowDimension, matrix.columnDimension)
-        }
-
-    val isSquare: Boolean
-        get() {
-            return matrix.isSquare
-        }
-
-    val isSymmetric: Boolean
-        get() {
-            return MatrixUtils.isSymmetric(matrix, 0.000_001)
-        }
-
-    val isSingular: Boolean
-        get() {
-            return LUDecomposition(matrix).solver.isNonSingular
-        }
-
-    val isOrthogonal: Boolean
-        get() {
-            return transpose == inverse
-        }
-
-    val entrySum: Float
-        get() {
-
-            var sumVal = 0.0
-            matrix.walkInOptimizedOrder(
-                object : org.apache.commons.math3.linear.DefaultRealMatrixChangingVisitor() {
-                    override fun visit(
-                        row: Int,
-                        column: Int,
-                        value: Double,
-                    ): Double {
-                        sumVal += value
-                        return value
-                    }
-                },
-            )
-
-            return sumVal.toFloat()
-        }
-
-    val trace: Float
-        get() {
-            if (!isSquare) {
-                throw IllegalArgumentException("Matrix must be square")
-            } else {
-                return matrix.trace.toFloat()
-            }
-        }
-
-    override val determinant: Float
-        get() {
-            if (!isSquare) {
-                throw IllegalArgumentException("Matrix must be square")
-            } else {
-                return LUDecomposition(matrix).determinant.toFloat()
-            }
-        }
-
-    val rank: Int
-        get() {
-            val luDecomposition = LUDecomposition(matrix)
-            val rowEchelonForm = luDecomposition.u
-
-            var rank = 0
-            for (row in 0 until rowEchelonForm.rowDimension) {
-                val rowVector = rowEchelonForm.getRowVector(row)
-                if (rowVector.norm > 0.0) {
-                    rank++
-                }
-            }
-
-            return rank
-        }
-
-    val inverse: GMatrix
-        get() {
-            if (!isSquare) {
-                throw IllegalArgumentException("Matrix must be square")
-            } else {
-                return GMatrix(LUDecomposition(matrix).solver.inverse)
-            }
-        }
-
-    val transpose: GMatrix
-        get() {
-            return GMatrix(matrix.transpose())
-        }
-
     fun pow(exponent: Int): GMatrix = GMatrix(matrix.power(exponent))
 
     fun elementWiseTimes(otherMatrix: GMatrix): GMatrix {
@@ -207,82 +239,14 @@ open class GMatrix(
 
     fun getColumn(index: Int): Point = Point(matrix.getColumn(index).toList())
 
-    val rows: List<Point>
-        get() {
-
-            val rowList = mutableListOf<Point>()
-            for (i in 0 until size.first) {
-                rowList.add(Point(matrix.getRowVector(i)))
-            }
-            return rowList.toList()
-        }
-
-    val columns: List<Point>
-        get() {
-
-            val columnList = mutableListOf<Point>()
-            for (i in 0 until size.first) {
-                columnList.add(Point(matrix.getColumnVector(i)))
-            }
-            return columnList.toList()
-        }
-
     fun luDecomposition(): Triple<GMatrix, GMatrix, GMatrix> {
         val luDecomposition = LUDecomposition(matrix)
-        return Triple(GMatrix(luDecomposition.l), GMatrix(luDecomposition.u), GMatrix(luDecomposition.p))
+        return Triple(
+            first = GMatrix(luDecomposition.l),
+            second = GMatrix(luDecomposition.u),
+            third = GMatrix(luDecomposition.p),
+        )
     }
-
-    val eigenValues: List<Float>
-        get() {
-            if (!isSquare) {
-                throw IllegalArgumentException("Matrix must be square")
-            } else {
-                return EigenDecomposition(matrix).realEigenvalues.map { it.toFloat() }
-            }
-        }
-
-    val eigenVectors: List<Point>
-        get() {
-            if (!isSquare) {
-                throw IllegalArgumentException("Matrix must be square")
-            } else {
-                return GMatrix(EigenDecomposition(matrix).v).columns
-            }
-        }
-
-    val svd: Triple<GMatrix, GMatrix, GMatrix>
-        get() {
-            val svd = SingularValueDecomposition(matrix)
-            return Triple(GMatrix(svd.u), GMatrix(svd.s), GMatrix(svd.v))
-        }
-
-    val isPositiveDefinite: Boolean
-        get() {
-            return eigenValues.all { it > 0.0 }
-        }
-
-    val isPositiveSemiDefinite: Boolean
-        get() {
-            return eigenValues.all { it >= 0.0 }
-        }
-    val isNegativeDefinite: Boolean
-        get() {
-            return eigenValues.all { it < 0.0 }
-        }
-
-    val isNegativeSemiDefinite: Boolean
-        get() {
-            return eigenValues.all { it <= 0.0 }
-        }
-
-    val isIndefinite: Boolean
-        get() {
-
-            val containsPositive = eigenValues.any { it > 0 }
-            val containsNegative = eigenValues.any { it < 0 }
-
-            return containsPositive && containsNegative
-        }
 
     override fun toRealMatrix(): RealMatrix = matrix.copy()
 

@@ -8,54 +8,6 @@
     <ID>BooleanPropertyNaming:GoodiesSketch.kt:GoodiesSketch$private val exitOnSave = true</ID>
     <ID>BooleanPropertyNaming:Polygon.kt:Polygon$var inside = false</ID>
     <ID>CascadingCallWrapping:ListUtils.kt:toList()</ID>
-    <ID>ClassOrdering:DeJongAttractor.kt:DeJongAttractor$val location: PVector get() = PVector(x, y)</ID>
-    <ID>ClassOrdering:GMatrix.kt:GMatrix$override val determinant: Float get() { if (!isSquare) { throw IllegalArgumentException("Matrix must be square") } else { return LUDecomposition(matrix).determinant.toFloat() } }</ID>
-    <ID>ClassOrdering:GMatrix.kt:GMatrix$val columns: List&lt;Point> get() { val columnList = mutableListOf&lt;Point>() for (i in 0 until size.first) { columnList.add(Point(matrix.getColumnVector(i))) } return columnList.toList() }</ID>
-    <ID>ClassOrdering:GMatrix.kt:GMatrix$val copy: GMatrix get() { return GMatrix(matrix.copy()) }</ID>
-    <ID>ClassOrdering:GMatrix.kt:GMatrix$val eigenValues: List&lt;Float> get() { if (!isSquare) { throw IllegalArgumentException("Matrix must be square") } else { return EigenDecomposition(matrix).realEigenvalues.map { it.toFloat() } } }</ID>
-    <ID>ClassOrdering:GMatrix.kt:GMatrix$val eigenVectors: List&lt;Point> get() { if (!isSquare) { throw IllegalArgumentException("Matrix must be square") } else { return GMatrix(EigenDecomposition(matrix).v).columns } }</ID>
-    <ID>ClassOrdering:GMatrix.kt:GMatrix$val entrySum: Float get() { var sumVal = 0.0 matrix.walkInOptimizedOrder( object : org.apache.commons.math3.linear.DefaultRealMatrixChangingVisitor() { override fun visit( row: Int, column: Int, value: Double, ): Double { sumVal += value return value } }, ) return sumVal.toFloat() }</ID>
-    <ID>ClassOrdering:GMatrix.kt:GMatrix$val inverse: GMatrix get() { if (!isSquare) { throw IllegalArgumentException("Matrix must be square") } else { return GMatrix(LUDecomposition(matrix).solver.inverse) } }</ID>
-    <ID>ClassOrdering:GMatrix.kt:GMatrix$val isIndefinite: Boolean get() { val containsPositive = eigenValues.any { it > 0 } val containsNegative = eigenValues.any { it &lt; 0 } return containsPositive &amp;&amp; containsNegative }</ID>
-    <ID>ClassOrdering:GMatrix.kt:GMatrix$val isNegativeDefinite: Boolean get() { return eigenValues.all { it &lt; 0.0 } }</ID>
-    <ID>ClassOrdering:GMatrix.kt:GMatrix$val isNegativeSemiDefinite: Boolean get() { return eigenValues.all { it &lt;= 0.0 } }</ID>
-    <ID>ClassOrdering:GMatrix.kt:GMatrix$val isOrthogonal: Boolean get() { return transpose == inverse }</ID>
-    <ID>ClassOrdering:GMatrix.kt:GMatrix$val isPositiveDefinite: Boolean get() { return eigenValues.all { it > 0.0 } }</ID>
-    <ID>ClassOrdering:GMatrix.kt:GMatrix$val isPositiveSemiDefinite: Boolean get() { return eigenValues.all { it >= 0.0 } }</ID>
-    <ID>ClassOrdering:GMatrix.kt:GMatrix$val isSingular: Boolean get() { return LUDecomposition(matrix).solver.isNonSingular }</ID>
-    <ID>ClassOrdering:GMatrix.kt:GMatrix$val isSquare: Boolean get() { return matrix.isSquare }</ID>
-    <ID>ClassOrdering:GMatrix.kt:GMatrix$val isSymmetric: Boolean get() { return MatrixUtils.isSymmetric(matrix, 0.000_001) }</ID>
-    <ID>ClassOrdering:GMatrix.kt:GMatrix$val rank: Int get() { val luDecomposition = LUDecomposition(matrix) val rowEchelonForm = luDecomposition.u var rank = 0 for (row in 0 until rowEchelonForm.rowDimension) { val rowVector = rowEchelonForm.getRowVector(row) if (rowVector.norm > 0.0) { rank++ } } return rank }</ID>
-    <ID>ClassOrdering:GMatrix.kt:GMatrix$val rows: List&lt;Point> get() { val rowList = mutableListOf&lt;Point>() for (i in 0 until size.first) { rowList.add(Point(matrix.getRowVector(i))) } return rowList.toList() }</ID>
-    <ID>ClassOrdering:GMatrix.kt:GMatrix$val size: Pair&lt;Int, Int> get() { return Pair(matrix.rowDimension, matrix.columnDimension) }</ID>
-    <ID>ClassOrdering:GMatrix.kt:GMatrix$val svd: Triple&lt;GMatrix, GMatrix, GMatrix> get() { val svd = SingularValueDecomposition(matrix) return Triple(GMatrix(svd.u), GMatrix(svd.s), GMatrix(svd.v)) }</ID>
-    <ID>ClassOrdering:GMatrix.kt:GMatrix$val trace: Float get() { if (!isSquare) { throw IllegalArgumentException("Matrix must be square") } else { return matrix.trace.toFloat() } }</ID>
-    <ID>ClassOrdering:GMatrix.kt:GMatrix$val transpose: GMatrix get() { return GMatrix(matrix.transpose()) }</ID>
-    <ID>ClassOrdering:GaussBrush.kt:GaussBrush$fun draw</ID>
-    <ID>ClassOrdering:Line.kt:Line$constructor</ID>
-    <ID>ClassOrdering:Line.kt:Line$fun copy: Line</ID>
-    <ID>ClassOrdering:Line.kt:Line$override fun draw</ID>
-    <ID>ClassOrdering:Line.kt:Line$override fun equals: Boolean</ID>
-    <ID>ClassOrdering:Line.kt:Line$override fun hashCode: Int</ID>
-    <ID>ClassOrdering:Line.kt:Line$override fun toString: String</ID>
-    <ID>ClassOrdering:Line.kt:Line$val midpoint: Point get() { return scaleFromStart(0.5).end }</ID>
-    <ID>ClassOrdering:NEllipsoid.kt:NEllipsoid$override val isConvex: Boolean get() = true</ID>
-    <ID>ClassOrdering:NewGaussBrush.kt:NewGaussBrush$fun draw</ID>
-    <ID>ClassOrdering:Point.kt:Point$val x: Float get() { if (this.dimensions > 0) { return this[0] } else { throw IllegalArgumentException("Point does not have enough dimensions") } }</ID>
-    <ID>ClassOrdering:Point.kt:Point$val y: Float get() { if (this.dimensions > 1) { return this[1] } else { throw IllegalArgumentException("Point does not have enough dimensions") } }</ID>
-    <ID>ClassOrdering:Point.kt:Point$val z: Float get() { if (this.dimensions > 2) { return this[2] } else { throw IllegalArgumentException("Point does not have enough dimensions") } }</ID>
-    <ID>ClassOrdering:Polygon.kt:Polygon$override val centroid: Point get() { return Point(GMatrix(vertices).rows.map { it.average() }) }</ID>
-    <ID>ClassOrdering:Polygon.kt:Polygon$override val isConvex: Boolean get() { if (vertices.size &lt;= 3) { return true } return convexHull().vertices.size == vertices.size }</ID>
-    <ID>ClassOrdering:Polygon.kt:Polygon$val directions: PolygonPath get() { return PolygonPath(directionsForListOfPoints(vertices, isClosed)) }</ID>
-    <ID>ClassOrdering:Polygon.kt:Polygon$val perimeter: Float get() { return edges.map { it.length }.sum() }</ID>
-    <ID>ClassOrdering:PolygonLikeShape.kt:PolygonLikeShape$val edgeCount: Int get() { return edges.size }</ID>
-    <ID>ClassOrdering:PolygonLikeShape.kt:PolygonLikeShape$val edges: List&lt;Line> get() { return listOfPointsToListOfLines(vertices, closed = isClosed) }</ID>
-    <ID>ClassOrdering:PolygonPath.kt:PolygonPath$val directions: PolygonPath get() { val diffs = mutableListOf&lt;Point>() for (i in 0 until vertices.size - 1) { val diff = vertices[i + 1] - vertices[i] diffs.add(diff) } return PolygonPath(diffs) }</ID>
-    <ID>ClassOrdering:PolygonPath.kt:PolygonPath$val end: Point get() { return vertices.last() }</ID>
-    <ID>ClassOrdering:PolygonPath.kt:PolygonPath$val start: Point get() { return vertices.first() }</ID>
-    <ID>ClassOrdering:Quadrilateral.kt:Quadrilateral$constructor</ID>
-    <ID>ClassOrdering:RotationMatrix.kt:RotationMatrix$fun toGMatrix: GMatrix</ID>
-    <ID>ClassOrdering:Shape.kt:Shape$val isClosed: Boolean</ID>
     <ID>CognitiveComplexMethod:ChaikinCurve.kt:ChaikinCurve.Companion$private fun fitChaikinCurve: PolygonLikeShape</ID>
     <ID>CognitiveComplexMethod:MapUtils.kt:fun map2: Float</ID>
     <ID>CognitiveComplexMethod:Polygon.kt:Polygon$fun convexHull: Polygon</ID>
@@ -69,25 +21,6 @@
     <ID>EmptyIfBlock:SimpleFont.kt:SimpleFont${ }</ID>
     <ID>EmptyIfBlock:SimpleFont2.kt:SimpleFont2${ }</ID>
     <ID>ExplicitCollectionElementAccessMethod:PolygonPath.kt:PolygonPath$super.get(index)</ID>
-    <ID>ExpressionBodySyntax:GMatrix.kt:GMatrix$return GMatrix(matrix.copy())</ID>
-    <ID>ExpressionBodySyntax:GMatrix.kt:GMatrix$return GMatrix(matrix.transpose())</ID>
-    <ID>ExpressionBodySyntax:GMatrix.kt:GMatrix$return LUDecomposition(matrix).solver.isNonSingular</ID>
-    <ID>ExpressionBodySyntax:GMatrix.kt:GMatrix$return MatrixUtils.isSymmetric(matrix, 0.000_001)</ID>
-    <ID>ExpressionBodySyntax:GMatrix.kt:GMatrix$return Pair(matrix.rowDimension, matrix.columnDimension)</ID>
-    <ID>ExpressionBodySyntax:GMatrix.kt:GMatrix$return eigenValues.all { it &lt; 0.0 }</ID>
-    <ID>ExpressionBodySyntax:GMatrix.kt:GMatrix$return eigenValues.all { it &lt;= 0.0 }</ID>
-    <ID>ExpressionBodySyntax:GMatrix.kt:GMatrix$return eigenValues.all { it > 0.0 }</ID>
-    <ID>ExpressionBodySyntax:GMatrix.kt:GMatrix$return eigenValues.all { it >= 0.0 }</ID>
-    <ID>ExpressionBodySyntax:GMatrix.kt:GMatrix$return matrix.isSquare</ID>
-    <ID>ExpressionBodySyntax:GMatrix.kt:GMatrix$return transpose == inverse</ID>
-    <ID>ExpressionBodySyntax:Line.kt:Line$return scaleFromStart(0.5).end</ID>
-    <ID>ExpressionBodySyntax:Polygon.kt:Polygon$return Point(GMatrix(vertices).rows.map { it.average() })</ID>
-    <ID>ExpressionBodySyntax:Polygon.kt:Polygon$return PolygonPath(directionsForListOfPoints(vertices, isClosed))</ID>
-    <ID>ExpressionBodySyntax:Polygon.kt:Polygon$return edges.map { it.length }.sum()</ID>
-    <ID>ExpressionBodySyntax:PolygonLikeShape.kt:PolygonLikeShape$return edges.size</ID>
-    <ID>ExpressionBodySyntax:PolygonLikeShape.kt:PolygonLikeShape$return listOfPointsToListOfLines(vertices, closed = isClosed)</ID>
-    <ID>ExpressionBodySyntax:PolygonPath.kt:PolygonPath$return vertices.first()</ID>
-    <ID>ExpressionBodySyntax:PolygonPath.kt:PolygonPath$return vertices.last()</ID>
     <ID>ForbiddenComment:RotationMatrix.kt:RotationMatrix.Companion$// TODO: -1 correct?</ID>
     <ID>ForbiddenMethodCall:Point.kt:Point$println( "[WARNING] setMag() returns a new Vector instead of modifying the old one. Overwrite you variable " + "with the result of setMag()", )</ID>
     <ID>FunctionNameMaxLength:Conversions.kt:Conversions$@JvmStatic fun listOfListOfFloatsToDoubleArrays: Array&lt;DoubleArray></ID>
@@ -96,10 +29,8 @@
     <ID>FunctionNaming:Conversions.kt:Conversions$@Suppress("ktlint:standard:function-naming") @JvmStatic fun PVector3DToRealVector: RealVector</ID>
     <ID>FunctionNaming:Conversions.kt:Conversions$@Suppress("ktlint:standard:function-naming") @JvmStatic fun PVectorToDoubleArray: DoubleArray</ID>
     <ID>ImplicitDefaultLocale:GeneralUtils.kt:String.format("%02x", byte)</ID>
-    <ID>ImplicitUnitReturnType:Line.kt:Line$override fun draw</ID>
     <ID>LargeClass:SimpleFont.kt:SimpleFont : Font</ID>
     <ID>LargeClass:SimpleFont2.kt:SimpleFont2 : Font</ID>
-    <ID>LibraryCodeMustSpecifyReturnType:Line.kt:Line$override fun draw</ID>
     <ID>LongMethod:GaussBrush.kt:GaussBrush.Companion$fun initBrush: GaussBrush</ID>
     <ID>LongMethod:MapUtils.kt:fun map2: Float</ID>
     <ID>LongMethod:NewGaussBrush.kt:NewGaussBrush.Companion$fun initBrush: NewGaussBrush</ID>
@@ -153,13 +84,6 @@
     <ID>NotImplementedDeclaration:GoodiesSketch.kt:GoodiesSketch$throw NotImplementedError("setup() must be implemented in subclasses.")</ID>
     <ID>NotImplementedDeclaration:Polygon.kt:Polygon$TODO("Not yet implemented")</ID>
     <ID>OutdatedDocumentation:RandomUtils.kt:fun &lt;T> sampleWithReplacementFromList: List&lt;T></ID>
-    <ID>PropertyUsedBeforeDeclaration:GMatrix.kt:GMatrix$columns</ID>
-    <ID>PropertyUsedBeforeDeclaration:GMatrix.kt:GMatrix$inverse</ID>
-    <ID>PropertyUsedBeforeDeclaration:GMatrix.kt:GMatrix$rows</ID>
-    <ID>PropertyUsedBeforeDeclaration:GMatrix.kt:GMatrix$size</ID>
-    <ID>PropertyUsedBeforeDeclaration:GMatrix.kt:GMatrix$transpose</ID>
-    <ID>PropertyUsedBeforeDeclaration:Line.kt:Line$end</ID>
-    <ID>PropertyUsedBeforeDeclaration:Line.kt:Line$start</ID>
     <ID>ReturnCount:MapUtils.kt:fun map2: Float</ID>
     <ID>SpreadOperator:GaussBrush.kt:GaussBrush.Companion$(*it)</ID>
     <ID>SpreadOperator:Line.kt:Line$(*translation.toTypedArray())</ID>
@@ -381,9 +305,6 @@
     <ID>UndocumentedPublicFunction:Utils.kt:fun isPrime: Boolean</ID>
     <ID>UndocumentedPublicFunction:Utils.kt:fun listOfPointsToListOfLines: List&lt;Line></ID>
     <ID>UndocumentedPublicFunction:Utils.kt:fun sumOfSquares: Float</ID>
-    <ID>UnnamedParameterUse:GMatrix.kt:GMatrix$Pair</ID>
-    <ID>UnnamedParameterUse:GMatrix.kt:GMatrix$Triple</ID>
-    <ID>UnnecessaryFullyQualifiedName:GMatrix.kt:GMatrix.&lt;no name provided>$org.apache.commons.math3.linear.DefaultRealMatrixChangingVisitor</ID>
     <ID>UnnecessaryParentheses:Polygon.kt:Polygon$( cross == 0.0F &amp;&amp; vertex.distance(currentVertex) > nextVertex.distance( currentVertex, ) )</ID>
     <ID>UnusedParameter:Utils.kt:margin: Number</ID>
     <ID>UnusedPrivateFunction:GoodiesSketch.kt:GoodiesSketch$private fun saveAndExit</ID>
@@ -398,8 +319,6 @@
     <ID>UnusedVariable:WaterColorBlob.kt:WaterColorBlob$i</ID>
     <ID>UseDataClass:ShapeTreeNode.kt:ShapeTreeNode&lt;T></ID>
     <ID>UseEmptyCounterpart:ListUtils.kt:listOf&lt;Number>()</ID>
-    <ID>UseRequire:GMatrix.kt:GMatrix$throw IllegalArgumentException("Matrix must be square")</ID>
-    <ID>UseRequire:Point.kt:Point$throw IllegalArgumentException("Point does not have enough dimensions")</ID>
     <ID>UseSumOfInsteadOfFlatMapSize:Grid2D.kt:Grid2D$flatten()</ID>
     <ID>VarCouldBeVal:GaussBrush.kt:GaussBrush$var currentPositions = brushPins.toMutableList()</ID>
   </CurrentIssues>

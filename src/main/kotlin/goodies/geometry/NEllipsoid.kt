@@ -29,14 +29,14 @@ open class NEllipsoid(
     override val centroid: Point
         get() = center
 
+    override val isConvex: Boolean
+        get() = true
+
     override fun center(): NEllipsoid = NEllipsoid(Point.zeros(dimensions), axes)
 
     override fun centerAt(point: Point): Shape = NEllipsoid(point, axes)
 
     override fun normalize(): NEllipsoid = NEllipsoid(centerPoint, Point(axes).normalize().toList())
-
-    override val isConvex: Boolean
-        get() = true
 
     override fun addDimensions(
         vararg dimension: Number,
