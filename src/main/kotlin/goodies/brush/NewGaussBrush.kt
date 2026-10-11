@@ -60,13 +60,13 @@ class NewGaussBrush(
                     ).toFloat()
                 }
             return NewGaussBrush(
-                brushPins,
-                pinSizes,
-                sizeNoiseScale.toFloat(),
-                sizeNoiseLowerBound.toFloat(),
-                sizeNoiseUpperBound.toFloat(),
-                pinOpacity,
-                color,
+                brushPins = brushPins,
+                pinSizes = pinSizes,
+                sizeNoiseScale = sizeNoiseScale.toFloat(),
+                sizeNoiseLowerBound = sizeNoiseLowerBound.toFloat(),
+                sizeNoiseUpperBound = sizeNoiseUpperBound.toFloat(),
+                pinOpacity = pinOpacity,
+                color = color,
             )
         }
     }

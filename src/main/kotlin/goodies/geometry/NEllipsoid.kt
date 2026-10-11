@@ -75,7 +75,7 @@ open class NEllipsoid(
     fun anglesForPointOnSurface(point: Point): List<Float> {
         val angles = mutableListOf<Float>()
         for (i in 0 until dimensions - 1) {
-            val ssqDenominator = point.slice(0, i + 2).map { it * it }.sum()
+            val ssqDenominator = point.slice(from = 0, to = i + 2).map { it * it }.sum()
             if (ssqDenominator == 0.0F) {
                 val angle = 0.0F
                 angles.add(angle)

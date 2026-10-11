@@ -20,9 +20,9 @@ class Grid2D(
     val nCells: Int
 
     init {
-        val rowSpace = linSpace(yMin, yMax, yParts)
+        val rowSpace = linSpace(start = yMin, stop = yMax, num = yParts)
         nRows = rowSpace.size
-        val columnSpace = linSpace(xMin, xMax, xParts)
+        val columnSpace = linSpace(start = xMin, stop = xMax, num = xParts)
         nCols = columnSpace.size
         gridPoints = cartesian(rowSpace, columnSpace)
         cells = getCells(gridPoints, nRows, nCols)

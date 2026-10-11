@@ -42,7 +42,7 @@ class Line(
 
     override fun toString(): String = "Line(a=$a, b=$b)"
 
-    fun copy(): Line = Line(start, end)
+    fun copy(): Line = Line(a = start, b = end)
 
     val dimensions: Int
         get() = a.dimensions
@@ -60,51 +60,52 @@ class Line(
         get() = b.copy()
 
     val reversed: Line
-        get() = Line(end, start)
+        get() = Line(a = end, b = start)
 
     val length: Float
         get() = a.distance(b)
 
-    override fun addDimensions(vararg dimension: Number): Line = Line(a.extend(*dimension), b.extend(*dimension))
+    override fun addDimensions(vararg dimension: Number): Line =
+        Line(a = a.extend(*dimension), b = b.extend(*dimension))
 
     override fun center(): Line {
         val centered = GMatrix(vertices).center().rows
-        return Line(centered.first(), centered.last())
+        return Line(a = centered.first(), b = centered.last())
     }
 
     override fun centerAt(point: Point): Shape = center().translate(point.toList())
 
     override fun normalize(): Line {
         val normalized = GMatrix(vertices).normalize().rows
-        return Line(normalized.first(), normalized.last())
+        return Line(a = normalized.first(), b = normalized.last())
     }
 
     override fun translate(vararg translation: Number): Line =
         Line(
-            a.translate(*translation),
-            b.translate(*translation),
+            a = a.translate(*translation),
+            b = b.translate(*translation),
         )
 
     fun translate(translation: List<Number>): Line =
         Line(
-            a.translate(*translation.toTypedArray()),
-            b.translate(*translation.toTypedArray()),
+            a = a.translate(*translation.toTypedArray()),
+            b = b.translate(*translation.toTypedArray()),
         )
 
     override fun translate(translation: Number): Line =
         Line(
-            a.translate(translation),
-            b.translate(translation),
+            a = a.translate(translation),
+            b = b.translate(translation),
         )
 
-    override fun scale(factor: Number): Line = Line(a.scale(factor), b.scale(factor))
+    override fun scale(factor: Number): Line = Line(a = a.scale(factor), b = b.scale(factor))
 
     val midpoint: Point
         get() {
             return scaleFromStart(0.5).end
         }
 
-    fun scaleFromStart(factor: Number): Line = Line(start, start + factor * (end - start))
+    fun scaleFromStart(factor: Number): Line = Line(a = start, b = start + factor * (end - start))
 
     fun scaleFromEnd(factor: Number): Line = reversed.scaleFromStart(factor).reversed
 
@@ -116,8 +117,8 @@ class Line(
         val split = length / GOLDEN_RATIO
         val splitPoint = scaleFromStart(split).end
         return listOf(
-            Line(start, splitPoint),
-            Line(splitPoint, end),
+            Line(a = start, b = splitPoint),
+            Line(a = splitPoint, b = end),
         )
     }
 
@@ -143,39 +144,39 @@ class Line(
     fun increaseByLength(addOn: Number): Line {
         val scalingFactor = 1 + addOn.toFloat() / length
         val newEnd = scaleFromStart(scalingFactor).end
-        return Line(start, newEnd)
+        return Line(a = start, b = newEnd)
     }
 
     companion object {
         fun fromPVector2D(
             start: PVector,
             end: PVector,
-        ): Line = Line(Point(start.x, start.y), Point(end.x, end.y))
+        ): Line = Line(a = Point(start.x, start.y), b = Point(end.x, end.y))
 
         fun fromPVector3D(
             start: PVector,
             end: PVector,
-        ): Line = Line(Point(start.x, start.y, start.z), Point(end.x, end.y, end.z))
+        ): Line = Line(a = Point(start.x, start.y, start.z), b = Point(end.x, end.y, end.z))
 
-        fun makePositiveRealLine(upper: Number): Line = Line(Point(0f, 0f), Point(upper, 0f))
+        fun makePositiveRealLine(upper: Number): Line = Line(a = Point(0f, 0f), b = Point(upper, 0f))
 
         fun makeRealLine(
             lower: Float,
             upper: Float,
         ): Line {
             require(!(lower > upper)) { "Parameter lower must less or equal than upp" }
-            return Line(Point(lower, 0f), Point(upper, 0f))
+            return Line(a = Point(lower, 0f), b = Point(upper, 0f))
         }
 
         fun hLIne(
             sketch: PApplet,
             y: Float,
-        ): Line = Line(Point(0f, y), Point(sketch.width.toFloat(), y))
+        ): Line = Line(a = Point(0f, y), b = Point(sketch.width.toFloat(), y))
 
         fun vLine(
             sketch: PApplet,
             x: Float,
-        ): Line = Line(Point(x, 0f), Point(x, sketch.height.toFloat()))
+        ): Line = Line(a = Point(x, 0f), b = Point(x, sketch.height.toFloat()))
     }
 
     override fun draw(sketch: PApplet) =

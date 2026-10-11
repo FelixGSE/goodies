@@ -38,7 +38,7 @@ class WaterColorBlobTest {
             val blob = WaterColorBlob(square)
 
             // When
-            blob.createDeformedPolygons(3, 2)
+            blob.createDeformedPolygons(n = 3, depth = 2)
 
             // Then
             assertThat(blob.deformedPolygons).hasSize(3)
@@ -50,7 +50,7 @@ class WaterColorBlobTest {
             val blob = WaterColorBlob(square)
 
             // When
-            blob.createDeformedPolygons(1, 3)
+            blob.createDeformedPolygons(n = 1, depth = 3)
 
             // Then
             assertThat(blob.deformedPolygons[0].vertices.size)

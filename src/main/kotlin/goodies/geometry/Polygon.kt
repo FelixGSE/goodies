@@ -151,7 +151,7 @@ open class Polygon(
         iterations: Int,
         lower: Number = 0.1,
         upper: Number = 0.1,
-    ): List<Polygon> = polygonSpiral(this, iterations, lower, upper)
+    ): List<Polygon> = polygonSpiral(polygon = this, iterations = iterations, lower = lower, upper = upper)
 
     private fun polygonSpiral(
         polygon: Polygon,
@@ -163,7 +163,7 @@ open class Polygon(
             return listOf(polygon)
         }
 
-        val scale = randomFloat(lower.toFloat(), upper.toFloat())
+        val scale = randomFloat(a = lower.toFloat(), b = upper.toFloat())
 
         val newPolygon = Polygon(polygon.edges.map { it.scaleFromStart(scale).end }.toList())
 

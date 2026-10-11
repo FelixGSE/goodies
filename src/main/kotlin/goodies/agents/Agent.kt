@@ -27,14 +27,14 @@ class Agent(
     ) {
         val pApplet = PApplet()
         val angle = pApplet.noise(pos.x / noiseScale, pos.y / noiseScale) * noiseStrength
-        val angle2 = atan2((curly - pos.y).toDouble(), (curlx - pos.x).toDouble()).toFloat()
+        val angle2 = atan2(y = (curly - pos.y).toDouble(), x = (curlx - pos.x).toDouble()).toFloat()
         val nextX = cos((angle2 - PApplet.HALF_PI).toDouble()).toFloat() * speed * dir
         val nextY = sin((angle + angle2 - PApplet.HALF_PI).toDouble()).toFloat() * speed * dir
 
         val nextPos = Point(nextX, nextY)
         if (!boundary.contains(nextPos)) {
             dir *= -1
-            update(curly, curlx, noiseScale, noiseStrength)
+            update(curly = curly, curlx = curlx, noiseScale = noiseScale, noiseStrength = noiseStrength)
         } else {
             pos = nextPos
         }

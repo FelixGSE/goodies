@@ -17,7 +17,16 @@ class CosineCurveTest {
         val shift = 1.0
 
         // When
-        val result = cosineCurve(xStart, xEnd, stepSize, amplitude, ordinaryFrequency, phase, shift)
+        val result =
+            cosineCurve(
+                xStart = xStart,
+                xEnd = xEnd,
+                stepSize = stepSize,
+                amplitude = amplitude,
+                ordinaryFrequency = ordinaryFrequency,
+                phase = phase,
+                shift = shift,
+            )
 
         // Then
         assertThat(result).hasSize(40)
@@ -47,8 +56,17 @@ class CosineCurveTest {
         val shift = 0.0
 
         // When & Then
-        assertThatThrownBy { cosineCurve(xStart, xEnd, stepSize, amplitude, ordinaryFrequency, phase, shift) }
-            .isInstanceOf(IllegalArgumentException::class.java)
+        assertThatThrownBy {
+            cosineCurve(
+                xStart = xStart,
+                xEnd = xEnd,
+                stepSize = stepSize,
+                amplitude = amplitude,
+                ordinaryFrequency = ordinaryFrequency,
+                phase = phase,
+                shift = shift,
+            )
+        }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("stepSize must be greater than 0")
     }
 }

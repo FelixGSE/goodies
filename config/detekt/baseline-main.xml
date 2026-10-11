@@ -148,28 +148,7 @@
     <ID>MagicNumber:Utils.kt:3</ID>
     <ID>MagicNumber:Utils.kt:4</ID>
     <ID>MagicNumber:Utils.kt:5</ID>
-    <ID>MagicNumber:WaterColorBlob.kt:WaterColorBlob.Companion$100f</ID>
     <ID>MissingPackageDeclaration:ShapeTree.kt:.ShapeTree.kt</ID>
-    <ID>NamedArguments:Agent.kt:Agent$update(curly, curlx, noiseScale, noiseStrength)</ID>
-    <ID>NamedArguments:DeJongAttractor.kt:DeJongAttractor$DeJongAttractor(xNext, yNext, a, b, c, d)</ID>
-    <ID>NamedArguments:GaussBrush.kt:GaussBrush.Companion$GaussBrush( brushPins, pinSizes, sizeNoiseScale.toFloat(), sizeNoiseLowerBound.toFloat(), sizeNoiseUpperBound.toFloat(), pinOpacity, color, )</ID>
-    <ID>NamedArguments:NewGaussBrush.kt:NewGaussBrush.Companion$NewGaussBrush( brushPins, pinSizes, sizeNoiseScale.toFloat(), sizeNoiseLowerBound.toFloat(), sizeNoiseUpperBound.toFloat(), pinOpacity, color, )</ID>
-    <ID>NamedArguments:Point.kt:Point$getRotationMatrixForAxis(i, j, dimensions, angle.toFloat())</ID>
-    <ID>NamedArguments:Polygon.kt:Polygon$polygonSpiral(this, iterations, lower, upper)</ID>
-    <ID>NamedArguments:Quadrilateral.kt:Quadrilateral$Quadrilateral( pointOnOppositeSite, pointOnSide, quadrilateral.c, quadrilateral.d, )</ID>
-    <ID>NamedArguments:Quadrilateral.kt:Quadrilateral$Quadrilateral( pointOnOppositeSite, quadrilateral.b, quadrilateral.c, pointOnSide, )</ID>
-    <ID>NamedArguments:Quadrilateral.kt:Quadrilateral$Quadrilateral( pointOnSide, pointOnOppositeSite, quadrilateral.c, quadrilateral.d, )</ID>
-    <ID>NamedArguments:Quadrilateral.kt:Quadrilateral$Quadrilateral( pointOnSide, quadrilateral.b, quadrilateral.c, pointOnOppositeSite, )</ID>
-    <ID>NamedArguments:Quadrilateral.kt:Quadrilateral$Quadrilateral( quadrilateral.a, pointOnOppositeSite, pointOnSide, quadrilateral.d, )</ID>
-    <ID>NamedArguments:Quadrilateral.kt:Quadrilateral$Quadrilateral( quadrilateral.a, pointOnSide, pointOnOppositeSite, quadrilateral.d, )</ID>
-    <ID>NamedArguments:Quadrilateral.kt:Quadrilateral$Quadrilateral( quadrilateral.a, quadrilateral.b, pointOnOppositeSite, pointOnSide, )</ID>
-    <ID>NamedArguments:Quadrilateral.kt:Quadrilateral$Quadrilateral( quadrilateral.a, quadrilateral.b, pointOnSide, pointOnOppositeSite, )</ID>
-    <ID>NamedArguments:RotationMatrix.kt:RotationMatrix$getRotationMatrixForAxis(i, j, dimensions, angle)</ID>
-    <ID>NamedArguments:SimpleFont.kt:SimpleFont$drawLetter(sketch, letter.toString(), pos, scale)</ID>
-    <ID>NamedArguments:SimpleFont2.kt:SimpleFont2$drawLetter(sketch, letter.toString(), pos, scale)</ID>
-    <ID>NamedArguments:WaterColorBlob.kt:WaterColorBlob.Companion$subdivide(points, edge, depth - 1, 100f / (depth + 1), 100f / (depth + 1))</ID>
-    <ID>NamedArguments:WaterColorBlob.kt:WaterColorBlob.Companion$subdivide(points, left, depth - 1, nextLengthVariance, nextAngleVariance)</ID>
-    <ID>NamedArguments:WaterColorBlob.kt:WaterColorBlob.Companion$subdivide(points, right, depth - 1, nextLengthVariance, nextAngleVariance)</ID>
     <ID>NotImplementedDeclaration:GoodiesSketch.kt:GoodiesSketch$throw NotImplementedError("draw() must be implemented in subclasses.")</ID>
     <ID>NotImplementedDeclaration:GoodiesSketch.kt:GoodiesSketch$throw NotImplementedError("setup() must be implemented in subclasses.")</ID>
     <ID>NotImplementedDeclaration:Polygon.kt:Polygon$TODO("Not yet implemented")</ID>
@@ -402,34 +381,8 @@
     <ID>UndocumentedPublicFunction:Utils.kt:fun isPrime: Boolean</ID>
     <ID>UndocumentedPublicFunction:Utils.kt:fun listOfPointsToListOfLines: List&lt;Line></ID>
     <ID>UndocumentedPublicFunction:Utils.kt:fun sumOfSquares: Float</ID>
-    <ID>UnnamedParameterUse:Agent.kt:Agent$atan2</ID>
-    <ID>UnnamedParameterUse:ChaikinCurve.kt:ChaikinCurve.Companion$Line</ID>
-    <ID>UnnamedParameterUse:DeJongAttractor.kt:DeJongAttractor$DeJongAttractor</ID>
     <ID>UnnamedParameterUse:GMatrix.kt:GMatrix$Pair</ID>
     <ID>UnnamedParameterUse:GMatrix.kt:GMatrix$Triple</ID>
-    <ID>UnnamedParameterUse:GaussBrush.kt:GaussBrush.Companion$GaussBrush</ID>
-    <ID>UnnamedParameterUse:Grid2D.kt:Grid2D$linSpace</ID>
-    <ID>UnnamedParameterUse:Line.kt:Line$Line</ID>
-    <ID>UnnamedParameterUse:Line.kt:Line.Companion$Line</ID>
-    <ID>UnnamedParameterUse:NEllipsoid.kt:NEllipsoid$slice</ID>
-    <ID>UnnamedParameterUse:NewGaussBrush.kt:NewGaussBrush.Companion$NewGaussBrush</ID>
-    <ID>UnnamedParameterUse:Point.kt:Point$rotateAxis</ID>
-    <ID>UnnamedParameterUse:PointUtils.kt:Line</ID>
-    <ID>UnnamedParameterUse:Polygon.kt:Polygon$randomFloat</ID>
-    <ID>UnnamedParameterUse:Quadrilateral.kt:Quadrilateral$Pair</ID>
-    <ID>UnnamedParameterUse:Quadrilateral.kt:Quadrilateral$Quadrilateral</ID>
-    <ID>UnnamedParameterUse:Quadrilateral.kt:Quadrilateral$ShapeTreeNode</ID>
-    <ID>UnnamedParameterUse:Quadrilateral.kt:Quadrilateral$Triple</ID>
-    <ID>UnnamedParameterUse:RandomUtils.kt:nextInt</ID>
-    <ID>UnnamedParameterUse:RotationMatrix.kt:RotationMatrix.Companion$Pair</ID>
-    <ID>UnnamedParameterUse:ShapeTree.kt:ShapeTree$maxOf</ID>
-    <ID>UnnamedParameterUse:SimpleFont.kt:SimpleFont$scaleLines</ID>
-    <ID>UnnamedParameterUse:SimpleFont2.kt:SimpleFont2$scaleLines</ID>
-    <ID>UnnamedParameterUse:TransformationStack.kt:TransformationStack$TranslationMatrix</ID>
-    <ID>UnnamedParameterUse:Utils.kt:Line</ID>
-    <ID>UnnamedParameterUse:WaterColorBlob.kt:WaterColorBlob.Companion$Line</ID>
-    <ID>UnnamedParameterUse:WaterColorBlob.kt:WaterColorBlob.Companion$atan2</ID>
-    <ID>UnnamedParameterUse:WaterColorBlob.kt:WaterColorBlob.Companion$subdivide</ID>
     <ID>UnnecessaryFullyQualifiedName:GMatrix.kt:GMatrix.&lt;no name provided>$org.apache.commons.math3.linear.DefaultRealMatrixChangingVisitor</ID>
     <ID>UnnecessaryParentheses:Polygon.kt:Polygon$( cross == 0.0F &amp;&amp; vertex.distance(currentVertex) > nextVertex.distance( currentVertex, ) )</ID>
     <ID>UnusedParameter:Utils.kt:margin: Number</ID>

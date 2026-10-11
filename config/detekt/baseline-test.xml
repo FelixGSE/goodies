@@ -8,29 +8,6 @@
     <ID>ForbiddenMethodCall:RandomUtilsTest.kt:RandomUtilsTest$println(a)</ID>
     <ID>LongMethod:SphereTest.kt:SphereTest.Basics$private fun getParametersForComputationCartesianCoordinatesToPolarCoordinates: Stream&lt;Arguments></ID>
     <ID>LongMethod:SphereTest.kt:SphereTest.Basics$private fun getParametersForComputationOfPolarCoordinatesToCartesianCoordinates: Stream&lt;Arguments></ID>
-    <ID>NamedArguments:CosineCurveTest.kt:CosineCurveTest$cosineCurve(xStart, xEnd, stepSize, amplitude, ordinaryFrequency, phase, shift)</ID>
-    <ID>NamedArguments:DeJongAttractorTest.kt:DeJongAttractorTest.Construction$DeJongAttractor(0.5f, 0.5f, 1f, 2f, 3f, 4f)</ID>
-    <ID>NamedArguments:DeJongAttractorTest.kt:DeJongAttractorTest.Construction$DeJongAttractor(1f, 2f, 3f, 4f)</ID>
-    <ID>NamedArguments:DeJongAttractorTest.kt:DeJongAttractorTest.Iteration$DeJongAttractor(0f, 0f, 1.4f, -2.3f, 2.4f, -2.1f)</ID>
-    <ID>NamedArguments:DeJongAttractorTest.kt:DeJongAttractorTest.Iteration$DeJongAttractor(1.4f, -2.3f, 2.4f, -2.1f)</ID>
-    <ID>NamedArguments:DeJongAttractorTest.kt:DeJongAttractorTest.Iteration$DeJongAttractor(1f, 1f, 2f, 2f, 2f, 2f)</ID>
-    <ID>NamedArguments:DeJongAttractorTest.kt:DeJongAttractorTest.Properties$DeJongAttractor(0f, 0f, 1f, 2f, 3f, 4f)</ID>
-    <ID>NamedArguments:DeJongAttractorTest.kt:DeJongAttractorTest.Properties$DeJongAttractor(3.5f, -2.1f, 1f, 2f, 3f, 4f)</ID>
-    <ID>NamedArguments:Grid2DTest.kt:Grid2DTest.Construction$Grid2D(0, 10, 4, 0, 10, 4)</ID>
-    <ID>NamedArguments:RotationMatrixTest.kt:RotationMatrixTest.Properties$RotationMatrix(0, 3, 4, 0.5)</ID>
-    <ID>NamedArguments:RotationMatrixTest.kt:RotationMatrixTest.Properties$RotationMatrix(1, 2, 4, 0.5)</ID>
-    <ID>NamedArguments:RotationMatrixTest.kt:RotationMatrixTest.Properties$RotationMatrix(1, 3, 4, 0.5)</ID>
-    <ID>NamedArguments:RotationMatrixTest.kt:RotationMatrixTest.Properties$RotationMatrix(2, 3, 4, 0.5)</ID>
-    <ID>NamedArguments:SignCurveGeneratorTest.kt:SignCurveGeneratorTest$signCurve(xStart, xEnd, stepSize, amplitude, ordinaryFrequency, phase, shift)</ID>
-    <ID>UnnamedParameterUse:DeJongAttractorTest.kt:DeJongAttractorTest.Construction$DeJongAttractor</ID>
-    <ID>UnnamedParameterUse:DeJongAttractorTest.kt:DeJongAttractorTest.Iteration$DeJongAttractor</ID>
-    <ID>UnnamedParameterUse:DeJongAttractorTest.kt:DeJongAttractorTest.Properties$DeJongAttractor</ID>
-    <ID>UnnamedParameterUse:Grid2DTest.kt:Grid2DTest.Construction$Grid2D</ID>
-    <ID>UnnamedParameterUse:ListUtilsTest.kt:ListUtilsTest$cartesianProduct</ID>
-    <ID>UnnamedParameterUse:ListUtilsTest.kt:ListUtilsTest.LineSpaceTest$linSpace</ID>
-    <ID>UnnamedParameterUse:PointTest.kt:PointTest.Utils$swapEntries</ID>
-    <ID>UnnamedParameterUse:RotationMatrixTest.kt:RotationMatrixTest.Properties$RotationMatrix</ID>
-    <ID>UnnamedParameterUse:WaterColorBlobTest.kt:WaterColorBlobTest.Deformation$createDeformedPolygons</ID>
     <ID>UnusedPrivateFunction:CircleTest.kt:CircleTest.Basics$private fun getParametersForComputationOfPointsOnSphere: Stream&lt;Arguments></ID>
     <ID>UnusedPrivateFunction:PointTest.kt:PointTest.Construction$private fun getPointInputFromList: Stream&lt;List&lt;Number>></ID>
     <ID>UnusedPrivateFunction:PointTest.kt:PointTest.Construction$private fun getPointInputFromNumbers: Stream&lt;Arguments></ID>

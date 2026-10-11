@@ -19,7 +19,7 @@ data class DeJongAttractor(
     fun next(): DeJongAttractor {
         val xNext = PApplet.sin(a * y) - PApplet.cos(b * x)
         val yNext = PApplet.sin(c * x) - PApplet.cos(d * y)
-        return DeJongAttractor(xNext, yNext, a, b, c, d)
+        return DeJongAttractor(x = xNext, y = yNext, a = a, b = b, c = c, d = d)
     }
 
     fun draw(

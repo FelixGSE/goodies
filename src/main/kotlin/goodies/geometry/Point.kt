@@ -188,32 +188,33 @@ class Point(
 
     fun rotate(angle: Number): Point {
         require(dimensions == 2) { "Invalid dimensions. Points must have dimension equal to 2 for this method" }
-        return rotateAxis(0, 1, angle.toFloat())
+        return rotateAxis(i = 0, j = 1, angle = angle.toFloat())
     }
 
     fun rotateZ(angle: Number): Point {
         require(dimensions >= 3) { "Invalid dimensions. Point must have at least 3 dimensions for this method" }
-        return rotateAxis(0, 1, angle.toFloat())
+        return rotateAxis(i = 0, j = 1, angle = angle.toFloat())
     }
 
     fun rotateY(angle: Number): Point {
         require(dimensions >= 3) { "Invalid dimensions. Point must have at least 3 dimensions for this method" }
-        return rotateAxis(0, 2, angle.toFloat())
+        return rotateAxis(i = 0, j = 2, angle = angle.toFloat())
     }
 
     fun rotateX(angle: Number): Point {
         require(dimensions >= 3) { "Invalid dimensions. Point must have at least 3 dimensions for this method" }
-        return rotateAxis(1, 2, angle.toFloat())
+        return rotateAxis(i = 1, j = 2, angle = angle.toFloat())
     }
 
     fun rotateAxis(
         i: Int,
         j: Int,
         angle: Number,
-    ): Point =
-        Point(
-            RotationMatrixUtils.getRotationMatrixForAxis(i, j, dimensions, angle.toFloat()).preMultiply(toRealVector()),
-        )
+    ): Point {
+        val rotation =
+            RotationMatrixUtils.getRotationMatrixForAxis(i = i, j = j, dimensions = dimensions, angle = angle.toFloat())
+        return rotation.multiplyPoint(this)
+    }
 
     fun rotateAxis(
         i: Int,

@@ -5,7 +5,7 @@ class ShapeTree<T>(
 ) {
     fun height(node: ShapeTreeNode<T>? = root): Int {
         if (node == null) return 0
-        return maxOf(height(node.left), height(node.right)) + 1
+        return maxOf(a = height(node.left), b = height(node.right)) + 1
     }
 
     fun preorderTraversal(node: ShapeTreeNode<T>? = root): List<T> {

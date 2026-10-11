@@ -11,7 +11,7 @@ class RotationMatrix(
     dimensions: Int,
     angle: Number,
 ) : GMatrix(
-        getRotationMatrixForAxis(i, j, dimensions, angle),
+        getRotationMatrixForAxis(i = i, j = j, dimensions = dimensions, angle = angle),
     ) {
     constructor(index: Int, dimensions: Int, angle: Number) : this(
         getCoordinates(dimensions, index).first,
@@ -51,7 +51,7 @@ class RotationMatrix(
             for (i in 0 until dimensions - 1) {
                 for (j in i + 1 until dimensions) {
                     if (currentIndex == index) {
-                        return Pair(i, j)
+                        return Pair(first = i, second = j)
                     }
                     currentIndex++
                 }

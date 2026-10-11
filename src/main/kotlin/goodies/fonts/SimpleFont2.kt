@@ -17,7 +17,7 @@ class SimpleFont2(
             Line(PVector(1F, 0F), PVector(1F, 1F)),
             Line(PVector(0F, 1F), PVector(1F, 1F)),
             Line(PVector(0F, 0F), PVector(0F, 1F)),
-        ).map { scaleLines(it, baseScaleUpperX, baseScaleUpperY) }
+        ).map { scaleLines(line = it, scaleX = baseScaleUpperX, scaleY = baseScaleUpperY) }
 
     val upperXMin: Int = 0
     val upperXMax: Float = 1 * baseScaleUpperX.toFloat()
@@ -30,7 +30,7 @@ class SimpleFont2(
             Line(PVector(1F, 0F), PVector(1F, 1F)),
             Line(PVector(0F, 1F), PVector(1F, 1F)),
             Line(PVector(0F, 0F), PVector(0F, 1F)),
-        ).map { scaleLines(it, baseScaleLowerX, baseScaleLowerY) }
+        ).map { scaleLines(line = it, scaleX = baseScaleLowerX, scaleY = baseScaleLowerY) }
 
     private fun scaleLines(
         line: Line,
@@ -902,7 +902,7 @@ class SimpleFont2(
             if (letter == 'I') {
             }
             val pos = Point(position.x + offset.toFloat() * i, position.y)
-            drawLetter(sketch, letter.toString(), pos, scale)
+            drawLetter(sketch = sketch, letter = letter.toString(), position = pos, scale = scale)
         }
     }
 }

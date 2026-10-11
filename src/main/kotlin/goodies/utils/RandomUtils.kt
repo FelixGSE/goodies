@@ -120,7 +120,7 @@ fun randomInteger(
     b: Int,
 ): Int {
     require(a <= b) { "Invalid range: a must be less than or equal to b" }
-    return Random.nextInt(a, b + 1)
+    return Random.nextInt(from = a, until = b + 1)
 }
 
 fun randomInteger(

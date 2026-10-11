@@ -10,7 +10,7 @@ class Grid2DTest {
         @Test
         fun `Grid2D should be initialized with correct dimensions`() {
             // Given
-            val grid = Grid2D(0, 10, 4, 0, 10, 4)
+            val grid = Grid2D(yMin = 0, yMax = 10, yParts = 4, xMin = 0, xMax = 10, xParts = 4)
             val expectedNRows = 4
             val expectedNCols = 4
             val expectedNCells = 9

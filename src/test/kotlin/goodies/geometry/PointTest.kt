@@ -604,7 +604,7 @@ internal class PointTest {
             val expected = Point(4, 2, 3, 1)
 
             // When
-            val result = point.swapEntries(0, 3)
+            val result = point.swapEntries(firstPositionOne = 0, secondPositionOne = 3)
 
             // Then
             assertThat(result).isEqualTo(expected)

@@ -29,7 +29,7 @@ class ChaikinCurve(
             val split = ratio / 2.0
             val newStart = line.scaleFromStart(split).end
             val newEnd = line.scaleFromStart(1.0 - split).end
-            return Line(newStart, newEnd)
+            return Line(a = newStart, b = newEnd)
         }
 
         private fun fitChaikinCurve(
@@ -46,7 +46,7 @@ class ChaikinCurve(
                 for (j in 0 until shorts.size - 1) {
                     val thisLine = shorts[j]
                     val nextLine = shorts[j + 1]
-                    val connectingLine = Line(thisLine.end, nextLine.start)
+                    val connectingLine = Line(a = thisLine.end, b = nextLine.start)
                     newLines.add(thisLine)
                     newLines.add(connectingLine)
                     if (j == shorts.size - 2) {
@@ -54,7 +54,7 @@ class ChaikinCurve(
                     }
                 }
                 if (closed) {
-                    val endLine = Line(shorts.last().end, newLines.first().start)
+                    val endLine = Line(a = shorts.last().end, b = newLines.first().start)
                     newLines.add(endLine)
                 }
                 lines = newLines

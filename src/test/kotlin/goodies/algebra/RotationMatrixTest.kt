@@ -13,10 +13,10 @@ internal class RotationMatrixTest {
         fun `Multiplying several high dimensional RotationMatrices should still have a determinant of 1`() {
             // Given
             val matrix =
-                RotationMatrix(0, 3, 4, 0.5)
-                    .dot(RotationMatrix(2, 3, 4, 0.5))
-                    .dot(RotationMatrix(1, 3, 4, 0.5))
-                    .dot(RotationMatrix(1, 2, 4, 0.5))
+                RotationMatrix(i = 0, j = 3, dimensions = 4, angle = 0.5)
+                    .dot(RotationMatrix(i = 2, j = 3, dimensions = 4, angle = 0.5))
+                    .dot(RotationMatrix(i = 1, j = 3, dimensions = 4, angle = 0.5))
+                    .dot(RotationMatrix(i = 1, j = 2, dimensions = 4, angle = 0.5))
 
             // When
 

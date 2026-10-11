@@ -36,7 +36,7 @@ internal class ListUtilsTest {
             val expected = listOf(0.0F, 2.5F, 5.0F, 7.5F, 10.0F)
 
             // When
-            val result = linSpace(from, to, step)
+            val result = linSpace(start = from, stop = to, num = step)
 
             // Then
             Assertions.assertThat(result).isEqualTo(expected)
@@ -62,7 +62,7 @@ internal class ListUtilsTest {
             )
 
         // When
-        val result = cartesianProduct(a, b)
+        val result = cartesianProduct(first = a, second = b)
         // Then
         Assertions.assertThat(result).isEqualTo(expected)
     }

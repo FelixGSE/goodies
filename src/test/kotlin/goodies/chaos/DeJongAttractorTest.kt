@@ -14,7 +14,7 @@ class DeJongAttractorTest {
         @Test
         fun `should create attractor with x and y at zero by default`() {
             // Given / When
-            val attractor = DeJongAttractor(1f, 2f, 3f, 4f)
+            val attractor = DeJongAttractor(a = 1f, b = 2f, c = 3f, d = 4f)
 
             // Then
             assertThat(attractor.x).isEqualTo(0f)
@@ -28,7 +28,7 @@ class DeJongAttractorTest {
         @Test
         fun `should create attractor with explicit x and y`() {
             // Given / When
-            val attractor = DeJongAttractor(0.5f, 0.5f, 1f, 2f, 3f, 4f)
+            val attractor = DeJongAttractor(x = 0.5f, y = 0.5f, a = 1f, b = 2f, c = 3f, d = 4f)
 
             // Then
             assertThat(attractor.x).isEqualTo(0.5f)
@@ -41,7 +41,7 @@ class DeJongAttractorTest {
         @Test
         fun `next should compute new x and y using De Jong equations`() {
             // Given
-            val attractor = DeJongAttractor(0f, 0f, 1.4f, -2.3f, 2.4f, -2.1f)
+            val attractor = DeJongAttractor(x = 0f, y = 0f, a = 1.4f, b = -2.3f, c = 2.4f, d = -2.1f)
 
             // When
             val next = attractor.next()
@@ -56,7 +56,7 @@ class DeJongAttractorTest {
         @Test
         fun `next should preserve parameters a, b, c, d`() {
             // Given
-            val attractor = DeJongAttractor(1.4f, -2.3f, 2.4f, -2.1f)
+            val attractor = DeJongAttractor(a = 1.4f, b = -2.3f, c = 2.4f, d = -2.1f)
 
             // When
             val next = attractor.next()
@@ -71,7 +71,7 @@ class DeJongAttractorTest {
         @Test
         fun `next should not modify original attractor (immutability)`() {
             // Given
-            val attractor = DeJongAttractor(0f, 0f, 1.4f, -2.3f, 2.4f, -2.1f)
+            val attractor = DeJongAttractor(x = 0f, y = 0f, a = 1.4f, b = -2.3f, c = 2.4f, d = -2.1f)
 
             // When
             attractor.next()
@@ -84,7 +84,7 @@ class DeJongAttractorTest {
         @Test
         fun `should iterate multiple steps`() {
             // Given
-            val attractor = DeJongAttractor(1.4f, -2.3f, 2.4f, -2.1f)
+            val attractor = DeJongAttractor(a = 1.4f, b = -2.3f, c = 2.4f, d = -2.1f)
 
             // When
             val step1 = attractor.next()
@@ -99,7 +99,7 @@ class DeJongAttractorTest {
         @Test
         fun `next should return correct values for non-zero starting point`() {
             // Given
-            val attractor = DeJongAttractor(1f, 1f, 2f, 2f, 2f, 2f)
+            val attractor = DeJongAttractor(x = 1f, y = 1f, a = 2f, b = 2f, c = 2f, d = 2f)
 
             // When
             val next = attractor.next()
@@ -118,7 +118,7 @@ class DeJongAttractorTest {
         @Test
         fun `location should return PVector with x and y`() {
             // Given
-            val attractor = DeJongAttractor(3.5f, -2.1f, 1f, 2f, 3f, 4f)
+            val attractor = DeJongAttractor(x = 3.5f, y = -2.1f, a = 1f, b = 2f, c = 3f, d = 4f)
 
             // When
             val loc = attractor.location
@@ -131,8 +131,8 @@ class DeJongAttractorTest {
         @Test
         fun `data class equality should work`() {
             // Given
-            val a1 = DeJongAttractor(0f, 0f, 1f, 2f, 3f, 4f)
-            val a2 = DeJongAttractor(0f, 0f, 1f, 2f, 3f, 4f)
+            val a1 = DeJongAttractor(x = 0f, y = 0f, a = 1f, b = 2f, c = 3f, d = 4f)
+            val a2 = DeJongAttractor(x = 0f, y = 0f, a = 1f, b = 2f, c = 3f, d = 4f)
 
             // Then
             assertThat(a1).isEqualTo(a2)

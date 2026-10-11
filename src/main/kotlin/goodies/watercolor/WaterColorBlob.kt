@@ -39,7 +39,14 @@ class WaterColorBlob(
             val points = mutableListOf<Point>()
             for (edge in polygon.edges) {
                 points.add(edge.start)
-                subdivide(points, edge, depth - 1, 100f / (depth + 1), 100f / (depth + 1))
+                subdivide(
+                    points = points,
+                    line = edge,
+                    depth = depth - 1,
+                    lengthVariance = 100f / (depth + 1),
+                    angleVariance =
+                        100f / (depth + 1),
+                )
             }
             return Polygon(points)
         }
@@ -59,8 +66,8 @@ class WaterColorBlob(
             val displacement = (rng.nextGaussian() * lengthVariance).toFloat()
             val baseAngle =
                 atan2(
-                    (line.end.y - line.start.y).toDouble(),
-                    (line.end.x - line.start.x).toDouble(),
+                    y = (line.end.y - line.start.y).toDouble(),
+                    x = (line.end.x - line.start.x).toDouble(),
                 ).toFloat()
             val perpAngle =
                 baseAngle + Math.PI.toFloat() / 2f +
@@ -72,14 +79,26 @@ class WaterColorBlob(
                     midPoint.y + sin(perpAngle.toDouble()).toFloat() * displacement,
                 )
 
-            val left = Line(line.start, splitPoint)
-            val right = Line(splitPoint, line.end)
+            val left = Line(a = line.start, b = splitPoint)
+            val right = Line(a = splitPoint, b = line.end)
             val nextLengthVariance = 100f / (2 * depth.coerceAtLeast(1) + 1)
             val nextAngleVariance = 100f / (depth.coerceAtLeast(1) + 1)
 
-            subdivide(points, left, depth - 1, nextLengthVariance, nextAngleVariance)
+            subdivide(
+                points = points,
+                line = left,
+                depth = depth - 1,
+                lengthVariance = nextLengthVariance,
+                angleVariance = nextAngleVariance,
+            )
             points.add(splitPoint)
-            subdivide(points, right, depth - 1, nextLengthVariance, nextAngleVariance)
+            subdivide(
+                points = points,
+                line = right,
+                depth = depth - 1,
+                lengthVariance = nextLengthVariance,
+                angleVariance = nextAngleVariance,
+            )
         }
     }
 }

@@ -91,10 +91,10 @@ fun listOfPointsToListOfLines(
     for (i in 0 until points.size - 1) {
         val currentPoint = points[i]
         val nextPoint = points[i + 1]
-        lines.add(Line(currentPoint, nextPoint))
+        lines.add(Line(a = currentPoint, b = nextPoint))
     }
     if (closed) {
-        lines.add(Line(points.last(), points.first()))
+        lines.add(Line(a = points.last(), b = points.first()))
     }
     return lines.toList()
 }
