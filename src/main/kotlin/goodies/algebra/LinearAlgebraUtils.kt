@@ -16,7 +16,10 @@ fun areLinearlyIndependent(vectors: List<Point>): Boolean {
     return GMatrix(vectors, orientation = "column").isSingular
 }
 
-fun solveLinearSystem(coefficients: GMatrix, constants: Point): Point {
+fun solveLinearSystem(
+    coefficients: GMatrix,
+    constants: Point,
+): Point {
     val mat = coefficients.toRealMatrix()
     val vec = constants.toRealVector()
     val luDecomposition = LUDecomposition(mat)

@@ -1,10 +1,17 @@
 package goodies.algebra
 
 import goodies.geometry.Point
-import org.apache.commons.math3.linear.*
+import org.apache.commons.math3.linear.EigenDecomposition
+import org.apache.commons.math3.linear.LUDecomposition
+import org.apache.commons.math3.linear.MatrixUtils
+import org.apache.commons.math3.linear.RealMatrix
+import org.apache.commons.math3.linear.SingularValueDecomposition
 
-open class GMatrix(private val matrix: RealMatrix) : Iterable<Point>, Graphics, Matrix {
-
+open class GMatrix(
+    private val matrix: RealMatrix,
+) : Iterable<Point>,
+    Graphics,
+    Matrix {
     constructor(values: List<List<Number>>) : this(
         MatrixUtils.createRealMatrix(
             values.map { it.map { inner -> inner.toDouble() }.toDoubleArray() }.toTypedArray(),
@@ -26,9 +33,7 @@ open class GMatrix(private val matrix: RealMatrix) : Iterable<Point>, Graphics, 
     )
 
     // toString with size
-    override fun toString(): String {
-        return "GMatrix(${matrix.rowDimension}x${matrix.columnDimension})"
-    }
+    override fun toString(): String = "GMatrix(${matrix.rowDimension}x${matrix.columnDimension})"
 
     override fun hashCode(): Int {
         var result = matrix.hashCode()
@@ -36,90 +41,54 @@ open class GMatrix(private val matrix: RealMatrix) : Iterable<Point>, Graphics, 
         return result
     }
 
-    override fun iterator(): Iterator<Point> {
-        return rows.iterator()
-    }
+    override fun iterator(): Iterator<Point> = rows.iterator()
 
-    operator fun get(i: Int, j: Int): Float {
-        return matrix.getEntry(i, j).toFloat()
-    }
+    operator fun get(
+        i: Int,
+        j: Int,
+    ): Float = matrix.getEntry(i, j).toFloat()
 
-    operator fun get(index: Int): Point {
-        return Point(matrix.getRow(index).toList())
-    }
+    operator fun get(index: Int): Point = Point(matrix.getRow(index).toList())
 
-    operator fun plus(other: GMatrix): GMatrix {
-        return GMatrix(matrix.add(other.toRealMatrix()))
-    }
+    operator fun plus(other: GMatrix): GMatrix = GMatrix(matrix.add(other.toRealMatrix()))
 
-    operator fun plus(scalar: Number): GMatrix {
-        return GMatrix(matrix.scalarAdd(scalar.toDouble()))
-    }
+    operator fun plus(scalar: Number): GMatrix = GMatrix(matrix.scalarAdd(scalar.toDouble()))
 
-    operator fun minus(other: GMatrix): GMatrix {
-        return GMatrix(matrix.subtract(other.toRealMatrix()))
-    }
+    operator fun minus(other: GMatrix): GMatrix = GMatrix(matrix.subtract(other.toRealMatrix()))
 
-    operator fun minus(scalar: Number): GMatrix {
-        return GMatrix(matrix.scalarAdd(-1.0 * scalar.toDouble()))
-    }
+    operator fun minus(scalar: Number): GMatrix = GMatrix(matrix.scalarAdd(-1.0 * scalar.toDouble()))
 
-    operator fun times(other: GMatrix): GMatrix {
-        return this.elementWiseTimes(other)
-    }
+    operator fun times(other: GMatrix): GMatrix = this.elementWiseTimes(other)
 
-    operator fun times(point: Point): Point {
-        return this.dot(point)
-    }
+    operator fun times(point: Point): Point = this.dot(point)
 
-    operator fun times(scalar: Number): GMatrix {
-        return GMatrix(matrix.scalarMultiply(scalar.toDouble()))
-    }
+    operator fun times(scalar: Number): GMatrix = GMatrix(matrix.scalarMultiply(scalar.toDouble()))
 
-    operator fun div(scalar: Number): GMatrix {
-        return GMatrix(matrix.scalarMultiply(1.0 / scalar.toDouble()))
-    }
+    operator fun div(scalar: Number): GMatrix = GMatrix(matrix.scalarMultiply(1.0 / scalar.toDouble()))
 
     val copy: GMatrix
         get() {
             return GMatrix(matrix.copy())
         }
 
-    override fun makeAffine(): GMatrix {
-        return GMatrix(columns.map { it.extend(0) } + listOf(Point(List(size.first) { 0 } + 1)))
-    }
+    override fun makeAffine(): GMatrix =
+        GMatrix(columns.map { it.extend(0) } + listOf(Point(List(size.first) { 0 } + 1)))
 
-    fun center(): GMatrix {
-        return GMatrix(columns.map { it - it.average() }, orientation = "column")
-    }
+    fun center(): GMatrix = GMatrix(columns.map { it - it.average() }, orientation = "column")
 
-    fun normalize(): GMatrix {
-        return GMatrix(columns.map { it.normalize() }, orientation = "column")
-    }
+    fun normalize(): GMatrix = GMatrix(columns.map { it.normalize() }, orientation = "column")
 
-    fun rowMean(): Point {
-        return Point(rows.map { it.average() })
-    }
+    fun rowMean(): Point = Point(rows.map { it.average() })
 
-    fun colMean(): Point {
-        return Point(columns.map { it.average() })
-    }
+    fun colMean(): Point = Point(columns.map { it.average() })
 
-    fun rowSum(): Point {
-        return Point(rows.map { it.sum() })
-    }
+    fun rowSum(): Point = Point(rows.map { it.sum() })
 
-    fun colSum(): Point {
-        return Point(rows.map { it.sum() })
-    }
+    fun colSum(): Point = Point(rows.map { it.sum() })
 
-    fun rowMax(): Point {
-        return Point(rows.map { it.max() })
-    }
+    fun rowMax(): Point = Point(rows.map { it.max() })
 
-    fun colMax(): Point {
-        return Point(columns.map { it.max() })
-    }
+    fun colMax(): Point = Point(columns.map { it.max() })
 
     fun rowBind(matrix: GMatrix): GMatrix {
         require(this.size.first == matrix.size.first) { "Matrices must have the same number of columns" }
@@ -160,12 +129,18 @@ open class GMatrix(private val matrix: RealMatrix) : Iterable<Point>, Graphics, 
         get() {
 
             var sumVal = 0.0
-            matrix.walkInOptimizedOrder(object : org.apache.commons.math3.linear.DefaultRealMatrixChangingVisitor() {
-                override fun visit(row: Int, column: Int, value: Double): Double {
-                    sumVal += value
-                    return value
-                }
-            })
+            matrix.walkInOptimizedOrder(
+                object : org.apache.commons.math3.linear.DefaultRealMatrixChangingVisitor() {
+                    override fun visit(
+                        row: Int,
+                        column: Int,
+                        value: Double,
+                    ): Double {
+                        sumVal += value
+                        return value
+                    }
+                },
+            )
 
             return sumVal.toFloat()
         }
@@ -218,9 +193,7 @@ open class GMatrix(private val matrix: RealMatrix) : Iterable<Point>, Graphics, 
             return GMatrix(matrix.transpose())
         }
 
-    fun pow(exponent: Int): GMatrix {
-        return GMatrix(matrix.power(exponent))
-    }
+    fun pow(exponent: Int): GMatrix = GMatrix(matrix.power(exponent))
 
     fun elementWiseTimes(otherMatrix: GMatrix): GMatrix {
         if (size != otherMatrix.size) {
@@ -229,21 +202,13 @@ open class GMatrix(private val matrix: RealMatrix) : Iterable<Point>, Graphics, 
         return GMatrix(matrix.multiply(otherMatrix.toRealMatrix()))
     }
 
-    override fun dot(other: Matrix): Matrix {
-        return GMatrix(matrix.preMultiply(other.toRealMatrix()))
-    }
+    override fun dot(other: Matrix): Matrix = GMatrix(matrix.preMultiply(other.toRealMatrix()))
 
-    override fun dot(other: Point): Point {
-        return Point(matrix.preMultiply(other.toRealVector()))
-    }
+    override fun dot(other: Point): Point = Point(matrix.preMultiply(other.toRealVector()))
 
-    fun getRow(index: Int): Point {
-        return Point(matrix.getRow(index).toList())
-    }
+    fun getRow(index: Int): Point = Point(matrix.getRow(index).toList())
 
-    fun getColumn(index: Int): Point {
-        return Point(matrix.getColumn(index).toList())
-    }
+    fun getColumn(index: Int): Point = Point(matrix.getColumn(index).toList())
 
     val rows: List<Point>
         get() {
@@ -338,13 +303,9 @@ open class GMatrix(private val matrix: RealMatrix) : Iterable<Point>, Graphics, 
 //            return Point(nullSpaceVectors)
 //        }
 
-    override fun toRealMatrix(): RealMatrix {
-        return matrix.copy()
-    }
+    override fun toRealMatrix(): RealMatrix = matrix.copy()
 
-    fun toArrayOfDoubleArray(): Array<DoubleArray> {
-        return rows.map { it.toDoubleArray() }.toTypedArray()
-    }
+    fun toArrayOfDoubleArray(): Array<DoubleArray> = rows.map { it.toDoubleArray() }.toTypedArray()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -355,18 +316,10 @@ open class GMatrix(private val matrix: RealMatrix) : Iterable<Point>, Graphics, 
     }
 }
 
-operator fun Number.plus(gMatrix: GMatrix): GMatrix {
-    return gMatrix + this
-}
+operator fun Number.plus(gMatrix: GMatrix): GMatrix = gMatrix + this
 
-operator fun Number.minus(gMatrix: GMatrix): GMatrix {
-    return gMatrix + (-1.0 * this.toDouble())
-}
+operator fun Number.minus(gMatrix: GMatrix): GMatrix = gMatrix + (-1.0 * this.toDouble())
 
-operator fun Number.times(gMatrix: GMatrix): GMatrix {
-    return gMatrix * this
-}
+operator fun Number.times(gMatrix: GMatrix): GMatrix = gMatrix * this
 
-operator fun Number.div(gMatrix: GMatrix): GMatrix {
-    return gMatrix / this
-}
+operator fun Number.div(gMatrix: GMatrix): GMatrix = gMatrix / this

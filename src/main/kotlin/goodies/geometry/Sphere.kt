@@ -3,8 +3,11 @@ package goodies.geometry
 import goodies.draw.Drawable
 import processing.core.PApplet
 
-class Sphere(center: Point, radius: Number) : NSphere(center, radius), Drawable {
-
+class Sphere(
+    center: Point,
+    radius: Number,
+) : NSphere(center, radius),
+    Drawable {
     init {
         if (dimensions != 3) {
             throw IllegalArgumentException("A sphere can only have three dimensions")
@@ -16,8 +19,6 @@ class Sphere(center: Point, radius: Number) : NSphere(center, radius), Drawable 
     }
 
     companion object {
-        fun unitSphere(): NEllipsoid {
-            return unitNSphere(3)
-        }
+        fun unitSphere(): NEllipsoid = unitNSphere(3)
     }
 }

@@ -1,7 +1,8 @@
 import goodies.containers.ShapeTreeNode
 
-class ShapeTree<T>(val root: ShapeTreeNode<T>) {
-
+class ShapeTree<T>(
+    val root: ShapeTreeNode<T>,
+) {
     fun height(node: ShapeTreeNode<T>? = root): Int {
         if (node == null) return 0
         return maxOf(height(node.left), height(node.right)) + 1

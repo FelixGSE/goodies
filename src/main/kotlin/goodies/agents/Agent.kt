@@ -3,23 +3,28 @@ package goodies.agents
 import goodies.geometry.Point
 import goodies.geometry.Polygon
 import processing.core.PApplet
+import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
-import kotlin.math.atan2
 
 class Agent(
     var pos: Point,
     val boundary: Polygon,
     var size: Float = (Math.random() * 45 + 5).toFloat(),
     var speed: Float = (Math.random() * 10 + 10).toFloat(),
-    var dir: Int = 1
+    var dir: Int = 1,
 ) {
     constructor(boundary: Polygon) : this(
         pos = boundary.randomPointOn(),
-        boundary = boundary
+        boundary = boundary,
     )
 
-    fun update(curly: Float, curlx: Float, noiseScale: Float, noiseStrength: Float) {
+    fun update(
+        curly: Float,
+        curlx: Float,
+        noiseScale: Float,
+        noiseStrength: Float,
+    ) {
         val pApplet = PApplet()
         val angle = pApplet.noise(pos.x / noiseScale, pos.y / noiseScale) * noiseStrength
         val angle2 = atan2((curly - pos.y).toDouble(), (curlx - pos.x).toDouble()).toFloat()

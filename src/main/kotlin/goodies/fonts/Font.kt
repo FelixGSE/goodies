@@ -1,7 +1,3 @@
 package goodies.fonts
 
-interface Font {
-
-
-
-}
+interface Font

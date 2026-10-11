@@ -10,21 +10,20 @@ import goodies.utils.weightedSample
 import processing.core.PApplet
 import processing.core.PConstants.CLOSE
 
-open class Polygon(override val vertices: List<Point>) : PolygonLikeShape, ClosedShape, Geom {
-
+open class Polygon(
+    override val vertices: List<Point>,
+) : PolygonLikeShape,
+    ClosedShape,
+    Geom {
     constructor(vararg vertices: Point) : this(vertices.toList())
 
     override fun translate(vararg translation: Number): Polygon {
         TODO("Not yet implemented")
     }
 
-    override fun translate(translation: Number): Polygon {
-        return Polygon(vertices.map { it.translate(translation) })
-    }
+    override fun translate(translation: Number): Polygon = Polygon(vertices.map { it.translate(translation) })
 
-    override fun scale(factor: Number): Polygon {
-        return Polygon(vertices.map { it.scale(factor) })
-    }
+    override fun scale(factor: Number): Polygon = Polygon(vertices.map { it.scale(factor) })
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -33,9 +32,7 @@ open class Polygon(override val vertices: List<Point>) : PolygonLikeShape, Close
         return vertices == other.vertices
     }
 
-    override fun hashCode(): Int {
-        return vertices.hashCode()
-    }
+    override fun hashCode(): Int = vertices.hashCode()
 
     val directions: PolygonPath
         get() {
@@ -47,29 +44,25 @@ open class Polygon(override val vertices: List<Point>) : PolygonLikeShape, Close
             return Point(GMatrix(vertices).rows.map { it.average() })
         }
 
-    override fun center(): Polygon {
-        return Polygon(vertexMatrix.center().rows)
-    }
+    override fun center(): Polygon = Polygon(vertexMatrix.center().rows)
 
-    override fun centerAt(point: Point): Polygon {
-        return center().translate(point)
-    }
+    override fun centerAt(point: Point): Polygon = center().translate(point)
 
-    override fun normalize(): Polygon {
-        return Polygon(GMatrix(vertices).normalize().rows)
-    }
+    override fun normalize(): Polygon = Polygon(GMatrix(vertices).normalize().rows)
 
-    fun translate(translation: Point): Polygon {
-        return Polygon(vertices.map { it + translation })
-    }
+    fun translate(translation: Point): Polygon = Polygon(vertices.map { it + translation })
 
-    fun rotateAroundReferencePoint(angle: Number, referencePoint: Point): Polygon {
-        return Polygon(vertices.map { it - referencePoint }).rotate(angle).translate(referencePoint)
-    }
+    fun rotateAroundReferencePoint(
+        angle: Number,
+        referencePoint: Point,
+    ): Polygon =
+        Polygon(
+            vertices.map {
+                it - referencePoint
+            },
+        ).rotate(angle).translate(referencePoint)
 
-    fun rotate(angle: Number): Polygon {
-        return Polygon(vertices.map { it.rotate(angle) })
-    }
+    fun rotate(angle: Number): Polygon = Polygon(vertices.map { it.rotate(angle) })
 
     val perimeter: Float
         get() {
@@ -127,14 +120,16 @@ open class Polygon(override val vertices: List<Point>) : PolygonLikeShape, Close
             for (vertex in vertices) {
                 if (vertex == currentVertex) continue
 
-                val cross = (vertex.x - currentVertex.x) * (nextVertex.y - currentVertex.y) -
-                    (vertex.y - currentVertex.y) * (nextVertex.x - currentVertex.x)
+                val cross =
+                    (vertex.x - currentVertex.x) * (nextVertex.y - currentVertex.y) -
+                        (vertex.y - currentVertex.y) * (nextVertex.x - currentVertex.x)
 
                 if (nextVertex == currentVertex || cross > 0 || (
-                        cross == 0.0F && vertex.distance(currentVertex) > nextVertex.distance(
-                            currentVertex,
-                        )
-                        )
+                        cross == 0.0F && vertex.distance(currentVertex) >
+                            nextVertex.distance(
+                                currentVertex,
+                            )
+                    )
                 ) {
                     nextVertex = vertex
                 }
@@ -181,9 +176,11 @@ open class Polygon(override val vertices: List<Point>) : PolygonLikeShape, Close
         sketch.endShape(CLOSE)
     }
 
-    fun polygonSpiral(iterations: Int, lower: Number = 0.1, upper: Number = 0.1): List<Polygon> {
-        return polygonSpiral(this, iterations, lower, upper)
-    }
+    fun polygonSpiral(
+        iterations: Int,
+        lower: Number = 0.1,
+        upper: Number = 0.1,
+    ): List<Polygon> = polygonSpiral(this, iterations, lower, upper)
 
     private fun polygonSpiral(
         polygon: Polygon,
@@ -208,7 +205,11 @@ open class Polygon(override val vertices: List<Point>) : PolygonLikeShape, Close
         var j = vertices.size - 1
         while (i < vertices.size) {
             if ((vertices[i].y > point.y) != (vertices[j].y > point.y) &&
-                (point.x < (vertices[j].x - vertices[i].x) * (point.y - vertices[i].y) / (vertices[j].y - vertices[i].y) + vertices[i].x)
+                (
+                    point.x <
+                        (vertices[j].x - vertices[i].x) * (point.y - vertices[i].y) / (vertices[j].y - vertices[i].y) +
+                        vertices[i].x
+                )
             ) {
                 inside = !inside
             }

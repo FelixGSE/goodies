@@ -7,7 +7,10 @@ interface ColorPalette : Iterable<Int> {
 
     override fun iterator(): Iterator<Int> = colors.iterator()
 
-    fun drawSample(sketch: PApplet, size: Int) {
+    fun drawSample(
+        sketch: PApplet,
+        size: Int,
+    ) {
         val width = sketch.width.toFloat()
         var nextX = 0f
         var nextY = size.toFloat()

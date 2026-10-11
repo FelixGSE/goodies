@@ -4,7 +4,6 @@ import org.apache.commons.math3.linear.MatrixUtils
 import org.apache.commons.math3.linear.RealMatrix
 
 class TranslationMatrix : GMatrix {
-
     constructor(vararg translationFactors: Number) : super(
         createTranslationMatrix(translationFactors.toList()),
     )

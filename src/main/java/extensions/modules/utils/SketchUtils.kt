@@ -2,13 +2,9 @@ package extensions.modules.utils
 
 import processing.core.PApplet
 
-
 object SketchUtils {
-
     @JvmStatic
-    private fun getSketchName(sketch: PApplet): String {
-        return sketch.javaClass.name
-    }
+    private fun getSketchName(sketch: PApplet): String = sketch.javaClass.name
 
     @JvmStatic
     fun getSketchNameAndSetSeed(sketch: PApplet): String {

@@ -9,8 +9,11 @@ class ShearMatrix : GMatrix {
     )
 
     private companion object {
-
-        fun computeShearMatrix(dimensions: Int, shearAxis: Int, shearFactor: Number): RealMatrix {
+        fun computeShearMatrix(
+            dimensions: Int,
+            shearAxis: Int,
+            shearFactor: Number,
+        ): RealMatrix {
             require(shearAxis in 0 until dimensions) {
                 "shearAxis must be a valid axis index between 0 and ${dimensions - 1}."
             }

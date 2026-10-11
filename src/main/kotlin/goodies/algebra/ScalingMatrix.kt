@@ -4,7 +4,6 @@ import org.apache.commons.math3.linear.MatrixUtils
 import org.apache.commons.math3.linear.RealMatrix
 
 class ScalingMatrix : GMatrix {
-
     constructor(vararg scalingFactors: Number) : super(
         createScalingMatrix(scalingFactors.toList()),
     )
@@ -21,9 +20,10 @@ class ScalingMatrix : GMatrix {
         fun createScalingMatrix(scalingFactors: List<Number>): RealMatrix {
             val dimensions = scalingFactors.size
 
-            val scalingMatrix = MatrixUtils.createRealDiagonalMatrix(
-                scalingFactors.map { it.toDouble() }.toDoubleArray(),
-            )
+            val scalingMatrix =
+                MatrixUtils.createRealDiagonalMatrix(
+                    scalingFactors.map { it.toDouble() }.toDoubleArray(),
+                )
 
             require(dimensions > 0) {
                 "scalingFactors must contain at least one element."

@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test
 import utils.linSpace
 
 class Grid2DTest {
-
     @Nested
     inner class Construction {
         @Test
@@ -19,14 +18,10 @@ class Grid2DTest {
 
             // When
 
-
             // Then
             Assertions.assertThat(grid.nRows).isEqualTo(expectedNRows)
             Assertions.assertThat(grid.nCols).isEqualTo(expectedNCols)
             Assertions.assertThat(grid.nCells).isEqualTo(expectedNCells)
-
         }
-
-
     }
 }

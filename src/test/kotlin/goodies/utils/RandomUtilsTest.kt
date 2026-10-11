@@ -8,7 +8,6 @@ import utils.itemPercentages
 import kotlin.random.Random
 
 internal class RandomUtilsTest {
-
     @Test
     fun `weightedSample should return items in proportion to their probabilities`() {
         // Given
@@ -24,7 +23,8 @@ internal class RandomUtilsTest {
 
         // Then
         val percentages = itemPercentages(result)
-        Assertions.assertThat(options.map { percentages.getValue(it) }.toDoubleArray())
+        Assertions
+            .assertThat(options.map { percentages.getValue(it) }.toDoubleArray())
             .containsExactly(expected, withPrecision(tolerance))
     }
 
@@ -51,14 +51,14 @@ internal class RandomUtilsTest {
         val thrown = Assertions.catchThrowable { weightedSample(options, weights, Random(42)) }
 
         // Then
-        Assertions.assertThat(thrown).isInstanceOf(IllegalArgumentException::class.java)
+        Assertions
+            .assertThat(thrown)
+            .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessageContaining("sum to one")
     }
 
     @Test
-    fun `randomBitList with correct length`(
-    ) {
-
+    fun `randomBitList with correct length`() {
         // Given
         val n = 100
 
@@ -67,13 +67,10 @@ internal class RandomUtilsTest {
 
         // Then
         Assertions.assertThat(result).isEqualTo(100)
-
     }
 
     @Test
-    fun `sampleWithReplacementFromList with correct length`(
-    ) {
-
+    fun `sampleWithReplacementFromList with correct length`() {
         // Given
         val input = listOf("A", "B", "C")
         val n = 100
@@ -83,13 +80,10 @@ internal class RandomUtilsTest {
 
         // Then
         Assertions.assertThat(result).isEqualTo(n)
-
     }
 
     @Test
-    fun `weightedSampleWithReplacementFromList with correct length`(
-    ) {
-
+    fun `weightedSampleWithReplacementFromList with correct length`() {
         // Given
         val options = listOf("one", "two", "three")
         val distribution = listOf(0.3, 0.5, 0.2)
@@ -100,16 +94,16 @@ internal class RandomUtilsTest {
 
         // Then
         Assertions.assertThat(result).isEqualTo(n)
-
     }
 
     @Test
-    fun foo(){
-        for(i in 0..100){
-            val a = org.apache.commons.math3.distribution.ParetoDistribution().sample()
+    fun foo() {
+        for (i in 0..100) {
+            val a =
+                org.apache.commons.math3.distribution
+                    .ParetoDistribution()
+                    .sample()
             println(a)
         }
     }
-
 }
-

@@ -1,21 +1,23 @@
 package goodies.geometry
 
-import goodies.projections.StereographicProjection
-import goodies.algebra.RotationMatrixUtils
-import goodies.sampler.SphereSampler.drawPointOnUnitNSphere
 import goodies.algebra.Graphics
 import goodies.algebra.RotationMatrix
+import goodies.algebra.RotationMatrixUtils
+import goodies.projections.StereographicProjection
+import goodies.sampler.SphereSampler.drawPointOnUnitNSphere
 import org.apache.commons.math3.linear.MatrixUtils
 import org.apache.commons.math3.linear.RealMatrix
 import org.apache.commons.math3.linear.RealVector
 import processing.core.PApplet
 import processing.core.PVector
-import java.util.*
+import java.util.Collections
 import kotlin.math.acos
 import kotlin.math.pow
 
-class Point(vararg coordinates: Number) : Iterable<Float>, Graphics {
-
+class Point(
+    vararg coordinates: Number,
+) : Iterable<Float>,
+    Graphics {
     private val coordinates = MatrixUtils.createRealVector(coordinates.map { it.toDouble() }.toDoubleArray())
     val dimensions = coordinates.size
 
@@ -23,9 +25,7 @@ class Point(vararg coordinates: Number) : Iterable<Float>, Graphics {
     constructor(coordinates: RealVector) : this(*coordinates.toArray().toTypedArray())
     constructor(pVector: PVector) : this(*pVector.array().toTypedArray())
 
-    override fun toString(): String {
-        return "Point(dimensions=$dimensions, coordinates=$coordinates)"
-    }
+    override fun toString(): String = "Point(dimensions=$dimensions, coordinates=$coordinates)"
 
     val x: Float
         get() {
@@ -70,37 +70,24 @@ class Point(vararg coordinates: Number) : Iterable<Float>, Graphics {
         return result
     }
 
-    override fun iterator(): Iterator<Float> {
-        return toFloatList().iterator()
-    }
+    override fun iterator(): Iterator<Float> = toFloatList().iterator()
 
-    operator fun get(index: Int): Float {
-        return coordinates.getEntry(index).toFloat()
-    }
+    operator fun get(index: Int): Float = coordinates.getEntry(index).toFloat()
 
-    fun slice(from: Int, to: Int): Point {
-        return Point(toFloatList().slice(from until to))
-    }
+    fun slice(
+        from: Int,
+        to: Int,
+    ): Point = Point(toFloatList().slice(from until to))
 
-    fun slice(i: Int): Point {
-        return Point(toFloatList().slice(i until i))
-    }
+    fun slice(i: Int): Point = Point(toFloatList().slice(i until i))
 
-    operator fun minus(other: Point): Point {
-        return Point(coordinates.subtract(other.toRealVector()))
-    }
+    operator fun minus(other: Point): Point = Point(coordinates.subtract(other.toRealVector()))
 
-    operator fun minus(number: Number): Point {
-        return Point(coordinates.toArray().map { it - number.toDouble() })
-    }
+    operator fun minus(number: Number): Point = Point(coordinates.toArray().map { it - number.toDouble() })
 
-    operator fun plus(other: Point): Point {
-        return Point(coordinates.add(other.toRealVector()))
-    }
+    operator fun plus(other: Point): Point = Point(coordinates.add(other.toRealVector()))
 
-    operator fun plus(number: Number): Point {
-        return Point(coordinates.toArray().map { it + number.toDouble() })
-    }
+    operator fun plus(number: Number): Point = Point(coordinates.toArray().map { it + number.toDouble() })
 
     operator fun times(other: Point): Point {
         if (dimensions != other.dimensions) {
@@ -109,49 +96,33 @@ class Point(vararg coordinates: Number) : Iterable<Float>, Graphics {
         return Point(other.toDoubleArray().zip(coordinates.toArray()) { x, y -> x * y })
     }
 
-    operator fun times(number: Number): Point {
-        return Point(coordinates.toArray().map { it * number.toDouble() })
-    }
+    operator fun times(number: Number): Point = Point(coordinates.toArray().map { it * number.toDouble() })
 
-    operator fun div(other: Point): Point {
-        return Point(other.toDoubleArray().zip(coordinates.toArray()) { x, y -> x / y })
-    }
+    operator fun div(other: Point): Point = Point(other.toDoubleArray().zip(coordinates.toArray()) { x, y -> x / y })
 
-    operator fun div(number: Number): Point {
-        return Point(coordinates.toArray().map { it / number.toDouble() })
-    }
+    operator fun div(number: Number): Point = Point(coordinates.toArray().map { it / number.toDouble() })
 
     /**
      * Alias plus operator. Compliance with Processing PVector
      *
      */
-    fun add(other: Point): Point {
-        return this + other
-    }
+    fun add(other: Point): Point = this + other
 
     /**
      * Alias minus operator. Compliance with Processing PVector
      *
      */
-    fun sub(other: Point): Point {
-        return this - other
-    }
+    fun sub(other: Point): Point = this - other
 
     /**
      * Alias times operator. Compliance with Processing PVector
      *
      */
-    fun mult(other: Point): Point {
-        return this * other
-    }
+    fun mult(other: Point): Point = this * other
 
-    fun dot(point: Point): Float {
-        return coordinates.dotProduct(point.toRealVector()).toFloat()
-    }
+    fun dot(point: Point): Float = coordinates.dotProduct(point.toRealVector()).toFloat()
 
-    fun pow(exponent: Number): Point {
-        return Point(coordinates.toArray().map { it.pow(exponent.toDouble()) })
-    }
+    fun pow(exponent: Number): Point = Point(coordinates.toArray().map { it.pow(exponent.toDouble()) })
 
     fun cross(other: Point): Point {
         if (dimensions != 3 || other.dimensions != 3) {
@@ -172,9 +143,13 @@ class Point(vararg coordinates: Number) : Iterable<Float>, Graphics {
         return Point(*(0 until dimensions).map { this[it] + translation[it].toDouble() }.toTypedArray())
     }
 
-    fun translate(translation: Number): Point {
-        return Point(*(0 until dimensions).map { this[it] + translation.toDouble() }.toTypedArray())
-    }
+    fun translate(translation: Number): Point =
+        Point(
+            *(0 until dimensions)
+                .map {
+                    this[it] + translation.toDouble()
+                }.toTypedArray(),
+        )
 
     fun translate(translation: Point): Point {
         if (translation.dimensions != dimensions) {
@@ -183,74 +158,48 @@ class Point(vararg coordinates: Number) : Iterable<Float>, Graphics {
         return Point(*(0 until dimensions).map { this[it] + translation[it].toDouble() }.toTypedArray())
     }
 
-    fun scale(factor: Number): Point {
-        return Point(coordinates.mapMultiply(factor.toDouble()))
-    }
+    fun scale(factor: Number): Point = Point(coordinates.mapMultiply(factor.toDouble()))
 
-    fun sum(): Float {
-        return coordinates.toArray().sum().toFloat()
-    }
+    fun sum(): Float = coordinates.toArray().sum().toFloat()
 
-    fun average(): Float {
-        return coordinates.toArray().average().toFloat()
-    }
+    fun average(): Float = coordinates.toArray().average().toFloat()
 
-    fun avg(): Float {
-        return average()
-    }
+    fun avg(): Float = average()
 
-    fun max(): Float {
-        return toList().max()
-    }
+    fun max(): Float = toList().max()
 
     fun maxIndex(): Int {
         val coordinatesList = toList()
         return coordinatesList.indexOf(coordinatesList.max())
     }
 
-    fun negate(): Point {
-        return this * -1
-    }
+    fun negate(): Point = this * -1
 
-    fun distance(other: Point): Float {
-        return coordinates.getDistance(other.toRealVector()).toFloat()
-    }
+    fun distance(other: Point): Float = coordinates.getDistance(other.toRealVector()).toFloat()
 
     /**
      * Alias distance(). Compliance with Processing PVector
      *
      */
-    fun dist(other: Point): Float {
-        return distance(other)
-    }
+    fun dist(other: Point): Float = distance(other)
 
-    fun magnitude(): Float {
-        return coordinates.norm.toFloat()
-    }
+    fun magnitude(): Float = coordinates.norm.toFloat()
 
     /**
      * Alias for magnitude(). Compliance with Processing PVector
      *
      */
-    fun mag(): Float {
-        return magnitude()
-    }
+    fun mag(): Float = magnitude()
 
-    fun magnitudeSquared(): Float {
-        return coordinates.toArray().sumOf { it * it }.toFloat()
-    }
+    fun magnitudeSquared(): Float = coordinates.toArray().sumOf { it * it }.toFloat()
 
     /**
      * Alias for magnitudeSquared(). Compliance with Processing PVector
      *
      */
-    fun magSq(): Float {
-        return magnitudeSquared()
-    }
+    fun magSq(): Float = magnitudeSquared()
 
-    fun normalize(): Point {
-        return Point(coordinates.unitVector())
-    }
+    fun normalize(): Point = Point(coordinates.unitVector())
 
     fun rotate(angle: Number): Point {
         if (dimensions != 2) {
@@ -282,15 +231,19 @@ class Point(vararg coordinates: Number) : Iterable<Float>, Graphics {
         return rotateAxis(1, 2, angle.toFloat())
     }
 
-    fun rotateAxis(i: Int, j: Int, angle: Number): Point {
-        return Point(
+    fun rotateAxis(
+        i: Int,
+        j: Int,
+        angle: Number,
+    ): Point =
+        Point(
             RotationMatrixUtils.getRotationMatrixForAxis(i, j, dimensions, angle.toFloat()).preMultiply(toRealVector()),
         )
-    }
 
-    fun rotateAxis(i: Int, angle: Number): Point {
-        return RotationMatrix(i, dimensions, angle).dot(this)
-    }
+    fun rotateAxis(
+        i: Int,
+        angle: Number,
+    ): Point = RotationMatrix(i, dimensions, angle).dot(this)
 
 //    fun rotateSequence(axes: List<Int>, angles: List<Number>): Point {
 //        require(axes.size == angles.size) {
@@ -305,17 +258,16 @@ class Point(vararg coordinates: Number) : Iterable<Float>, Graphics {
 //            return it
 //    }
 
-    fun rotateAxisAroundReferencePoint(i: Int, j: Int, angle: Number, referencePoint: Point): Point {
-        return (this - referencePoint).rotateAxis(i, j, angle) + referencePoint
-    }
+    fun rotateAxisAroundReferencePoint(
+        i: Int,
+        j: Int,
+        angle: Number,
+        referencePoint: Point,
+    ): Point = (this - referencePoint).rotateAxis(i, j, angle) + referencePoint
 
-    fun angleBetween(point: Point): Float {
-        return acos(normalize().dot(point.normalize()).toDouble()).toFloat()
-    }
+    fun angleBetween(point: Point): Float = acos(normalize().dot(point.normalize()).toDouble()).toFloat()
 
-    fun headings(): List<Float> {
-        return NSphere.unitNSphere(dimensions).anglesForPointOnSurface(normalize())
-    }
+    fun headings(): List<Float> = NSphere.unitNSphere(dimensions).anglesForPointOnSurface(normalize())
 
     fun heading(): Float {
         require(dimensions == 2) {
@@ -331,9 +283,8 @@ class Point(vararg coordinates: Number) : Iterable<Float>, Graphics {
         }
     }
 
-    fun projectDown(distance: Float = 1.0f): Point {
-        return Point(StereographicProjection.projectDownOneDimension(distance, coordinates))
-    }
+    fun projectDown(distance: Float = 1.0f): Point =
+        Point(StereographicProjection.projectDownOneDimension(distance, coordinates))
 
     fun projectDownTo3D(distance: Float = 1.0f): Point {
         if (dimensions < 3) {
@@ -346,9 +297,7 @@ class Point(vararg coordinates: Number) : Iterable<Float>, Graphics {
         return point
     }
 
-    fun newWithLength(length: Number): Point {
-        return Point(coordinates.unitVector().map { it * length.toDouble() })
-    }
+    fun newWithLength(length: Number): Point = Point(coordinates.unitVector().map { it * length.toDouble() })
 
     /**
      * Alias for newWithLength(). Compliance with Processing PVector. Returns a new vector instead of modifying the original.
@@ -373,7 +322,10 @@ class Point(vararg coordinates: Number) : Iterable<Float>, Graphics {
         }
     }
 
-    fun lerp(other: Point, t: Float): Point {
+    fun lerp(
+        other: Point,
+        t: Float,
+    ): Point {
         require(dimensions == other.dimensions) {
             "Vectors must be of the same dimension for lerp operation."
         }
@@ -397,50 +349,35 @@ class Point(vararg coordinates: Number) : Iterable<Float>, Graphics {
         return Point(pointAsList.toList())
     }
 
-    fun extend(
-        vararg values: Number,
-    ): Point {
-        return Point(toDoubleArray().plus(values.map { it.toDouble() }).toList())
-    }
+    fun extend(vararg values: Number): Point = Point(toDoubleArray().plus(values.map { it.toDouble() }).toList())
 
-    override fun makeAffine(): Point {
-        return extend(1)
-    }
+    override fun makeAffine(): Point = extend(1)
 
-    fun copy(): Point {
-        return Point(coordinates.copy())
-    }
+    fun copy(): Point = Point(coordinates.copy())
 
-    fun toRealVector(): RealVector {
-        return coordinates.copy()
-    }
+    fun toRealVector(): RealVector = coordinates.copy()
 
-    fun toDoubleArray(): DoubleArray {
-        return coordinates.toArray()
-    }
+    fun toDoubleArray(): DoubleArray = coordinates.toArray()
 
     /**
      * Alias for toFloatArray(). Compliance with Processing PVector.
      *
      */
-    fun array(): FloatArray {
-        return toFloatArray()
-    }
+    fun array(): FloatArray = toFloatArray()
 
-    fun toFloatArray(): FloatArray {
-        return coordinates.toArray().map { it.toFloat() }.toFloatArray()
-    }
+    fun toFloatArray(): FloatArray = coordinates.toArray().map { it.toFloat() }.toFloatArray()
 
-    fun toDoubleList(): List<Double> {
-        return coordinates.toArray().toList()
-    }
+    fun toDoubleList(): List<Double> = coordinates.toArray().toList()
 
-    fun toFloatList(): List<Float> {
-        return coordinates.toArray().map { it.toFloat() }.toFloatArray().toList()
-    }
+    fun toFloatList(): List<Float> =
+        coordinates
+            .toArray()
+            .map { it.toFloat() }
+            .toFloatArray()
+            .toList()
 
-    fun toPVector(): PVector {
-        return when (dimensions) {
+    fun toPVector(): PVector =
+        when (dimensions) {
             2 -> {
                 PVector(this[0], this[1])
             }
@@ -450,13 +387,14 @@ class Point(vararg coordinates: Number) : Iterable<Float>, Graphics {
             }
 
             else -> {
-                throw java.lang.IllegalArgumentException("Can't convert Point to PVector - Invalid number of dimensions")
+                throw java.lang.IllegalArgumentException(
+                    "Can't convert Point to PVector - Invalid number of dimensions",
+                )
             }
         }
-    }
 
-    fun draw(sketch: PApplet) {
-        return when (dimensions) {
+    fun draw(sketch: PApplet) =
+        when (dimensions) {
             2 -> {
                 sketch.point(this[0], this[1])
             }
@@ -469,13 +407,9 @@ class Point(vararg coordinates: Number) : Iterable<Float>, Graphics {
                 throw java.lang.IllegalArgumentException("Can't convert Point to PVector - Too many dimensions")
             }
         }
-    }
 
     companion object {
-
-        fun zeros(dimensions: Int): Point {
-            return Point(List(dimensions) { 0 })
-        }
+        fun zeros(dimensions: Int): Point = Point(List(dimensions) { 0 })
 
         fun randomPoint(dimensions: Int): Point {
             if (dimensions < 0) {
@@ -485,13 +419,9 @@ class Point(vararg coordinates: Number) : Iterable<Float>, Graphics {
             return Point(*drawPointOnUnitNSphere(dimensions).toArray().toTypedArray())
         }
 
-        fun random2D(): Point {
-            return Point.randomPoint(2)
-        }
+        fun random2D(): Point = Point.randomPoint(2)
 
-        fun random3D(): Point {
-            return Point.randomPoint(3)
-        }
+        fun random3D(): Point = Point.randomPoint(3)
 
         /**
          * Generate a 2D GVector from an angle. For compliance with Processing PVector class
@@ -499,27 +429,24 @@ class Point(vararg coordinates: Number) : Iterable<Float>, Graphics {
          * @param angle The angle is in radians.
          * @return The GVector with magnitude 1 for the corresponding angle.
          */
-        fun fromAngle(angle: Number): Point {
-            return NSphere.unitNSphere(2).pointOnSurface(angle)
-        }
+        fun fromAngle(angle: Number): Point = NSphere.unitNSphere(2).pointOnSurface(angle)
 
-        fun fromAngles(vararg angles: Number): Point {
-            return NSphere.unitNSphere(angles.size).pointOnSurface(*angles)
-        }
+        fun fromAngles(vararg angles: Number): Point = NSphere.unitNSphere(angles.size).pointOnSurface(*angles)
 
-        fun fromPVector2D(pVector: PVector): Point {
-            return Point(pVector.x, pVector.y)
-        }
+        fun fromPVector2D(pVector: PVector): Point = Point(pVector.x, pVector.y)
 
-        fun fromPVector3D(pVector: PVector): Point {
-            return Point(pVector.x, pVector.y)
-        }
+        fun fromPVector3D(pVector: PVector): Point = Point(pVector.x, pVector.y)
     }
 }
 
 fun RealMatrix.multiplyPoint(point: Point): Point = Point(this.preMultiply(point.toRealVector()))
+
 fun Iterable<Number>.toPoint(): Point = (Point(this.toList()))
+
 operator fun Number.plus(point: Point): Point = point + (this)
+
 operator fun Number.minus(point: Point): Point = Point(point.map { this.toFloat() - it })
+
 operator fun Number.times(point: Point): Point = point * (this)
+
 operator fun Number.div(point: Point): Point = Point(point.map { this.toFloat() / it })

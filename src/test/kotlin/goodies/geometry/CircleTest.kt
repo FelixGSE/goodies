@@ -15,7 +15,6 @@ internal class CircleTest {
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     @Nested
     inner class Construction {
-
         @Test
         fun `Initialization of a Circle should throw IllegalArgumentException when dimension is not equal to two`() {
             // Given
@@ -25,21 +24,20 @@ internal class CircleTest {
             val result = catchThrowable { Circle(center, 10) }
 
             // Then
-            assertThat(result).isInstanceOf(IllegalArgumentException().javaClass)
+            assertThat(result)
+                .isInstanceOf(IllegalArgumentException().javaClass)
                 .hasMessageContaining("A circle can only have two dimensions")
-
         }
-
     }
 
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     @Nested
     inner class Basics {
-
         @ParameterizedTest
         @MethodSource("getParametersForComputationOfPointsOnSphere")
         fun `pointOnSurface should compute a defined sample of points on a unit circle`(
-            angle: Double, expected: Point
+            angle: Double,
+            expected: Point,
         ) {
             // Given
             val unitCircle = Circle.unitCircle()
@@ -49,13 +47,13 @@ internal class CircleTest {
 
             // Then
             assertThat(result.toDoubleArray()).containsSequence(expected.toDoubleArray(), withPrecision(0.01))
-
         }
 
         @ParameterizedTest
         @MethodSource("getParametersForComputationOfPointsOnSphere")
         fun `anglesForPointOnSurface should compute the angle for a point on a unit circle`(
-            angle: Double, point: Point
+            angle: Double,
+            point: Point,
         ) {
             // Given
             val unitCircle = Circle.unitCircle()
@@ -66,11 +64,10 @@ internal class CircleTest {
 
             // Then
             assertThat(result).isEqualTo(angleAsRadians.toFloat(), withPrecision(0.0001f))
-
         }
 
-        private fun getParametersForComputationOfPointsOnSphere(): Stream<Arguments> {
-            return Stream.of(
+        private fun getParametersForComputationOfPointsOnSphere(): Stream<Arguments> =
+            Stream.of(
                 Arguments.of(0, Point(0, 1)),
                 Arguments.of(45, Point(sqrt(2.0) / 2, sqrt(2.0) / 2)),
                 Arguments.of(90, Point(1, 0)),
@@ -80,7 +77,5 @@ internal class CircleTest {
                 Arguments.of(270, Point(-1, 0)),
                 Arguments.of(315, Point(-sqrt(2.0) / 2, sqrt(2.0) / 2)),
             )
-        }
-
     }
 }

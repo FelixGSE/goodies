@@ -10,10 +10,8 @@ import processing.core.PVector
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class StereographicProjectionTest {
-
     @Nested
     inner class Project3Dto2D {
-
         @Test
         fun `should project 3D point to 2D`() {
             // Given
@@ -58,7 +56,6 @@ class StereographicProjectionTest {
 
     @Nested
     inner class ProjectDownOneDimension {
-
         @Test
         fun `should reduce dimensionality by one for RealVector`() {
             // Given

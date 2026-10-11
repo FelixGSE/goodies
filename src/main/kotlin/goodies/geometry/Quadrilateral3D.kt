@@ -1,4 +1,3 @@
 package goodies.geometry
 
-class Quadrilateral3D {
-}
+class Quadrilateral3D

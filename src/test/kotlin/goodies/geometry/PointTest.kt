@@ -3,6 +3,7 @@ package goodies.geometry
 import org.apache.commons.math3.exception.MathArithmeticException
 import org.apache.commons.math3.linear.MatrixUtils
 import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.withPrecision
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -11,15 +12,11 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import processing.core.PVector
 import java.util.stream.Stream
-import org.assertj.core.api.Assertions.withPrecision
-
 
 internal class PointTest {
-
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     @Nested
     inner class Construction {
-
         @Test
         fun `Empty constructor for Point`() {
             // Given
@@ -30,12 +27,14 @@ internal class PointTest {
 
             // Then
             assertThat(result).isEqualTo(0)
-
         }
 
         @ParameterizedTest
         @MethodSource("getPointInputFromNumbers")
-        fun `Construct a Point object from Numbers`(x: Number, y: Number) {
+        fun `Construct a Point object from Numbers`(
+            x: Number,
+            y: Number,
+        ) {
             // Given
             val expected = Point(x, y)
 
@@ -46,14 +45,13 @@ internal class PointTest {
             assertThat(result).isEqualTo(expected)
         }
 
-        private fun getPointInputFromNumbers(): Stream<Arguments> {
-            return Stream.of(
+        private fun getPointInputFromNumbers(): Stream<Arguments> =
+            Stream.of(
                 Arguments.of(1, 1),
                 Arguments.of(1L, 1L),
                 Arguments.of(1.0, 1.0),
                 Arguments.of(1.0f, 1.0f),
             )
-        }
 
         @ParameterizedTest
         @MethodSource("getPointInputFromList")
@@ -68,14 +66,13 @@ internal class PointTest {
             assertThat(result).isEqualTo(expected)
         }
 
-        private fun getPointInputFromList(): Stream<List<Number>> {
-            return Stream.of(
+        private fun getPointInputFromList(): Stream<List<Number>> =
+            Stream.of(
                 listOf(1, 1),
                 listOf(1L, 1L),
                 listOf(1.0, 1.0),
                 listOf(1.0f, 1.0f),
             )
-        }
 
         @Test
         fun `Construct a Point object from RealVector`() {
@@ -97,9 +94,9 @@ internal class PointTest {
             val result = catchThrowable { Point.randomPoint(-1) }
 
             // Then
-            assertThat(result).isInstanceOf(IllegalArgumentException().javaClass)
+            assertThat(result)
+                .isInstanceOf(IllegalArgumentException().javaClass)
                 .hasMessageContaining("Dimensions must greater or equal than zero")
-
         }
 
         @Test
@@ -124,10 +121,7 @@ internal class PointTest {
 
             // Then
             assertThat(result).isEqualTo(inputDimensions)
-
         }
-
-
     }
 
     @Nested
@@ -143,7 +137,6 @@ internal class PointTest {
 
             // Then
             assertThat(result).isEqualTo(expected)
-
         }
 
         @Test
@@ -153,9 +146,9 @@ internal class PointTest {
             // When
             val result = catchThrowable { Point().x }
 
-            assertThat(result).isInstanceOf(IllegalArgumentException().javaClass)
+            assertThat(result)
+                .isInstanceOf(IllegalArgumentException().javaClass)
                 .hasMessageContaining("Point does not have enough dimensions")
-
         }
 
         @Test
@@ -169,7 +162,6 @@ internal class PointTest {
 
             // Then
             assertThat(result).isEqualTo(expected)
-
         }
 
         @Test
@@ -179,9 +171,9 @@ internal class PointTest {
             // When
             val result = catchThrowable { Point(1).y }
 
-            assertThat(result).isInstanceOf(IllegalArgumentException().javaClass)
+            assertThat(result)
+                .isInstanceOf(IllegalArgumentException().javaClass)
                 .hasMessageContaining("Point does not have enough dimensions")
-
         }
 
         @Test
@@ -195,7 +187,6 @@ internal class PointTest {
 
             // Then
             assertThat(result).isEqualTo(expected)
-
         }
 
         @Test
@@ -205,17 +196,14 @@ internal class PointTest {
             // When
             val result = catchThrowable { Point(1, 2).z }
 
-            assertThat(result).isInstanceOf(IllegalArgumentException().javaClass)
+            assertThat(result)
+                .isInstanceOf(IllegalArgumentException().javaClass)
                 .hasMessageContaining("Point does not have enough dimensions")
-
         }
-
     }
-
 
     @Nested
     inner class Arithmetic {
-
         @Test
         fun `Minus operator should subtract two Points element wise`() {
             // Given
@@ -228,7 +216,6 @@ internal class PointTest {
 
             // Then
             assertThat(result).isEqualTo(expected)
-
         }
 
         @Test
@@ -243,7 +230,6 @@ internal class PointTest {
 
             // Then
             assertThat(result).isEqualTo(expected)
-
         }
 
         @Test
@@ -258,7 +244,6 @@ internal class PointTest {
 
             // Then
             assertThat(result).isEqualTo(expected)
-
         }
 
         @Test
@@ -273,7 +258,6 @@ internal class PointTest {
 
             // Then
             assertThat(result).isEqualTo(expected)
-
         }
 
         @Test
@@ -288,7 +272,6 @@ internal class PointTest {
 
             // Then
             assertThat(result).isEqualTo(expected)
-
         }
 
         @Test
@@ -301,9 +284,9 @@ internal class PointTest {
             val result = catchThrowable { point * anotherPoint }
 
             // Then
-            assertThat(result).isInstanceOf(IllegalArgumentException().javaClass)
+            assertThat(result)
+                .isInstanceOf(IllegalArgumentException().javaClass)
                 .hasMessageContaining("Points dimension do not match")
-
         }
 
         @Test
@@ -318,7 +301,6 @@ internal class PointTest {
 
             // Then
             assertThat(result).isEqualTo(expected)
-
         }
 
         @Test
@@ -333,7 +315,6 @@ internal class PointTest {
 
             // Then
             assertThat(result).isEqualTo(expected)
-
         }
 
         @Test
@@ -348,7 +329,6 @@ internal class PointTest {
 
             // Then
             assertThat(result).isEqualTo(expected)
-
         }
 
         @Test
@@ -362,15 +342,12 @@ internal class PointTest {
 
             // Then
             assertThat(result).isEqualTo(0.0f)
-
         }
-
     }
 
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     @Nested
     inner class Algebra {
-
         @Test
         fun `normalize should convert a given Point to a vector with length 1`() {
             // Given
@@ -403,16 +380,12 @@ internal class PointTest {
             val result = catchThrowable { Point().normalize() }
             // Then
             assertThat(result).isInstanceOf(MathArithmeticException().javaClass).hasMessageContaining("zero norm")
-
         }
-
     }
-
 
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     @Nested
     inner class Geometry {
-
         @Test
         fun `translate should translate a given vector in all dimension`() {
             // Given
@@ -428,20 +401,19 @@ internal class PointTest {
 
             // When
             assertThat(result).isEqualTo(expectedResult)
-
         }
 
         @Test
-        fun `translate should throw IllegalArgumentException when input doesn't match dimensions and is not a single number`() {
+        fun `translate should throw IllegalArgumentException when dimensions differ and input is not a scalar`() {
             // Given
             val point = Point(10, 10, 10)
 
             // When
             val result = catchThrowable { point.translate(10, 10) }
 
-            assertThat(result).isInstanceOf(IllegalArgumentException().javaClass)
+            assertThat(result)
+                .isInstanceOf(IllegalArgumentException().javaClass)
                 .hasMessageContaining("Translation does not match point dimension")
-
         }
 
         @Test
@@ -458,12 +430,14 @@ internal class PointTest {
 
             // When
             assertThat(result).isEqualTo(expectedResult)
-
         }
 
         @ParameterizedTest(name = "TestPoint: {0}")
         @MethodSource("getArgsForRotate")
-        fun `rotate should rotate a Point clock wise by degree`(angle: Number, expected: Point) {
+        fun `rotate should rotate a Point clock wise by degree`(
+            angle: Number,
+            expected: Point,
+        ) {
             // Given
             val point = Point(1, 0)
 //            val angle = PApplet.radians(90f)
@@ -472,15 +446,15 @@ internal class PointTest {
 
             // Then
             assertThat(result.toDoubleArray()).containsSequence(expected.toDoubleArray(), withPrecision(0.01))
-
         }
 
-        private fun getArgsForRotate(): Stream<Arguments> = Stream.of(
-            Arguments.of(90, Point(0, -1)),
-            Arguments.of(180, Point(-1, 0)),
-            Arguments.of(270, Point(0, 1)),
-            Arguments.of(360, Point(1, 0)),
-        )
+        private fun getArgsForRotate(): Stream<Arguments> =
+            Stream.of(
+                Arguments.of(90, Point(0, -1)),
+                Arguments.of(180, Point(-1, 0)),
+                Arguments.of(270, Point(0, 1)),
+                Arguments.of(360, Point(1, 0)),
+            )
 
         @ParameterizedTest(name = "TestPoint: {0}")
         @MethodSource("getInvalidPointsForRotate")
@@ -489,17 +463,19 @@ internal class PointTest {
 
             val result = catchThrowable { point.rotate(90) }
             // Then
-            assertThat(result).isInstanceOf(IllegalArgumentException().javaClass)
+            assertThat(result)
+                .isInstanceOf(IllegalArgumentException().javaClass)
                 .hasMessageContaining("Invalid dimensions. Points must have dimension equal to 2 for this method")
-
         }
 
         private fun getInvalidPointsForRotate(): Stream<Point> = Stream.of(Point(1), Point(1, 2, 3))
 
-
         @ParameterizedTest(name = "TestPoint: {0}")
         @MethodSource("getArgsForRotateZ")
-        fun `rotateZ should rotate a Point clock wise by degree`(angle: Number, expected: Point) {
+        fun `rotateZ should rotate a Point clock wise by degree`(
+            angle: Number,
+            expected: Point,
+        ) {
             // Given
             val point = Point(1, 0, 0)
 //            val angle = PApplet.radians(90f)
@@ -508,15 +484,15 @@ internal class PointTest {
 
             // Then
             assertThat(result.toDoubleArray()).containsSequence(expected.toDoubleArray(), withPrecision(0.01))
-
         }
 
-        private fun getArgsForRotateZ(): Stream<Arguments> = Stream.of(
-            Arguments.of(90, Point(0, -1, 0)),
-            Arguments.of(180, Point(-1, 0, 0)),
-            Arguments.of(270, Point(0, 1, 0)),
-            Arguments.of(360, Point(1, 0, 0)),
-        )
+        private fun getArgsForRotateZ(): Stream<Arguments> =
+            Stream.of(
+                Arguments.of(90, Point(0, -1, 0)),
+                Arguments.of(180, Point(-1, 0, 0)),
+                Arguments.of(270, Point(0, 1, 0)),
+                Arguments.of(360, Point(1, 0, 0)),
+            )
 
         @ParameterizedTest(name = "TestPoint: {0}")
         @MethodSource("getInvalidPointsForRotationsInThreeDimensions")
@@ -525,14 +501,17 @@ internal class PointTest {
 
             val result = catchThrowable { point.rotateZ(90) }
             // Then
-            assertThat(result).isInstanceOf(IllegalArgumentException().javaClass)
+            assertThat(result)
+                .isInstanceOf(IllegalArgumentException().javaClass)
                 .hasMessageContaining("Invalid dimensions. Point must have at least 3 dimensions for this method")
-
         }
 
         @ParameterizedTest(name = "TestPoint: {0}")
         @MethodSource("getArgsForRotateY")
-        fun `rotateY should rotate a Point clock wise by degree`(angle: Number, expected: Point) {
+        fun `rotateY should rotate a Point clock wise by degree`(
+            angle: Number,
+            expected: Point,
+        ) {
             // Given
             val point = Point(1, 0, 0)
 //            val angle = PApplet.radians(90f)
@@ -541,15 +520,15 @@ internal class PointTest {
 
             // Then
             assertThat(result.toDoubleArray()).containsSequence(expected.toDoubleArray(), withPrecision(0.01))
-
         }
 
-        private fun getArgsForRotateY(): Stream<Arguments> = Stream.of(
-            Arguments.of(90, Point(0, 0, -1)),
-            Arguments.of(180, Point(-1, 0, 0)),
-            Arguments.of(270, Point(0, 0, 1)),
-            Arguments.of(360, Point(1, 0, 0)),
-        )
+        private fun getArgsForRotateY(): Stream<Arguments> =
+            Stream.of(
+                Arguments.of(90, Point(0, 0, -1)),
+                Arguments.of(180, Point(-1, 0, 0)),
+                Arguments.of(270, Point(0, 0, 1)),
+                Arguments.of(360, Point(1, 0, 0)),
+            )
 
         @ParameterizedTest(name = "TestPoint: {0}")
         @MethodSource("getInvalidPointsForRotationsInThreeDimensions")
@@ -558,15 +537,17 @@ internal class PointTest {
 
             val result = catchThrowable { point.rotateY(90) }
             // Then
-            assertThat(result).isInstanceOf(IllegalArgumentException().javaClass)
+            assertThat(result)
+                .isInstanceOf(IllegalArgumentException().javaClass)
                 .hasMessageContaining("Invalid dimensions. Point must have at least 3 dimensions for this method")
-
         }
-
 
         @ParameterizedTest(name = "TestPoint: {0}")
         @MethodSource("getArgsForRotateX")
-        fun `rotateX should rotate a Point clock wise by degree`(angle: Number, expected: Point) {
+        fun `rotateX should rotate a Point clock wise by degree`(
+            angle: Number,
+            expected: Point,
+        ) {
             // Given
             val point = Point(0, 0, 1)
 //            val angle = PApplet.radians(90f)
@@ -575,16 +556,15 @@ internal class PointTest {
 
             // Then
             assertThat(result.toDoubleArray()).containsSequence(expected.toDoubleArray(), withPrecision(0.01))
-
         }
 
-        private fun getArgsForRotateX(): Stream<Arguments> = Stream.of(
-            Arguments.of(90, Point(0, 1, 0)),
-            Arguments.of(180, Point(0, 0, -1)),
-            Arguments.of(270, Point(0, -1, 0)),
-            Arguments.of(360, Point(0, 0, 1)),
-        )
-
+        private fun getArgsForRotateX(): Stream<Arguments> =
+            Stream.of(
+                Arguments.of(90, Point(0, 1, 0)),
+                Arguments.of(180, Point(0, 0, -1)),
+                Arguments.of(270, Point(0, -1, 0)),
+                Arguments.of(360, Point(0, 0, 1)),
+            )
 
         private fun getInvalidPointsForRotationsInThreeDimensions(): Stream<Point> =
             Stream.of(Point(), Point(1), Point(1, 2))
@@ -599,7 +579,6 @@ internal class PointTest {
 
             // Then
             assertThat(result).isEqualTo(expected)
-
         }
 
         @Test
@@ -613,15 +592,11 @@ internal class PointTest {
 
             // Then
             assertThat(result).isEqualTo(expected)
-
         }
-
-
     }
 
     @Nested
     inner class Utils {
-
         @Test
         fun `swapPointEntries should swap to entries of a given Point`() {
             // Given
@@ -633,7 +608,6 @@ internal class PointTest {
 
             // Then
             assertThat(result).isEqualTo(expected)
-
         }
 
         @Test
@@ -646,7 +620,6 @@ internal class PointTest {
 
             // Then
             assertThat(result).isEqualTo(point).isNotEqualTo(result === point)
-
         }
 
         @Test
@@ -660,7 +633,6 @@ internal class PointTest {
 
             // Then
             assertThat(result).isEqualTo(newLength)
-
         }
 
         @Test
@@ -674,11 +646,10 @@ internal class PointTest {
 
             // Then
             assertThat(result).isEqualTo(expectedLimit)
-
         }
 
         @Test
-        fun `limit should return a copy ot the original vector when limit is larger than the magnitude of the vector`() {
+        fun `limit should return a copy of the original vector when limit exceeds its magnitude`() {
             // Given
             val point = Point(1, 1)
             val expectedLimit = 99
@@ -688,7 +659,6 @@ internal class PointTest {
 
             // Then
             assertThat(result).isEqualTo(point)
-
         }
 
         @Test
@@ -701,18 +671,15 @@ internal class PointTest {
             val result = catchThrowable { point.limit(expectedLimit) }
 
             // Then
-            assertThat(result).isInstanceOf(IllegalArgumentException().javaClass)
+            assertThat(result)
+                .isInstanceOf(IllegalArgumentException().javaClass)
                 .hasMessageContaining("Length must be a positive number")
-
         }
-
     }
-
 
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     @Nested
     inner class Conversions {
-
         @Test
         fun toRealVectorShouldConvertAPointToARealVector() {
             // Given
@@ -725,7 +692,6 @@ internal class PointTest {
 
             // Then
             assertThat(result).isEqualTo(expected)
-
         }
 
         @Test
@@ -740,7 +706,6 @@ internal class PointTest {
 
             // Then
             assertThat(result).isEqualTo(expected)
-
         }
 
         @Test
@@ -755,7 +720,6 @@ internal class PointTest {
 
             // Then
             assertThat(result).isEqualTo(expected)
-
         }
 
         @Test
@@ -770,7 +734,6 @@ internal class PointTest {
 
             // Then
             assertThat(result).isEqualTo(expected)
-
         }
 
         @Test
@@ -785,7 +748,6 @@ internal class PointTest {
 
             // Then
             assertThat(result).isEqualTo(expected)
-
         }
 
         @Test
@@ -800,9 +762,7 @@ internal class PointTest {
 
             // Then
             assertThat(result).isEqualTo(expected)
-
         }
-
 
         @ParameterizedTest(name = "TestPoint: {0}")
         @MethodSource("getNonConvertiblePoints")
@@ -811,14 +771,11 @@ internal class PointTest {
 
             val result = catchThrowable { point.toPVector() }
             // Then
-            assertThat(result).isInstanceOf(IllegalArgumentException().javaClass)
+            assertThat(result)
+                .isInstanceOf(IllegalArgumentException().javaClass)
                 .hasMessageContaining("Can't convert Point to PVector - Invalid number of dimensions")
-
         }
 
         private fun getNonConvertiblePoints(): Stream<Point> = Stream.of(Point(1), Point(1, 2, 3, 4))
-
     }
-
-
 }

@@ -8,17 +8,15 @@ import org.junit.jupiter.api.Test
 import utils.itemPercentages
 
 internal class PointUtilsTest {
-
     @Test
-    fun `listOfPointsToListOfLines should return n - 1 lines for a given set of points`(
-    ) {
-
+    fun `listOfPointsToListOfLines should return n - 1 lines for a given set of points`() {
         // Given
-        val points = listOf(
-            Point.random2D(),
-            Point.random2D(),
-            Point.random2D()
-        )
+        val points =
+            listOf(
+                Point.random2D(),
+                Point.random2D(),
+                Point.random2D(),
+            )
         val expectedNumberOfLines = points.size - 1
         // When
         val result = listOfPointsToListOfLines(points).size
@@ -26,7 +24,4 @@ internal class PointUtilsTest {
         // Then
         Assertions.assertThat(result).isEqualTo(expectedNumberOfLines)
     }
-
-
 }
-

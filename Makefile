@@ -35,6 +35,26 @@ coverage: ## Run the tests with coverage, fail below MIN (e.g. make coverage MIN
 clean: ## Delete build output
 	$(GRADLE) clean
 
+##@ Quality
+
+.PHONY: fmt
+fmt: ## Format every Kotlin file with ktlint
+	$(GRADLE) ktlintFormat
+
+.PHONY: lint
+lint: ## Check formatting with ktlint, lint with detekt, refuse a growing baseline
+	$(GRADLE) --continue ktlintCheck detektMain detektTest
+	scripts/lint-detekt-baseline.sh
+	scripts/lint-detekt-baseline-test.sh
+
+.PHONY: check
+check: lint ## Done gate: lint, tests, coverage above MIN (e.g. make check MIN=0.6)
+	$(GRADLE) check jacocoTestReport jacocoTestCoverageVerification -PcoverageMinimum=$(MIN)
+
+.PHONY: baseline
+baseline: ## Rewrite the detekt baselines after fixing legacy findings; they may only shrink
+	$(GRADLE) detektBaselineMain detektBaselineTest
+
 ##@ Hygiene
 
 .PHONY: hooks

@@ -1,3 +1,5 @@
 package goodies.exceptions
 
-class SketchOutOfBoundsException(message: String? = null) : RuntimeException(message)
+class SketchOutOfBoundsException(
+    message: String? = null,
+) : RuntimeException(message)

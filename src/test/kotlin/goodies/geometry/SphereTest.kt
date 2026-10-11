@@ -11,13 +11,11 @@ import java.util.stream.Stream
 import kotlin.math.sqrt
 
 internal class SphereTest {
-
     val piQuarter = sqrt(2.0) / 2
 
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     @Nested
     inner class Construction {
-
         @ParameterizedTest
         @MethodSource("getCentersForInvalidSphereConstructions")
         fun `Initialization of a Sphere should throw IllegalArgumentException when dimension is not equal to three`(
@@ -29,22 +27,21 @@ internal class SphereTest {
             val result = catchThrowable { Sphere(center, 10) }
 
             // Then
-            assertThat(result).isInstanceOf(IllegalArgumentException().javaClass)
+            assertThat(result)
+                .isInstanceOf(IllegalArgumentException().javaClass)
                 .hasMessageContaining("A sphere can only have three dimensions")
         }
 
-        private fun getCentersForInvalidSphereConstructions(): Stream<Point> {
-            return Stream.of(
+        private fun getCentersForInvalidSphereConstructions(): Stream<Point> =
+            Stream.of(
                 Point(1, 1),
                 Point(1, 2, 3, 4),
             )
-        }
     }
 
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     @Nested
     inner class Basics {
-
         @ParameterizedTest
         @MethodSource("getParametersForComputationOfPolarCoordinatesToCartesianCoordinates")
         fun `pointOnSurface should compute a defined sample of points on a unit sphere`(
@@ -61,8 +58,8 @@ internal class SphereTest {
             assertThat(result.toDoubleArray()).containsSequence(expected.toDoubleArray(), withPrecision(0.01))
         }
 
-        private fun getParametersForComputationOfPolarCoordinatesToCartesianCoordinates(): Stream<Arguments> {
-            return Stream.of(
+        private fun getParametersForComputationOfPolarCoordinatesToCartesianCoordinates(): Stream<Arguments> =
+            Stream.of(
                 Arguments.of(listOf(0.0, 0.0), Point(0, 0, 1)),
                 Arguments.of(listOf(0.0, 45.0), Point(0, piQuarter, piQuarter)),
                 Arguments.of(listOf(0.0, 90.0), Point(0, 1, 0)),
@@ -104,7 +101,6 @@ internal class SphereTest {
                 Arguments.of(listOf(315.0, 135.0), Point(-0.5, 0.5, -piQuarter)),
 //                Arguments.of(listOf(315.0, 180.0), Point(0, 0, -1)),
             )
-        }
 
         @ParameterizedTest
         @MethodSource("getParametersForComputationCartesianCoordinatesToPolarCoordinates")
@@ -126,8 +122,8 @@ internal class SphereTest {
             )
         }
 
-        private fun getParametersForComputationCartesianCoordinatesToPolarCoordinates(): Stream<Arguments> {
-            return Stream.of(
+        private fun getParametersForComputationCartesianCoordinatesToPolarCoordinates(): Stream<Arguments> =
+            Stream.of(
                 Arguments.of(listOf(0.0, 0.0), Point(0, 0, 1)),
                 Arguments.of(listOf(0.0, 45.0), Point(0, piQuarter, piQuarter)),
                 Arguments.of(listOf(0.0, 90.0), Point(0, 1, 0)),
@@ -155,6 +151,5 @@ internal class SphereTest {
                 Arguments.of(listOf(315.0, 90.0), Point(-piQuarter, piQuarter, 0)),
                 Arguments.of(listOf(315.0, 135.0), Point(-0.5, 0.5, -piQuarter)),
             )
-        }
     }
 }

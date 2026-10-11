@@ -1,4 +1,3 @@
 package goodies.geometry
 
-class NotReallyAnArc {
-}
+class NotReallyAnArc

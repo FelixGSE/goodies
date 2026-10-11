@@ -20,11 +20,14 @@ fun cartesianProduct(
     return (listOf(a, b).plus(sets))
         .fold(listOf(listOf<Number>())) { acc, set ->
             acc.flatMap { list -> set.map { element -> list + element } }
-        }
-        .toList()
+        }.toList()
 }
 
-fun floatRange(from: Number, to: Number, step: Number): List<Float> {
+fun floatRange(
+    from: Number,
+    to: Number,
+    step: Number,
+): List<Float> {
     val output = mutableListOf<Float>()
     var i = from.toFloat()
     while (i <= to.toDouble()) {
@@ -34,7 +37,11 @@ fun floatRange(from: Number, to: Number, step: Number): List<Float> {
     return output
 }
 
-fun linSpace(start: Number, stop: Number, num: Int): List<Float> {
+fun linSpace(
+    start: Number,
+    stop: Number,
+    num: Int,
+): List<Float> {
     val step = (stop.toDouble() - start.toDouble()) / (num.toDouble() - 1)
     val output = mutableListOf<Float>()
     for (i in 0 until num) {

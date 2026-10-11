@@ -7,10 +7,8 @@ import org.junit.jupiter.api.TestInstance
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ColorPaletteTest {
-
     @Nested
     inner class PaletteATests {
-
         @Test
         fun `should have four colors`() {
             // Given / When
@@ -60,13 +58,13 @@ class ColorPaletteTest {
 
     @Nested
     inner class CustomPaletteTests {
-
         @Test
         fun `should support custom palette creation`() {
             // Given
-            val customPalette = object : ColorPalette {
-                override val colors = listOf(-1, -2, -3)
-            }
+            val customPalette =
+                object : ColorPalette {
+                    override val colors = listOf(-1, -2, -3)
+                }
 
             // When / Then
             assertThat(customPalette.colors).hasSize(3)

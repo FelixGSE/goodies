@@ -2,8 +2,11 @@ package goodies.streamline
 
 import goodies.geometry.Point
 
-
-fun rk4(point: Point, timeStep: Double, getVelocity: (Point) -> Point?): Point? {
+fun rk4(
+    point: Point,
+    timeStep: Double,
+    getVelocity: (Point) -> Point?,
+): Point? {
     val k1 = getVelocity(point)
     if (k1 == null) return null
     val k2 = getVelocity(point + k1 * (timeStep * 0.5))

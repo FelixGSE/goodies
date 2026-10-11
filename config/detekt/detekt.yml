@@ -1,0 +1,96 @@
+config:
+  validation: true
+
+comments:
+  AbsentOrWrongFileLicense:
+    active: false
+  UndocumentedPublicClass:
+    includes:
+      - '**/goodies/geometry/**'
+      - '**/goodies/algebra/**'
+      - '**/goodies/ops/**'
+      - '**/goodies/noise/**'
+      - '**/goodies/spatial/**'
+  UndocumentedPublicFunction:
+    includes:
+      - '**/goodies/geometry/**'
+      - '**/goodies/algebra/**'
+      - '**/goodies/ops/**'
+      - '**/goodies/noise/**'
+      - '**/goodies/spatial/**'
+  UndocumentedPublicProperty:
+    active: false
+
+complexity:
+  CognitiveComplexMethod:
+    allowedComplexity: 8
+  ComplexCondition:
+    allowedConditions: 3
+  CyclomaticComplexMethod:
+    allowedComplexity: 8
+  LargeClass:
+    allowedLines: 300
+  LongMethod:
+    allowedLines: 25
+  LongParameterList:
+    allowedFunctionParameters: 4
+    allowedConstructorParameters: 5
+    ignoreDataClasses: true
+  NestedBlockDepth:
+    allowedDepth: 3
+  StringLiteralDuplication:
+    excludes: ['**/test/**']
+  TooManyFunctions:
+    allowedFunctionsPerFile: 15
+    allowedFunctionsPerClass: 15
+    allowedFunctionsPerInterface: 5
+    allowedFunctionsPerObject: 15
+    allowedFunctionsPerEnum: 15
+
+naming:
+  FunctionNameMinLength:
+    minimumFunctionNameLength: 2
+  FunctionNameMaxLength:
+    excludes: ['**/test/**']
+  FunctionNaming:
+    excludes: ['**/test/**']
+
+style:
+  DataClassContainsFunctions:
+    active: false
+  ForbiddenComment:
+    comments:
+      - value: 'TODO'
+        reason: 'A TODO names its story, TODO(E1.4), or its rule, DESIGN: X-n (CODE-8b).'
+      - value: 'FIXME'
+        reason: 'A FIXME names its story, FIXME(E1.4), or its rule, DESIGN: X-n (CODE-8b).'
+      - value: 'STOPSHIP'
+        reason: 'Fix it before it ships.'
+    allowedPatterns: '(TODO|FIXME)\([A-Z][0-9]*\.[0-9]+[a-z]?\)|DESIGN: [A-Z]+(-[A-Z]+)*-[0-9]+[a-z]?'
+  MagicNumber:
+    ignoreNumbers:
+      - '-1'
+      - '0'
+      - '1'
+      - '2'
+      - '0.5'
+      - '90'
+      - '180'
+      - '360'
+  MaxLineLength:
+    maxLineLength: 120
+  ReturnCount:
+    max: 2
+    excludeGuardClauses: true
+  UnnecessaryInnerClass:
+    excludes: ['**/test/**']
+  UnusedPrivateFunction:
+    allowedNames: '.*Cases'
+  WildcardImport:
+    excludes: ['**/test/**']
+
+libraries:
+  ForbiddenPublicDataClass:
+    active: false
+  LibraryEntitiesShouldNotBePublic:
+    active: false

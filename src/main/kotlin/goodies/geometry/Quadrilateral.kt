@@ -4,8 +4,9 @@ import ShapeTree
 import goodies.containers.ShapeTreeNode
 import processing.core.PApplet
 
-open class Quadrilateral(vertices: List<Point>) : Polygon(vertices) {
-
+open class Quadrilateral(
+    vertices: List<Point>,
+) : Polygon(vertices) {
     constructor(vararg vertices: Point) : this(vertices.toList())
 
     constructor(first: Point, second: Point, third: Point, fourth: Point) : this(listOf(first, second, third, fourth))
@@ -13,7 +14,6 @@ open class Quadrilateral(vertices: List<Point>) : Polygon(vertices) {
     init {
         require(vertices.size == 4) { "Quadrilateral must have 4 vertices" }
     }
-
 
     val a: Point
         get() {
@@ -32,27 +32,34 @@ open class Quadrilateral(vertices: List<Point>) : Polygon(vertices) {
             return vertices[3]
         }
 
-    private fun oppositeSideIndex(side: Int): Int {
-        return when (side) {
+    private fun oppositeSideIndex(side: Int): Int =
+        when (side) {
             0 -> 2
             1 -> 3
             2 -> 0
             3 -> 1
             else -> throw IllegalArgumentException("Invalid side")
         }
-    }
 
     private fun goldenRationSplit(quadrilateral: Quadrilateral): Triple<Int, Point, Point> {
         val longestSideIndex = quadrilateral.longestEdgeIndex()
-        val pointOnSide = quadrilateral.edges[longestSideIndex].goldenRatioSplit().toList().first().end
+        val pointOnSide =
+            quadrilateral.edges[longestSideIndex]
+                .goldenRatioSplit()
+                .toList()
+                .first()
+                .end
         val oppositeSide = quadrilateral.oppositeSideIndex(longestSideIndex)
-        val pointOnOppositeSite = quadrilateral.edges[oppositeSide].goldenRatioSplit().first().end
+        val pointOnOppositeSite =
+            quadrilateral.edges[oppositeSide]
+                .goldenRatioSplit()
+                .first()
+                .end
         return Triple(longestSideIndex, pointOnSide, pointOnOppositeSite)
     }
 
-    fun goldenRatioSubdivide(depth: Int): ShapeTree<Quadrilateral> {
-        return ShapeTree(quadSubdivide(this, depth, ::goldenRationSplit))
-    }
+    fun goldenRatioSubdivide(depth: Int): ShapeTree<Quadrilateral> =
+        ShapeTree(quadSubdivide(this, depth, ::goldenRationSplit))
 
     private fun quadSubdivide(
         quadrilateral: Quadrilateral,
@@ -65,88 +72,86 @@ open class Quadrilateral(vertices: List<Point>) : Polygon(vertices) {
 
         val (longestSideIndex, pointOnSide, pointOnOppositeSite) = splitFunction(quadrilateral)
 
-        val (left, right) = when (longestSideIndex) {
-            0 -> {
-                Pair(
-                    Quadrilateral(
-                        pointOnSide,
-                        quadrilateral.b,
-                        quadrilateral.c,
-                        pointOnOppositeSite,
-                    ),
-                    Quadrilateral(
-                        quadrilateral.a,
-                        pointOnSide,
-                        pointOnOppositeSite,
-                        quadrilateral.d,
-                    ),
-                )
-            }
+        val (left, right) =
+            when (longestSideIndex) {
+                0 -> {
+                    Pair(
+                        Quadrilateral(
+                            pointOnSide,
+                            quadrilateral.b,
+                            quadrilateral.c,
+                            pointOnOppositeSite,
+                        ),
+                        Quadrilateral(
+                            quadrilateral.a,
+                            pointOnSide,
+                            pointOnOppositeSite,
+                            quadrilateral.d,
+                        ),
+                    )
+                }
 
-            1 -> {
-                Pair(
-                    Quadrilateral(
-                        pointOnOppositeSite,
-                        pointOnSide,
-                        quadrilateral.c,
-                        quadrilateral.d,
-                    ),
-                    Quadrilateral(
-                        quadrilateral.a,
-                        quadrilateral.b,
-                        pointOnSide,
-                        pointOnOppositeSite,
-                    ),
-                )
-            }
+                1 -> {
+                    Pair(
+                        Quadrilateral(
+                            pointOnOppositeSite,
+                            pointOnSide,
+                            quadrilateral.c,
+                            quadrilateral.d,
+                        ),
+                        Quadrilateral(
+                            quadrilateral.a,
+                            quadrilateral.b,
+                            pointOnSide,
+                            pointOnOppositeSite,
+                        ),
+                    )
+                }
 
-            2 -> {
-                Pair(
-                    Quadrilateral(
-                        quadrilateral.a,
-                        pointOnOppositeSite,
-                        pointOnSide,
-                        quadrilateral.d,
-                    ),
-                    Quadrilateral(
-                        pointOnOppositeSite,
-                        quadrilateral.b,
-                        quadrilateral.c,
-                        pointOnSide,
-                    ),
-                )
-            }
+                2 -> {
+                    Pair(
+                        Quadrilateral(
+                            quadrilateral.a,
+                            pointOnOppositeSite,
+                            pointOnSide,
+                            quadrilateral.d,
+                        ),
+                        Quadrilateral(
+                            pointOnOppositeSite,
+                            quadrilateral.b,
+                            quadrilateral.c,
+                            pointOnSide,
+                        ),
+                    )
+                }
 
-            else -> {
-                Pair(
-                    Quadrilateral(
-                        quadrilateral.a,
-                        quadrilateral.b,
-                        pointOnOppositeSite,
-                        pointOnSide,
-                    ),
-                    Quadrilateral(
-                        pointOnSide,
-                        pointOnOppositeSite,
-                        quadrilateral.c,
-                        quadrilateral.d,
-                    ),
-                )
+                else -> {
+                    Pair(
+                        Quadrilateral(
+                            quadrilateral.a,
+                            quadrilateral.b,
+                            pointOnOppositeSite,
+                            pointOnSide,
+                        ),
+                        Quadrilateral(
+                            pointOnSide,
+                            pointOnOppositeSite,
+                            quadrilateral.c,
+                            quadrilateral.d,
+                        ),
+                    )
+                }
             }
-        }
 
         val leftChild = quadSubdivide(left, depth - 1, splitFunction)
         val rightChild = quadSubdivide(right, depth - 1, splitFunction)
 
         return ShapeTreeNode(quadrilateral, leftChild, rightChild)
-
-
     }
 
-
     companion object {
-        fun fromSketch(sketch: PApplet): Quadrilateral {
-            return Quadrilateral(
+        fun fromSketch(sketch: PApplet): Quadrilateral =
+            Quadrilateral(
                 listOf(
                     Point(0f, 0f),
                     Point(sketch.width.toFloat(), 0f),
@@ -154,6 +159,5 @@ open class Quadrilateral(vertices: List<Point>) : Polygon(vertices) {
                     Point(0f, sketch.height.toFloat()),
                 ),
             )
-        }
     }
 }

@@ -7,8 +7,10 @@ import goodies.geometry.PolygonPath
 import goodies.geometry.interfaces.PolygonLikeShape
 import processing.core.PApplet
 
-class ChaikinCurve(polygon: PolygonLikeShape, iterations: Int) {
-
+class ChaikinCurve(
+    polygon: PolygonLikeShape,
+    iterations: Int,
+) {
     val fittedPolygon: PolygonLikeShape = fitChaikinCurve(polygon.edges, iterations, polygon.isClosed)
 
     fun draw(sketch: PApplet) {
@@ -20,7 +22,10 @@ class ChaikinCurve(polygon: PolygonLikeShape, iterations: Int) {
     }
 
     companion object {
-        private fun shortenLine(line: Line, ratio: Double = 0.5): Line {
+        private fun shortenLine(
+            line: Line,
+            ratio: Double = 0.5,
+        ): Line {
             val split = ratio / 2.0
             val newStart = line.scaleFromStart(split).end
             val newEnd = line.scaleFromStart(1.0 - split).end
@@ -30,7 +35,7 @@ class ChaikinCurve(polygon: PolygonLikeShape, iterations: Int) {
         private fun fitChaikinCurve(
             initialEdges: List<Line>,
             iterations: Int,
-            closed: Boolean
+            closed: Boolean,
         ): PolygonLikeShape {
             var lines = initialEdges
 

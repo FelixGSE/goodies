@@ -5,15 +5,12 @@ import goodies.geometry.Point
 import goodies.geometry.PolygonPath
 import goodies.utils.listOfPointsToListOfLines
 
-interface PolygonLikeShape : Shape, DiscreteShape {
+interface PolygonLikeShape :
+    Shape,
+    DiscreteShape {
+    operator fun get(index: Int): Point = vertices[index].copy()
 
-    operator fun get(index: Int): Point {
-        return vertices[index].copy()
-    }
-
-    override fun addDimensions(vararg dimension: Number): Shape {
-        return PolygonPath(vertices.map { it.extend(*dimension) })
-    }
+    override fun addDimensions(vararg dimension: Number): Shape = PolygonPath(vertices.map { it.extend(*dimension) })
 
     val edges: List<Line>
         get() {
@@ -30,9 +27,7 @@ interface PolygonLikeShape : Shape, DiscreteShape {
         return edgeLengths.indexOf(edgeLengths.max())
     }
 
-    fun longestEdge(): Line {
-        return edges[longestEdgeIndex()]
-    }
+    fun longestEdge(): Line = edges[longestEdgeIndex()]
 
 //    fun getBoundingBox(): Rectangle {
 //        val xMin = this.vertices.minByOrNull { it.x }!!.x

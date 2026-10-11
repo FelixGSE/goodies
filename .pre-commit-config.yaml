@@ -1,7 +1,7 @@
 # Run by prek (https://github.com/j178/prek), a drop-in for pre-commit.
 # Install once per clone or worktree: `make hooks`. CI runs the same hooks on
 # every pull request, so skipping them locally only moves the failure.
-# Every hook is a shell script in scripts/: no Python, no network, no venvs.
+# Every hook is a shell script in scripts/ or a ./gradlew task: no Python, no venvs.
 default_install_hook_types: [pre-commit, commit-msg]
 
 repos:
@@ -23,5 +23,23 @@ repos:
         entry: scripts/lint-commit-msg.sh
         language: script
         stages: [commit-msg]
-      # Q.5 adds ktlint and detekt here, as `language: system` hooks that
-      # call ./gradlew, so formatting and lint findings never reach review.
+      - id: ktlint
+        name: ktlint, official style (make fmt fixes)
+        entry: ./gradlew --quiet ktlintCheck
+        language: system
+        stages: [pre-commit]
+        files: \.kts?$|^\.editorconfig$
+        pass_filenames: false
+      - id: detekt
+        name: detekt against its baselines
+        entry: ./gradlew --quiet detektMain detektTest
+        language: system
+        stages: [pre-commit]
+        files: \.kts?$|^config/detekt/
+        pass_filenames: false
+      - id: detekt-baseline
+        name: detekt baselines only shrink
+        entry: scripts/lint-detekt-baseline.sh
+        language: script
+        stages: [pre-commit]
+        files: ^config/detekt/baseline-(main|test)\.xml$

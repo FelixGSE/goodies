@@ -3,7 +3,10 @@ package goodies.utils
 import goodies.geometry.Line
 import goodies.geometry.Point
 
-fun listOfPointsToListOfLines(points: List<Point>, closed: Boolean = false): List<Line> {
+fun listOfPointsToListOfLines(
+    points: List<Point>,
+    closed: Boolean = false,
+): List<Line> {
     val lines = mutableListOf<Line>()
     for (i in 0 until points.size - 1) {
         val currentPoint = points[i]
@@ -16,7 +19,10 @@ fun listOfPointsToListOfLines(points: List<Point>, closed: Boolean = false): Lis
     return lines.toList()
 }
 
-fun directionsForListOfPoints(points: List<Point>, closed: Boolean = false): List<Point> {
+fun directionsForListOfPoints(
+    points: List<Point>,
+    closed: Boolean = false,
+): List<Point> {
     val diffs = mutableListOf<Point>()
     for (i in 0 until points.size - 1) {
         val diff = points[i + 1] - points[i]

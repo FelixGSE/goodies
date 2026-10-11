@@ -4,13 +4,18 @@ import goodies.geometry.interfaces.ClosedShape
 import goodies.geometry.interfaces.EllipsoidLike
 import goodies.geometry.interfaces.ParametricShape
 import goodies.geometry.interfaces.Shape
-import kotlin.math.*
+import kotlin.math.PI
+import kotlin.math.acos
+import kotlin.math.cos
+import kotlin.math.sin
+import kotlin.math.sqrt
 
-open class NEllipsoid(private val centerPoint: Point, private val axes: List<Number>) :
-    ParametricShape,
+open class NEllipsoid(
+    private val centerPoint: Point,
+    private val axes: List<Number>,
+) : ParametricShape,
     EllipsoidLike,
     ClosedShape {
-
     val dimensions = centerPoint.dimensions
 
     val center: Point
@@ -30,33 +35,26 @@ open class NEllipsoid(private val centerPoint: Point, private val axes: List<Num
     override val centroid: Point
         get() = center
 
-    override fun center(): NEllipsoid {
-        return NEllipsoid(Point.zeros(dimensions), axes)
-    }
+    override fun center(): NEllipsoid = NEllipsoid(Point.zeros(dimensions), axes)
 
-    override fun centerAt(point: Point): Shape {
-        return NEllipsoid(point, axes)
-    }
+    override fun centerAt(point: Point): Shape = NEllipsoid(point, axes)
 
-    override fun normalize(): NEllipsoid {
-        return NEllipsoid(centerPoint, Point(axes).normalize().toList())
-    }
+    override fun normalize(): NEllipsoid = NEllipsoid(centerPoint, Point(axes).normalize().toList())
 
     override val isConvex: Boolean
         get() = true
 
-    override fun addDimensions(vararg dimension: Number, newAxes: List<Float>): Shape {
+    override fun addDimensions(
+        vararg dimension: Number,
+        newAxes: List<Float>,
+    ): Shape {
         require(dimension.size == newAxes.size) { "Number of dimensions must match number of new axes" }
         return NEllipsoid(centerPoint.extend(*dimension), newAxes + newAxes)
     }
 
-    override fun contains(point: Point): Boolean {
-        return (point - center / Point(axes)).pow(2).sum() <= 1.0
-    }
+    override fun contains(point: Point): Boolean = (point - center / Point(axes)).pow(2).sum() <= 1.0
 
-    fun pointOnSurface(vararg angles: Number): Point {
-        return pointOnSurface(angles.map { it.toDouble() }.toList())
-    }
+    fun pointOnSurface(vararg angles: Number): Point = pointOnSurface(angles.map { it.toDouble() }.toList())
 
     fun pointOnSurface(angles: List<Number>): Point {
         val angleAsListOfDoubles = angles.map { it.toDouble() }

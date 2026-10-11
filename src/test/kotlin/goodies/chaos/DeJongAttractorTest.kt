@@ -9,10 +9,8 @@ import processing.core.PApplet
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DeJongAttractorTest {
-
     @Nested
     inner class Construction {
-
         @Test
         fun `should create attractor with x and y at zero by default`() {
             // Given / When
@@ -40,7 +38,6 @@ class DeJongAttractorTest {
 
     @Nested
     inner class Iteration {
-
         @Test
         fun `next should compute new x and y using De Jong equations`() {
             // Given
@@ -118,7 +115,6 @@ class DeJongAttractorTest {
 
     @Nested
     inner class Properties {
-
         @Test
         fun `location should return PVector with x and y`() {
             // Given
