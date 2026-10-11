@@ -2,6 +2,7 @@ package goodies.geometry.interfaces
 
 import goodies.geometry.Point
 
+/** Base of every geometric shape. */
 interface Shape {
     val isClosed: Boolean
 

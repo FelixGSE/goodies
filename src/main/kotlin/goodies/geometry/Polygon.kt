@@ -10,6 +10,7 @@ import goodies.utils.weightedSample
 import processing.core.PApplet
 import processing.core.PConstants.CLOSE
 
+/** Closed polygon through [vertices] in order; the last vertex joins the first. */
 open class Polygon(
     override val vertices: List<Point>,
 ) : PolygonLikeShape,

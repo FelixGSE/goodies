@@ -2,6 +2,7 @@ package goodies.geometry.interfaces
 
 import goodies.geometry.Point
 
+/** Shape with an inside: it has a centroid, can be convex and can contain points. */
 interface ClosedShape : Shape {
     val centroid: Point
     override val isClosed: Boolean get() = true

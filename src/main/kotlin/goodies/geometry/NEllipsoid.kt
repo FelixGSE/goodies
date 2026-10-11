@@ -10,6 +10,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
 
+/** Axis-aligned ellipsoid around [centerPoint] with one semi-axis per dimension, in at least two dimensions. */
 open class NEllipsoid(
     private val centerPoint: Point,
     private val axes: List<Number>,

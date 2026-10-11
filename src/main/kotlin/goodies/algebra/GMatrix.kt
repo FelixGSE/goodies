@@ -8,6 +8,11 @@ import org.apache.commons.math3.linear.MatrixUtils
 import org.apache.commons.math3.linear.RealMatrix
 import org.apache.commons.math3.linear.SingularValueDecomposition
 
+/**
+ * Dense matrix backed by an Apache Commons Math [RealMatrix] of `Double` entries.
+ *
+ * Entries and derived values are read back as `Float`; iterating yields the rows as [Point]s.
+ */
 open class GMatrix(
     private val matrix: RealMatrix,
 ) : Iterable<Point>,

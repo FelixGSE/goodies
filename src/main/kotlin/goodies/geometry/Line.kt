@@ -11,6 +11,7 @@ import goodies.utils.randomFloats
 import processing.core.PApplet
 import processing.core.PVector
 
+/** Straight segment from a to b in any number of dimensions; both ends have the same dimension. */
 class Line(
     private val a: Point,
     private val b: Point,
@@ -153,6 +154,7 @@ class Line(
         }
     }
 
+    /** Builders for lines. */
     companion object {
         fun fromPVector2D(
             start: PVector,

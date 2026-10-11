@@ -14,6 +14,11 @@ import java.util.Collections
 import kotlin.math.acos
 import kotlin.math.pow
 
+/**
+ * Immutable point, or vector, in any number of dimensions.
+ *
+ * Coordinates are stored as `Double` and read back as `Float`.
+ */
 class Point(
     vararg coordinates: Number,
 ) : Iterable<Float>,
@@ -348,6 +353,7 @@ class Point(
         }
     }
 
+    /** Builders for points. */
     companion object {
         fun zeros(dimensions: Int): Point = Point(List(dimensions) { 0 })
 

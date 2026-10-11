@@ -5,6 +5,7 @@ import org.apache.commons.math3.linear.RealMatrix
 import kotlin.math.cos
 import kotlin.math.sin
 
+/** Rotation matrices with the angle in degrees. */
 object RotationMatrixUtils {
     @JvmStatic
     fun getRotationMatrixForAxis(

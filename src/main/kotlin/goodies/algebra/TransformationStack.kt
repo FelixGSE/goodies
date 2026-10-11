@@ -1,5 +1,6 @@
 package goodies.algebra
 
+/** Collects transformation matrices for [dimension] axes, starting with the identity. */
 class TransformationStack(
     val dimension: Int,
 ) {

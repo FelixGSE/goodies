@@ -1,5 +1,6 @@
 package goodies.geometry
 
+/** Axis-aligned square with corner ([x], [y]) and side length [scale]. */
 class Square(
     x: Number,
     y: Number,

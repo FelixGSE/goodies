@@ -3,6 +3,7 @@ package goodies.geometry.interfaces
 import goodies.algebra.GMatrix
 import goodies.geometry.Point
 
+/** Shape given by a finite list of vertices. */
 interface DiscreteShape {
     val vertices: List<Point>
 

@@ -40,56 +40,6 @@
     <ID>TooManyFunctions:Polygon.kt:Polygon : PolygonLikeShapeClosedShapeGeom</ID>
     <ID>TooManyFunctions:SimpleFont.kt:SimpleFont : Font</ID>
     <ID>TooManyFunctions:SimpleFont2.kt:SimpleFont2 : Font</ID>
-    <ID>UndocumentedPublicClass:Arc.kt:Arc</ID>
-    <ID>UndocumentedPublicClass:Circle.kt:Circle : NSphereNative2D</ID>
-    <ID>UndocumentedPublicClass:Circle.kt:Circle$Companion</ID>
-    <ID>UndocumentedPublicClass:ClosedShape.kt:ClosedShape : Shape</ID>
-    <ID>UndocumentedPublicClass:DiagonalMatrix.kt:DiagonalMatrix : GMatrix</ID>
-    <ID>UndocumentedPublicClass:DiscreteShape.kt:DiscreteShape</ID>
-    <ID>UndocumentedPublicClass:Ellipse.kt:Ellipse</ID>
-    <ID>UndocumentedPublicClass:Ellipsoid.kt:Ellipsoid</ID>
-    <ID>UndocumentedPublicClass:EllipsoidLike.kt:EllipsoidLike : Shape</ID>
-    <ID>UndocumentedPublicClass:GMatrix.kt:GMatrix : IterableGraphicsMatrix</ID>
-    <ID>UndocumentedPublicClass:GVector.kt:GVector</ID>
-    <ID>UndocumentedPublicClass:Geom.kt:Geom</ID>
-    <ID>UndocumentedPublicClass:Graphics.kt:Graphics</ID>
-    <ID>UndocumentedPublicClass:IdentityMatrix.kt:IdentityMatrix : GMatrix</ID>
-    <ID>UndocumentedPublicClass:Line.kt:Line : DiscreteShapeOpenShapeGeomDrawable</ID>
-    <ID>UndocumentedPublicClass:Line.kt:Line$Companion</ID>
-    <ID>UndocumentedPublicClass:Matrix.kt:Matrix</ID>
-    <ID>UndocumentedPublicClass:NEllipsoid.kt:NEllipsoid : ParametricShapeEllipsoidLikeClosedShape</ID>
-    <ID>UndocumentedPublicClass:NSphere.kt:NSphere : NEllipsoid</ID>
-    <ID>UndocumentedPublicClass:NSphere.kt:NSphere$Companion</ID>
-    <ID>UndocumentedPublicClass:Native2D.kt:Native2D</ID>
-    <ID>UndocumentedPublicClass:Native3D.kt:Native3D</ID>
-    <ID>UndocumentedPublicClass:NotReallyAnArc.kt:NotReallyAnArc</ID>
-    <ID>UndocumentedPublicClass:OpenShape.kt:OpenShape : Shape</ID>
-    <ID>UndocumentedPublicClass:OrthogonalProjectionMatrix.kt:OrthogonalProjectionMatrix : GMatrix</ID>
-    <ID>UndocumentedPublicClass:ParametricShape.kt:ParametricShape : Shape</ID>
-    <ID>UndocumentedPublicClass:Point.kt:Point : IterableGraphics</ID>
-    <ID>UndocumentedPublicClass:Point.kt:Point$Companion</ID>
-    <ID>UndocumentedPublicClass:Polygon.kt:Polygon : PolygonLikeShapeClosedShapeGeom</ID>
-    <ID>UndocumentedPublicClass:PolygonLikeShape.kt:PolygonLikeShape : ShapeDiscreteShape</ID>
-    <ID>UndocumentedPublicClass:PolygonPath.kt:PolygonPath : PolygonLikeShapeOpenShapeIterable</ID>
-    <ID>UndocumentedPublicClass:Polytope.kt:Polytope</ID>
-    <ID>UndocumentedPublicClass:Quadrilateral.kt:Quadrilateral : Polygon</ID>
-    <ID>UndocumentedPublicClass:Quadrilateral.kt:Quadrilateral$Companion</ID>
-    <ID>UndocumentedPublicClass:Quadrilateral3D.kt:Quadrilateral3D</ID>
-    <ID>UndocumentedPublicClass:Rectangular.kt:Rectangular : Quadrilateral</ID>
-    <ID>UndocumentedPublicClass:Rectangular3D.kt:Rectangular3D</ID>
-    <ID>UndocumentedPublicClass:ReflectionMatrix.kt:ReflectionMatrix : GMatrix</ID>
-    <ID>UndocumentedPublicClass:RotationMatrix.kt:RotationMatrix : GMatrix</ID>
-    <ID>UndocumentedPublicClass:RotationMatrix.kt:RotationMatrix$Companion</ID>
-    <ID>UndocumentedPublicClass:RotationMatrixUtils.kt:RotationMatrixUtils</ID>
-    <ID>UndocumentedPublicClass:ScalingMatrix.kt:ScalingMatrix : GMatrix</ID>
-    <ID>UndocumentedPublicClass:Shape.kt:Shape</ID>
-    <ID>UndocumentedPublicClass:ShearMatrix.kt:ShearMatrix : GMatrix</ID>
-    <ID>UndocumentedPublicClass:Sphere.kt:Sphere : NSphereDrawable</ID>
-    <ID>UndocumentedPublicClass:Sphere.kt:Sphere$Companion</ID>
-    <ID>UndocumentedPublicClass:Square.kt:Square : Quadrilateral</ID>
-    <ID>UndocumentedPublicClass:TransformationStack.kt:TransformationStack</ID>
-    <ID>UndocumentedPublicClass:TranslationMatrix.kt:TranslationMatrix : GMatrix</ID>
-    <ID>UndocumentedPublicClass:Triangle.kt:Triangle : Polygon</ID>
     <ID>UndocumentedPublicFunction:Circle.kt:Circle$fun copy: Circle</ID>
     <ID>UndocumentedPublicFunction:Circle.kt:Circle.Companion$fun unitCircle: NEllipsoid</ID>
     <ID>UndocumentedPublicFunction:ClosedShape.kt:ClosedShape$fun contains: Boolean</ID>

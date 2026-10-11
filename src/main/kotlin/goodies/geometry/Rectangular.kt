@@ -1,5 +1,6 @@
 package goodies.geometry
 
+/** Axis-aligned rectangle with corner ([x], [y]), [width] and [height]. */
 open class Rectangular(
     x: Number,
     y: Number,

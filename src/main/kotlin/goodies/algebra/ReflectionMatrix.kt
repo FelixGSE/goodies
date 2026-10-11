@@ -3,6 +3,7 @@ package goodies.algebra
 import org.apache.commons.math3.linear.MatrixUtils
 import org.apache.commons.math3.linear.RealMatrix
 
+/** Identity matrix with -1 at the reflection axis: mirrors along that axis. */
 class ReflectionMatrix : GMatrix {
     constructor(dimensions: Int, reflectionAxis: Int) : super(
         createMirrorMatrix(dimensions, reflectionAxis),

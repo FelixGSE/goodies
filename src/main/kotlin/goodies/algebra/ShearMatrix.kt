@@ -3,6 +3,7 @@ package goodies.algebra
 import org.apache.commons.math3.linear.MatrixUtils
 import org.apache.commons.math3.linear.RealMatrix
 
+/** Identity matrix whose row at the shear axis holds the shear factor in every other column. */
 class ShearMatrix : GMatrix {
     constructor(dimensions: Int, shearAxis: Int, shearFactor: Number) : super(
         computeShearMatrix(dimensions, shearAxis, shearFactor),

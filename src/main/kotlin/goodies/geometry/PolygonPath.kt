@@ -5,6 +5,7 @@ import goodies.geometry.interfaces.PolygonLikeShape
 import goodies.geometry.interfaces.Shape
 import processing.core.PApplet
 
+/** Open polyline through [vertices] in order. */
 class PolygonPath(
     override val vertices: List<Point>,
 ) : PolygonLikeShape,

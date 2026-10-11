@@ -5,6 +5,7 @@ import goodies.geometry.Point
 import goodies.geometry.PolygonPath
 import goodies.utils.listOfPointsToListOfLines
 
+/** Shape of vertices joined by straight edges; a closed one also joins the last vertex to the first. */
 interface PolygonLikeShape :
     Shape,
     DiscreteShape {

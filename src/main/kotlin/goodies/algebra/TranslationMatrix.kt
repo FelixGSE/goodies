@@ -3,6 +3,7 @@ package goodies.algebra
 import org.apache.commons.math3.linear.MatrixUtils
 import org.apache.commons.math3.linear.RealMatrix
 
+/** Identity matrix with one translation factor per row in the last column. */
 class TranslationMatrix : GMatrix {
     constructor(vararg translationFactors: Number) : super(
         createTranslationMatrix(translationFactors.toList()),

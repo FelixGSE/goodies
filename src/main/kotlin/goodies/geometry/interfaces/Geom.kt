@@ -1,5 +1,6 @@
 package goodies.geometry.interfaces
 
+/** Shape that can be translated and scaled. */
 interface Geom {
     fun translate(vararg translation: Number): Shape
 

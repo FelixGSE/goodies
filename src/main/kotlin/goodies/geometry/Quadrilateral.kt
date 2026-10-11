@@ -4,6 +4,7 @@ import ShapeTree
 import goodies.containers.ShapeTreeNode
 import processing.core.PApplet
 
+/** Polygon with exactly four vertices a, b, c and d. */
 open class Quadrilateral(
     vertices: List<Point>,
 ) : Polygon(vertices) {
@@ -107,6 +108,7 @@ open class Quadrilateral(
         }
     }
 
+    /** Builders for quadrilaterals. */
     companion object {
         fun fromSketch(sketch: PApplet): Quadrilateral =
             Quadrilateral(

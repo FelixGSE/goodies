@@ -5,6 +5,11 @@ import org.apache.commons.math3.linear.RealMatrix
 import kotlin.math.cos
 import kotlin.math.sin
 
+/**
+ * Givens rotation by [angle] in the plane of axes [i] < [j] of a [dimensions]-dimensional space.
+ *
+ * The angle is in radians and used as given. DESIGN: ANG-3 asks for degrees.
+ */
 class RotationMatrix(
     i: Int,
     j: Int,
@@ -22,6 +27,7 @@ class RotationMatrix(
 
     fun toGMatrix(): GMatrix = GMatrix(toRealMatrix().copy())
 
+    /** Builders for rotation matrices, angles in radians. */
     companion object {
         fun getRotationMatrixForAxis(
             i: Int,

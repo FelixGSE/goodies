@@ -3,6 +3,7 @@ package goodies.geometry
 import goodies.draw.Drawable
 import processing.core.PApplet
 
+/** Sphere: an [NSphere] in three dimensions. Throws IllegalArgumentException for any other dimension. */
 class Sphere(
     center: Point,
     radius: Number,
@@ -16,6 +17,7 @@ class Sphere(
         sketch.sphere(radius)
     }
 
+    /** Builders for spheres. */
     companion object {
         fun unitSphere(): NEllipsoid = unitNSphere(SPATIAL_DIMENSIONS)
     }
