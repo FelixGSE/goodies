@@ -9,10 +9,16 @@ internal fun samplePins(
     mean: DoubleArray,
     covariance: Array<DoubleArray>,
     count: Int,
-): List<Point> = List(count) { Point(MultivariateNormalDistribution(mean, covariance).sample().toList()) }
+): List<Point> {
+    val distribution = MultivariateNormalDistribution(mean, covariance)
+    return List(count) { Point(distribution.sample().toList()) }
+}
 
 internal fun absoluteNormalSamples(
     mean: Number,
     std: Number,
     count: Int,
-): List<Float> = List(count) { abs(NormalDistribution(mean.toDouble(), std.toDouble()).sample()).toFloat() }
+): List<Float> {
+    val distribution = NormalDistribution(mean.toDouble(), std.toDouble())
+    return List(count) { abs(distribution.sample()).toFloat() }
+}
