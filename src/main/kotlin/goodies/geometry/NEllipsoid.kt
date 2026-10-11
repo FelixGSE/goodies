@@ -22,12 +22,8 @@ open class NEllipsoid(
         get() = centerPoint.copy()
 
     init {
-        if (dimensions < 2) {
-            throw IllegalArgumentException("Can only construct ellipse like objects with at least two dimensions")
-        }
-        if (dimensions != axes.size) {
-            throw IllegalArgumentException("Provided list of radia does not match the point dimensions")
-        }
+        require(dimensions >= 2) { "Can only construct ellipse like objects with at least two dimensions" }
+        require(dimensions == axes.size) { "Provided list of radia does not match the point dimensions" }
     }
 
     override val centroid: Point
@@ -56,9 +52,7 @@ open class NEllipsoid(
 
     fun pointOnSurface(angles: List<Number>): Point {
         val angleAsListOfDoubles = angles.map { it.toDouble() }
-        if (angles.size != dimensions - 1) {
-            throw IllegalArgumentException("Number of angles must have be equal to dimensions - 1")
-        }
+        require(angles.size == dimensions - 1) { "Number of angles must have be equal to dimensions - 1" }
         var result = Point(axes)
         val numberOfAngles = angles.size
 

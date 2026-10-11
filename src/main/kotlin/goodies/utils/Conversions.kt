@@ -38,7 +38,7 @@ object Conversions {
         return when (arr.size) {
             2 -> PVector(arr[0].toFloat(), arr[1].toFloat())
             3 -> PVector(arr[0].toFloat(), arr[1].toFloat(), arr[2].toFloat())
-            else -> throw IllegalArgumentException()
+            else -> throw IllegalArgumentException("Can only convert 2 and 3 dimensional values to PVector")
         }
     }
 
@@ -62,7 +62,7 @@ object Conversions {
         when (listOfFloats.size) {
             2 -> PVector(listOfFloats[0], listOfFloats[1])
             3 -> PVector(listOfFloats[0], listOfFloats[1], listOfFloats[2])
-            else -> throw IllegalArgumentException()
+            else -> throw IllegalArgumentException("Can only convert 2 and 3 dimensional values to PVector")
         }
 
     @JvmStatic

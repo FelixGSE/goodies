@@ -45,13 +45,9 @@ abstract class GoodiesSketch : PApplet() {
                 os.contains("win") -> "Desktop"
                 os.contains("mac") -> "Desktop"
                 os.contains("nix") || os.contains("nux") || os.contains("bsd") -> "Desktop"
-                else -> null
+                else -> error("Cannot determine the Desktop path for this operating system.")
             }
 
-        if (desktopFolderName == null) {
-            throw Exception("Cannot determine the Desktop path for this operating system.")
-        } else {
-            return System.getProperty("user.home") + File.separator + desktopFolderName
-        }
+        return System.getProperty("user.home") + File.separator + desktopFolderName
     }
 }

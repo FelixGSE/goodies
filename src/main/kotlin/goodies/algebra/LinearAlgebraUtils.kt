@@ -9,9 +9,7 @@ fun allGVectorsHaveEqualDimensions(vectors: List<Point>): Boolean {
 }
 
 fun areLinearlyIndependent(vectors: List<Point>): Boolean {
-    if (!allGVectorsHaveEqualDimensions(vectors)) {
-        throw IllegalArgumentException("All vectors must have the same dimension")
-    }
+    require(allGVectorsHaveEqualDimensions(vectors)) { "All vectors must have the same dimension" }
 
     return GMatrix(vectors, orientation = "column").isSingular
 }

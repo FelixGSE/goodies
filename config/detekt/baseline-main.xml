@@ -88,7 +88,6 @@
     <ID>ExpressionBodySyntax:PolygonLikeShape.kt:PolygonLikeShape$return listOfPointsToListOfLines(vertices, closed = isClosed)</ID>
     <ID>ExpressionBodySyntax:PolygonPath.kt:PolygonPath$return vertices.first()</ID>
     <ID>ExpressionBodySyntax:PolygonPath.kt:PolygonPath$return vertices.last()</ID>
-    <ID>ForbiddenComment:RotationMatrix.kt:RotationMatrix.Companion$// FIXME</ID>
     <ID>ForbiddenComment:RotationMatrix.kt:RotationMatrix.Companion$// TODO: -1 correct?</ID>
     <ID>ForbiddenMethodCall:Point.kt:Point$println( "[WARNING] setMag() returns a new Vector instead of modifying the old one. Overwrite you variable " + "with the result of setMag()", )</ID>
     <ID>FunctionNameMaxLength:Conversions.kt:Conversions$@JvmStatic fun listOfListOfFloatsToDoubleArrays: Array&lt;DoubleArray></ID>
@@ -195,9 +194,6 @@
     <ID>StringLiteralDuplication:GoodiesSketch.kt:GoodiesSketch$"Desktop"</ID>
     <ID>StringLiteralDuplication:Point.kt:Point$"Invalid dimensions. Point must have at least 3 dimensions for this method"</ID>
     <ID>StringLiteralDuplication:Point.kt:Point$"Point does not have enough dimensions"</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:Conversions.kt:Conversions$IllegalArgumentException()</ID>
-    <ID>TooGenericExceptionThrown:GoodiesSketch.kt:GoodiesSketch$throw Exception("Cannot determine the Desktop path for this operating system.")</ID>
-    <ID>TooGenericExceptionThrown:RotationMatrix.kt:RotationMatrix.Companion$throw Exception("This should never happen")</ID>
     <ID>TooManyFunctions:GMatrix.kt:GMatrix : IterableGraphicsMatrix</ID>
     <ID>TooManyFunctions:Line.kt:Line : DiscreteShapeOpenShapeGeomDrawable</ID>
     <ID>TooManyFunctions:Point.kt:Point : IterableGraphics</ID>
@@ -447,25 +443,10 @@
     <ID>UnusedVariable:SimpleFont.kt:SimpleFont$val mid = scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).midPoint</ID>
     <ID>UnusedVariable:SimpleFont2.kt:SimpleFont2$val mid = scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).midPoint</ID>
     <ID>UnusedVariable:WaterColorBlob.kt:WaterColorBlob$i</ID>
-    <ID>UseCheckOrError:Point.kt:Point$throw IllegalStateException("headings() should return a list of size 1 for 2D points")</ID>
     <ID>UseDataClass:ShapeTreeNode.kt:ShapeTreeNode&lt;T></ID>
     <ID>UseEmptyCounterpart:ListUtils.kt:listOf&lt;Number>()</ID>
-    <ID>UseRequire:Circle.kt:Circle$throw IllegalArgumentException("A circle can only have two dimensions")</ID>
-    <ID>UseRequire:GMatrix.kt:GMatrix$throw IllegalArgumentException("Matrices must have equal size")</ID>
     <ID>UseRequire:GMatrix.kt:GMatrix$throw IllegalArgumentException("Matrix must be square")</ID>
-    <ID>UseRequire:LinearAlgebraUtils.kt:throw IllegalArgumentException("All vectors must have the same dimension")</ID>
-    <ID>UseRequire:NEllipsoid.kt:NEllipsoid$throw IllegalArgumentException("Can only construct ellipse like objects with at least two dimensions")</ID>
-    <ID>UseRequire:NEllipsoid.kt:NEllipsoid$throw IllegalArgumentException("Number of angles must have be equal to dimensions - 1")</ID>
-    <ID>UseRequire:NEllipsoid.kt:NEllipsoid$throw IllegalArgumentException("Provided list of radia does not match the point dimensions")</ID>
-    <ID>UseRequire:Point.kt:Point$throw IllegalArgumentException("Invalid dimensions. Point must have at least 3 dimensions for this method")</ID>
-    <ID>UseRequire:Point.kt:Point$throw IllegalArgumentException("Invalid dimensions. Points must have dimension equal to 2 for this method")</ID>
-    <ID>UseRequire:Point.kt:Point$throw IllegalArgumentException("Length must be a positive number")</ID>
     <ID>UseRequire:Point.kt:Point$throw IllegalArgumentException("Point does not have enough dimensions")</ID>
-    <ID>UseRequire:Point.kt:Point$throw IllegalArgumentException("Point must have dimension 4 to be projected down to 3D")</ID>
-    <ID>UseRequire:Point.kt:Point$throw IllegalArgumentException("Points dimension do not match")</ID>
-    <ID>UseRequire:Point.kt:Point$throw IllegalArgumentException("Points must have dimension equal to 3 for this method")</ID>
-    <ID>UseRequire:Point.kt:Point.Companion$throw IllegalArgumentException("Dimensions must greater or equal than zero")</ID>
-    <ID>UseRequire:Sphere.kt:Sphere$throw IllegalArgumentException("A sphere can only have three dimensions")</ID>
     <ID>UseSumOfInsteadOfFlatMapSize:Grid2D.kt:Grid2D$flatten()</ID>
     <ID>VarCouldBeVal:GaussBrush.kt:GaussBrush$var currentPositions = brushPins.toMutableList()</ID>
   </CurrentIssues>

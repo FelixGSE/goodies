@@ -195,9 +195,7 @@ open class GMatrix(
     fun pow(exponent: Int): GMatrix = GMatrix(matrix.power(exponent))
 
     fun elementWiseTimes(otherMatrix: GMatrix): GMatrix {
-        if (size != otherMatrix.size) {
-            throw IllegalArgumentException("Matrices must have equal size")
-        }
+        require(size == otherMatrix.size) { "Matrices must have equal size" }
         return GMatrix(matrix.multiply(otherMatrix.toRealMatrix()))
     }
 

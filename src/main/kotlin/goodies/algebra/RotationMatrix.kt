@@ -56,8 +56,7 @@ class RotationMatrix(
                     currentIndex++
                 }
             }
-            // FIXME
-            throw Exception("This should never happen")
+            error("no rotation plane $index in $dimensions dimensions")
         }
 
         fun getNumberOfRotations(dimensions: Int): Int = (0 until dimensions).sum()

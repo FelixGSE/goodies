@@ -8,9 +8,7 @@ class Circle(
 ) : NSphere(center, radius),
     Native2D {
     init {
-        if (dimensions != 2) {
-            throw IllegalArgumentException("A circle can only have two dimensions")
-        }
+        require(dimensions == 2) { "A circle can only have two dimensions" }
     }
 
     override fun toString(): String = "Circle{center=${center}radius=$radius}"

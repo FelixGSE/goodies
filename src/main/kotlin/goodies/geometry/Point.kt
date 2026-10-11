@@ -90,9 +90,7 @@ class Point(
     operator fun plus(number: Number): Point = Point(coordinates.toArray().map { it + number.toDouble() })
 
     operator fun times(other: Point): Point {
-        if (dimensions != other.dimensions) {
-            throw IllegalArgumentException("Points dimension do not match")
-        }
+        require(dimensions == other.dimensions) { "Points dimension do not match" }
         return Point(other.toDoubleArray().zip(coordinates.toArray()) { x, y -> x * y })
     }
 
@@ -125,9 +123,7 @@ class Point(
     fun pow(exponent: Number): Point = Point(coordinates.toArray().map { it.pow(exponent.toDouble()) })
 
     fun cross(other: Point): Point {
-        if (dimensions != 3 || other.dimensions != 3) {
-            throw IllegalArgumentException("Points must have dimension equal to 3 for this method")
-        }
+        require(dimensions == 3 && other.dimensions == 3) { "Points must have dimension equal to 3 for this method" }
         return Point(
             this[1] * other[2] - this[2] * other[1],
             this[2] * other[0] - this[0] * other[2],
@@ -191,30 +187,22 @@ class Point(
     fun normalize(): Point = Point(coordinates.unitVector())
 
     fun rotate(angle: Number): Point {
-        if (dimensions != 2) {
-            throw IllegalArgumentException("Invalid dimensions. Points must have dimension equal to 2 for this method")
-        }
+        require(dimensions == 2) { "Invalid dimensions. Points must have dimension equal to 2 for this method" }
         return rotateAxis(0, 1, angle.toFloat())
     }
 
     fun rotateZ(angle: Number): Point {
-        if (dimensions < 3) {
-            throw IllegalArgumentException("Invalid dimensions. Point must have at least 3 dimensions for this method")
-        }
+        require(dimensions >= 3) { "Invalid dimensions. Point must have at least 3 dimensions for this method" }
         return rotateAxis(0, 1, angle.toFloat())
     }
 
     fun rotateY(angle: Number): Point {
-        if (dimensions < 3) {
-            throw IllegalArgumentException("Invalid dimensions. Point must have at least 3 dimensions for this method")
-        }
+        require(dimensions >= 3) { "Invalid dimensions. Point must have at least 3 dimensions for this method" }
         return rotateAxis(0, 2, angle.toFloat())
     }
 
     fun rotateX(angle: Number): Point {
-        if (dimensions < 3) {
-            throw IllegalArgumentException("Invalid dimensions. Point must have at least 3 dimensions for this method")
-        }
+        require(dimensions >= 3) { "Invalid dimensions. Point must have at least 3 dimensions for this method" }
         return rotateAxis(1, 2, angle.toFloat())
     }
 
@@ -250,20 +238,15 @@ class Point(
         }
         val headings = headings()
 
-        if (headings.size != 1) {
-            throw IllegalStateException("headings() should return a list of size 1 for 2D points")
-        } else {
-            return headings[0]
-        }
+        check(headings.size == 1) { "headings() should return a list of size 1 for 2D points" }
+        return headings[0]
     }
 
     fun projectDown(distance: Float = 1.0f): Point =
         Point(StereographicProjection.projectDownOneDimension(distance, coordinates))
 
     fun projectDownTo3D(distance: Float = 1.0f): Point {
-        if (dimensions < 3) {
-            throw IllegalArgumentException("Point must have dimension 4 to be projected down to 3D")
-        }
+        require(dimensions >= 3) { "Point must have dimension 4 to be projected down to 3D" }
         var point = this.copy()
         repeat(dimensions - 3) {
             point = point.projectDown(distance)
@@ -286,9 +269,7 @@ class Point(
     }
 
     fun limit(length: Number): Point {
-        if (length.toFloat() < 0.0f) {
-            throw IllegalArgumentException("Length must be a positive number")
-        }
+        require(!(length.toFloat() < 0.0f)) { "Length must be a positive number" }
         return if (length.toFloat() >= this.magnitude()) {
             copy()
         } else {
@@ -377,9 +358,7 @@ class Point(
         fun zeros(dimensions: Int): Point = Point(List(dimensions) { 0 })
 
         fun randomPoint(dimensions: Int): Point {
-            if (dimensions < 0) {
-                throw IllegalArgumentException("Dimensions must greater or equal than zero")
-            }
+            require(dimensions >= 0) { "Dimensions must greater or equal than zero" }
 
             return Point(*drawPointOnUnitNSphere(dimensions).toArray().toTypedArray())
         }

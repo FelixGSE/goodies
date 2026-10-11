@@ -9,9 +9,7 @@ class Sphere(
 ) : NSphere(center, radius),
     Drawable {
     init {
-        if (dimensions != 3) {
-            throw IllegalArgumentException("A sphere can only have three dimensions")
-        }
+        require(dimensions == 3) { "A sphere can only have three dimensions" }
     }
 
     override fun draw(sketch: PApplet) {
