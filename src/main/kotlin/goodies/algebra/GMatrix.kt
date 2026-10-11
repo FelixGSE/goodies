@@ -27,7 +27,7 @@ open class GMatrix(
     val rows: List<Point>
         get() {
             val rowList = mutableListOf<Point>()
-            for (i in 0 until size.first) {
+            for (i in 0 until matrix.rowDimension) {
                 rowList.add(Point(matrix.getRowVector(i)))
             }
             return rowList.toList()
@@ -36,7 +36,7 @@ open class GMatrix(
     val columns: List<Point>
         get() {
             val columnList = mutableListOf<Point>()
-            for (i in 0 until size.first) {
+            for (i in 0 until matrix.rowDimension) {
                 columnList.add(Point(matrix.getColumnVector(i)))
             }
             return columnList.toList()
@@ -55,7 +55,7 @@ open class GMatrix(
         }
 
     val isSymmetric: Boolean
-        get() = MatrixUtils.isSymmetric(matrix, 0.000_001)
+        get() = MatrixUtils.isSymmetric(matrix, SYMMETRY_TOLERANCE)
 
     val isSingular: Boolean
         get() = LUDecomposition(matrix).solver.isNonSingular
@@ -141,10 +141,8 @@ open class GMatrix(
 
     val isIndefinite: Boolean
         get() {
-            val hasPositive = eigenValues.any { it > 0 }
-            val hasNegative = eigenValues.any { it < 0 }
-
-            return hasPositive && hasNegative
+            val values = eigenValues
+            return values.any { it > 0 } && values.any { it < 0 }
         }
 
     constructor(values: List<List<Number>>) : this(
@@ -330,5 +328,7 @@ private fun notSquare(
     size: Pair<Int, Int>,
 ): String = "$operation needs a square matrix, got ${size.first}x${size.second}"
 
-private const val ROW = "row"
-private const val COLUMN = "column"
+private const val SYMMETRY_TOLERANCE = 1e-6
+
+internal const val ROW = "row"
+internal const val COLUMN = "column"

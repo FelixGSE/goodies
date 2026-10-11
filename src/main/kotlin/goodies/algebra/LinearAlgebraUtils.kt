@@ -17,7 +17,7 @@ fun allGVectorsHaveEqualDimensions(vectors: List<Point>): Boolean {
 fun areLinearlyIndependent(vectors: List<Point>): Boolean {
     require(allGVectorsHaveEqualDimensions(vectors)) { "All vectors must have the same dimension" }
 
-    return GMatrix(vectors, orientation = "column").isSingular
+    return GMatrix(vectors, orientation = COLUMN).isSingular
 }
 
 /** Solves `coefficients · x = constants` for x by LU decomposition. */
