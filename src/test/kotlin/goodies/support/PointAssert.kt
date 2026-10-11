@@ -10,7 +10,7 @@ class PointAssert(
 ) : AbstractAssert<PointAssert, Point>(actual, PointAssert::class.java) {
     fun isCloseTo(
         expected: Point,
-        precision: Offset<Double>,
+        precision: Offset<Double> = Assertions.withPrecision(EPSILON),
     ): PointAssert {
         isNotNull
         Assertions
