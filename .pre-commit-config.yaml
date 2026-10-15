@@ -3,6 +3,8 @@
 # every pull request, so skipping them locally only moves the failure.
 # Local hooks are shell scripts in scripts/ or ./gradlew tasks; the workflow
 # linters are remote hooks pinned to a commit, their toolchains managed by prek.
+# The hygiene job in .github/workflows/ci.yml skips branch-name and every
+# Gradle or baseline hook (make check runs those): extend its SKIP with them.
 default_install_hook_types: [pre-commit, commit-msg]
 
 repos:
