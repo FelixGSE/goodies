@@ -57,4 +57,4 @@ repos:
     hooks:
       - id: zizmor
         stages: [pre-commit]
-        files: ^\.github/workflows/
+        files: ^\.github/(workflows|actions)/

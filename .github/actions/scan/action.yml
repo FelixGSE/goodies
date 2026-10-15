@@ -1,0 +1,28 @@
+name: scan
+description: make scan with a pinned Trivy, its database cached per UTC day, SARIF uploaded even when the gate fails
+
+runs:
+  using: composite
+  steps:
+    - uses: aquasecurity/setup-trivy@81e514348e19b6112ce2a7e3ecbafe19c1e1f567 # v0.3.1
+      with:
+        version: v0.75.0
+    - id: day
+      shell: bash
+      run: echo "utc=$(date -u +%F)" >> "$GITHUB_OUTPUT"
+    - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      with:
+        path: ${{ runner.temp }}/trivy
+        key: trivy-db-${{ steps.day.outputs.utc }}
+        restore-keys: trivy-db-
+    - shell: bash
+      run: make scan
+      env:
+        TRIVY_FORMAT: sarif
+        TRIVY_OUTPUT: trivy.sarif
+        TRIVY_CACHE_DIR: ${{ runner.temp }}/trivy
+    - if: always() && hashFiles('trivy.sarif') != ''
+      uses: github/codeql-action/upload-sarif@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4.39.0
+      with:
+        sarif_file: trivy.sarif
+        category: scan
