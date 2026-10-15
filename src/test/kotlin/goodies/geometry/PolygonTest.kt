@@ -30,7 +30,7 @@ class PolygonTest {
         }
 
         @Test
-        @Disabled("known failure: expected the legacy Java Line, got goodies.geometry.Line; no owner yet")
+        @Disabled("known failure: expected the legacy Java Line, got goodies.geometry.Line; polygon triage")
         fun `edges should close the polygon with the last edge`() {
             // Given
             val polygon =
@@ -215,7 +215,7 @@ class PolygonTest {
     @Nested
     inner class InteriorAnglesTests {
         @Test
-        @Disabled("known failure: expected List<Double>, got List<Float> in another order; VAL-3, E3.4")
+        @Disabled("known failure: expected List<Double>, got List<Float> in another order; VAL-3")
         fun `should return correct angles for a triangle`() {
             // Given
             val polygon =
@@ -260,7 +260,8 @@ class PolygonTest {
 
         @Test
         @Disabled(
-            "known failure: expected [2.36, 1.70, 2.26, 2.48, 1.98], got [0.79, 3.14, 2.36, 1.57, 1.57]; no owner yet",
+            "known failure: expected [2.36, 1.70, 2.26, 2.48, 1.98], " +
+                "got [0.79, 3.14, 2.36, 1.57, 1.57]; polygon triage",
         )
         fun `should return correct angles for a non-convex pentagon`() {
             // Given

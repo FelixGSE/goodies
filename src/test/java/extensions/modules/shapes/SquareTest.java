@@ -22,7 +22,7 @@ class SquareTest {
         var square = new Square();
         assertThat(square.getCenter()).isEqualTo(new PVector(0,0));
     }
-    @Disabled("known failure: expected centroid [0.36, 0.36], got [0, 0]; E1.4")
+    @Disabled("known failure: expected centroid [0.36, 0.36], got [0, 0]; shape port")
     @Test
     public void shouldCreateGridPartition() {
         // given

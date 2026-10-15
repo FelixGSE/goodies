@@ -64,7 +64,7 @@ public class ArcTests {
 
     }
 
-    @Disabled("known failure: expected 0, got 90 (refCircleAngleStart); E1.3")
+    @Disabled("known failure: expected 0, got 90 (refCircleAngleStart); shape port")
     @Test
     public void testGetMidPoint() {
         PVector center = new PVector(500,500);

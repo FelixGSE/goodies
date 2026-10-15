@@ -102,7 +102,7 @@ class QuadrilateralTest {
 
     }
 
-    @Disabled("known failure: expected equal vertices, got different (PApplet.setSize without a surface); E1.4")
+    @Disabled("known failure: expected equal vertices, got different (PApplet.setSize without a surface); shape port")
     @Test
     void shouldCreateQuadrilateralFromAPAppletClassWithAppropiateSize() {
         // Given

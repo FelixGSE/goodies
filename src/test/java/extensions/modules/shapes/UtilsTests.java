@@ -85,7 +85,7 @@ public class UtilsTests {
 
 
 
-    @Disabled("known failure: expected pi/2, got 90; expectation wrong, degrees per VAL-7; drop in E1.4")
+    @Disabled("known failure: expected pi/2, got 90; expectation wrong, degrees per VAL-7; drop in the shape port")
     @Test
     public void testAngleForPointOnCircle() {
 

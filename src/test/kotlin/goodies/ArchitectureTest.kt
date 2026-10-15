@@ -23,13 +23,17 @@ internal class ArchitectureTest {
     private val draw = "draw"
     private val toolkit = production.map { it.topPackage() }.toSet() - core - draw
 
+    // owner: algebra layering
     private val algebraImportingOthers = setOf("GMatrix", "LinearAlgebraUtils", "Matrix")
 
+    // owner: shape layering
     private val geometryImportingUpwards =
         setOf("Line", "Point", "Polygon", "PolygonLikeShape", "Quadrilateral", "Sphere")
 
+    // owner: shape layering
     private val coreImportingProcessing = setOf("Line", "Point", "Polygon", "PolygonPath", "Quadrilateral", "Sphere")
 
+    // owner: legacy test naming
     private val testsNamedWithoutShould =
         setOf(
             "AgentTest",
@@ -47,6 +51,7 @@ internal class ArchitectureTest {
             "WaterColorBlobTest",
         )
 
+    // owner: legacy test naming
     private val testsWithoutGivenWhenThen =
         setOf(
             "AgentTest",
