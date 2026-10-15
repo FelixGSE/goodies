@@ -10,7 +10,8 @@ runs:
     - id: day
       shell: bash
       run: echo "utc=$(date -u +%F)" >> "$GITHUB_OUTPUT"
-    - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+    - id: restore
+      uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
       with:
         path: ${{ runner.temp }}/trivy
         key: trivy-db-${{ steps.day.outputs.utc }}
@@ -21,6 +22,11 @@ runs:
         TRIVY_FORMAT: sarif
         TRIVY_OUTPUT: trivy.sarif
         TRIVY_CACHE_DIR: ${{ runner.temp }}/trivy
+    - if: always() && steps.restore.outputs.cache-hit != 'true'
+      uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      with:
+        path: ${{ runner.temp }}/trivy
+        key: trivy-db-${{ steps.day.outputs.utc }}
     - if: always() && hashFiles('trivy.sarif') != ''
       uses: github/codeql-action/upload-sarif@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4.39.0
       with:
