@@ -11,18 +11,22 @@ class SphereSamplerTest {
     @Nested
     inner class UnitSphere {
         @Test
-        fun `should draw point on unit sphere with length 1`() {
-            // Given / When
+        fun `drawPointOnUnitSphere should draw a point with length 1`() {
+            // Given
+
+            // When
             val point = SphereSampler.drawPointOnUnitSphere()
-            val length = SphereSampler.lengthOfVector(point)
 
             // Then
+            val length = SphereSampler.lengthOfVector(point)
             assertThat(length).isCloseTo(1.0, offset(0.0001))
         }
 
         @Test
-        fun `should produce 3D vector`() {
-            // Given / When
+        fun `drawPointOnUnitSphere should produce a 3D vector`() {
+            // Given
+
+            // When
             val point = SphereSampler.drawPointOnUnitSphere()
 
             // Then
@@ -33,7 +37,7 @@ class SphereSamplerTest {
     @Nested
     inner class UnitNSphere {
         @Test
-        fun `should draw point on N-sphere with correct dimensionality`() {
+        fun `drawPointOnUnitNSphere should draw a point with correct dimensionality`() {
             // Given
             val dimensions = 5
 
@@ -45,22 +49,26 @@ class SphereSamplerTest {
         }
 
         @Test
-        fun `should draw point on N-sphere with unit length`() {
-            // Given / When
+        fun `drawPointOnUnitNSphere should draw a point with unit length when dimensions is 4`() {
+            // Given
+
+            // When
             val point = SphereSampler.drawPointOnUnitNSphere(4)
-            val length = point.norm
 
             // Then
+            val length = point.norm
             assertThat(length).isCloseTo(1.0, offset(0.0001))
         }
 
         @Test
-        fun `should draw point on 3-sphere with unit length`() {
-            // Given / When
+        fun `drawPointOnUnitNSphere should draw a point with unit length when dimensions is 3`() {
+            // Given
+
+            // When
             val point = SphereSampler.drawPointOnUnitNSphere(3)
-            val length = SphereSampler.lengthOfVector(point)
 
             // Then
+            val length = SphereSampler.lengthOfVector(point)
             assertThat(length).isCloseTo(1.0, offset(0.0001))
         }
     }

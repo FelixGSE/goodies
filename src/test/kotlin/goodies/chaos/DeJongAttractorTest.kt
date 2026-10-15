@@ -12,8 +12,10 @@ class DeJongAttractorTest {
     @Nested
     inner class Construction {
         @Test
-        fun `should create attractor with x and y at zero by default`() {
-            // Given / When
+        fun `DeJongAttractor should start at zero x and y by default`() {
+            // Given
+
+            // When
             val attractor = DeJongAttractor(a = 1f, b = 2f, c = 3f, d = 4f)
 
             // Then
@@ -26,8 +28,10 @@ class DeJongAttractorTest {
         }
 
         @Test
-        fun `should create attractor with explicit x and y`() {
-            // Given / When
+        fun `DeJongAttractor should hold the explicit x and y when given`() {
+            // Given
+
+            // When
             val attractor = DeJongAttractor(x = 0.5f, y = 0.5f, a = 1f, b = 2f, c = 3f, d = 4f)
 
             // Then
@@ -39,7 +43,7 @@ class DeJongAttractorTest {
     @Nested
     inner class Iteration {
         @Test
-        fun `next should compute new x and y using De Jong equations`() {
+        fun `next should compute new x and y using the De Jong equations`() {
             // Given
             val attractor = DeJongAttractor(x = 0f, y = 0f, a = 1.4f, b = -2.3f, c = 2.4f, d = -2.1f)
 
@@ -69,7 +73,7 @@ class DeJongAttractorTest {
         }
 
         @Test
-        fun `next should not modify original attractor (immutability)`() {
+        fun `next should not modify the original attractor`() {
             // Given
             val attractor = DeJongAttractor(x = 0f, y = 0f, a = 1.4f, b = -2.3f, c = 2.4f, d = -2.1f)
 
@@ -82,7 +86,7 @@ class DeJongAttractorTest {
         }
 
         @Test
-        fun `should iterate multiple steps`() {
+        fun `next should change x on every step when iterated multiple times`() {
             // Given
             val attractor = DeJongAttractor(a = 1.4f, b = -2.3f, c = 2.4f, d = -2.1f)
 
@@ -97,7 +101,7 @@ class DeJongAttractorTest {
         }
 
         @Test
-        fun `next should return correct values for non-zero starting point`() {
+        fun `next should return correct values for a non-zero starting point`() {
             // Given
             val attractor = DeJongAttractor(x = 1f, y = 1f, a = 2f, b = 2f, c = 2f, d = 2f)
 
@@ -116,7 +120,7 @@ class DeJongAttractorTest {
     @Nested
     inner class Properties {
         @Test
-        fun `location should return PVector with x and y`() {
+        fun `location should return a PVector with x and y`() {
             // Given
             val attractor = DeJongAttractor(x = 3.5f, y = -2.1f, a = 1f, b = 2f, c = 3f, d = 4f)
 
@@ -129,10 +133,12 @@ class DeJongAttractorTest {
         }
 
         @Test
-        fun `data class equality should work`() {
+        fun `DeJongAttractor should equal a copy with the same parameters`() {
             // Given
             val a1 = DeJongAttractor(x = 0f, y = 0f, a = 1f, b = 2f, c = 3f, d = 4f)
             val a2 = DeJongAttractor(x = 0f, y = 0f, a = 1f, b = 2f, c = 3f, d = 4f)
+
+            // When
 
             // Then
             assertThat(a1).isEqualTo(a2)

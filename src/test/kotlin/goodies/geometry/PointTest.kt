@@ -18,7 +18,7 @@ internal class PointTest {
     @Nested
     inner class Construction {
         @Test
-        fun `Empty constructor for Point`() {
+        fun `Point constructor should create a Point with zero dimensions when given no coordinates`() {
             // Given
             val expected = Point()
 
@@ -31,7 +31,7 @@ internal class PointTest {
 
         @ParameterizedTest
         @MethodSource("constructFromNumbersCases")
-        fun `Construct a Point object from Numbers`(
+        fun `Point constructor should create a Point from Numbers`(
             x: Number,
             y: Number,
         ) {
@@ -55,7 +55,7 @@ internal class PointTest {
 
         @ParameterizedTest
         @MethodSource("constructFromListCases")
-        fun `Construct a Point object from A List`(coordinates: List<Number>) {
+        fun `Point constructor should create a Point from a List`(coordinates: List<Number>) {
             // Given
             val expected = Point(coordinates)
 
@@ -75,7 +75,7 @@ internal class PointTest {
             )
 
         @Test
-        fun `Construct a Point object from RealVector`() {
+        fun `Point constructor should create a Point from a RealVector`() {
             // Given
             val expected = Point(1, 1)
 
@@ -140,12 +140,13 @@ internal class PointTest {
         }
 
         @Test
-        fun `Accessing property x should should throw IllegalArgumentException when Point has zero dimensions`() {
+        fun `x should throw IllegalArgumentException when the point has zero dimensions`() {
             // Given
 
             // When
             val result = catchThrowable { Point().x }
 
+            // Then
             assertThat(result)
                 .isInstanceOf(IllegalArgumentException().javaClass)
                 .hasMessageContaining("x needs 1 or more dimensions, got 0")
@@ -165,19 +166,20 @@ internal class PointTest {
         }
 
         @Test
-        fun `Accessing property y should should throw IllegalArgumentException when Point has only one dimension`() {
+        fun `y should throw IllegalArgumentException when the point has only one dimension`() {
             // Given
 
             // When
             val result = catchThrowable { Point(1).y }
 
+            // Then
             assertThat(result)
                 .isInstanceOf(IllegalArgumentException().javaClass)
                 .hasMessageContaining("y needs 2 or more dimensions, got 1")
         }
 
         @Test
-        fun `z should get the second coordinate of a Vector`() {
+        fun `z should get the third coordinate of a Vector`() {
             // Given
             val point = Point(15.0f, 99.0f, 255.0f)
             val expected = 255.0f
@@ -190,12 +192,13 @@ internal class PointTest {
         }
 
         @Test
-        fun `Accessing property z should should throw IllegalArgumentException when Point has only two dimensions`() {
+        fun `z should throw IllegalArgumentException when the point has only two dimensions`() {
             // Given
 
             // When
             val result = catchThrowable { Point(1, 2).z }
 
+            // Then
             assertThat(result)
                 .isInstanceOf(IllegalArgumentException().javaClass)
                 .hasMessageContaining("z needs 3 or more dimensions, got 2")
@@ -318,7 +321,7 @@ internal class PointTest {
         }
 
         @Test
-        fun `Div operator each element of Point a point by a scalar if right element is a Number`() {
+        fun `Div operator should divide each element of Point by a scalar when right operand is a Number`() {
             // Given
             val point = Point(5.0f, 5.0f)
             val scalar = 5
@@ -373,7 +376,7 @@ internal class PointTest {
         }
 
         @Test
-        fun `normalize should should throw MathArithmeticException when Point is empty`() {
+        fun `normalize should throw MathArithmeticException when Point is empty`() {
             // Given
 
             // When
@@ -399,7 +402,7 @@ internal class PointTest {
             // When
             val result = point.translate(xTranslation, yTranslation)
 
-            // When
+            // Then
             assertThat(result).isEqualTo(expectedResult)
         }
 
@@ -411,6 +414,7 @@ internal class PointTest {
             // When
             val result = catchThrowable { point.translate(10, 10) }
 
+            // Then
             assertThat(result)
                 .isInstanceOf(IllegalArgumentException().javaClass)
                 .hasMessageContaining("translate needs 3 values, got 2")
@@ -428,7 +432,7 @@ internal class PointTest {
             // When
             val result = point.translate(translation)
 
-            // When
+            // Then
             assertThat(result).isEqualTo(expectedResult)
         }
 
@@ -458,9 +462,11 @@ internal class PointTest {
         @ParameterizedTest(name = "TestPoint: {0}")
         @MethodSource("rotateInvalidDimensionsCases")
         fun `rotate should throw IllegalArgumentException when Point dimensions is not equal to 2`(point: Point) {
-            // When
+            // Given
 
+            // When
             val result = catchThrowable { point.rotate(90) }
+
             // Then
             assertThat(result)
                 .isInstanceOf(IllegalArgumentException().javaClass)
@@ -495,9 +501,11 @@ internal class PointTest {
         @ParameterizedTest(name = "TestPoint: {0}")
         @MethodSource("rotateZInvalidDimensionsCases")
         fun `rotateZ should throw IllegalArgumentException when Point dimensions is less than 3`(point: Point) {
-            // When
+            // Given
 
+            // When
             val result = catchThrowable { point.rotateZ(90) }
+
             // Then
             assertThat(result)
                 .isInstanceOf(IllegalArgumentException().javaClass)
@@ -532,9 +540,11 @@ internal class PointTest {
         @ParameterizedTest(name = "TestPoint: {0}")
         @MethodSource("rotateYInvalidDimensionsCases")
         fun `rotateY should throw IllegalArgumentException when Point dimensions is less than 3`(point: Point) {
-            // When
+            // Given
 
+            // When
             val result = catchThrowable { point.rotateY(90) }
+
             // Then
             assertThat(result)
                 .isInstanceOf(IllegalArgumentException().javaClass)
@@ -705,7 +715,7 @@ internal class PointTest {
     @Nested
     inner class Conversions {
         @Test
-        fun toRealVectorShouldConvertAPointToARealVector() {
+        fun `toRealVector should convert a Point to a RealVector`() {
             // Given
             val point = Point(1, 2, 3)
 
@@ -791,9 +801,11 @@ internal class PointTest {
         @ParameterizedTest(name = "TestPoint: {0}")
         @MethodSource("toPVectorInvalidDimensionsCases")
         fun `toPVector should throw IllegalArgumentException when Vector has dimension is not 2 or 3`(point: Point) {
-            // When
+            // Given
 
+            // When
             val result = catchThrowable { point.toPVector() }
+
             // Then
             assertThat(result)
                 .isInstanceOf(IllegalArgumentException().javaClass)

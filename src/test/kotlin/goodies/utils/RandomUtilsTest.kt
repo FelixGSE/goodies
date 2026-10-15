@@ -57,7 +57,7 @@ internal class RandomUtilsTest {
     }
 
     @Test
-    fun `randomBitList with correct length`() {
+    fun `randomBitList should return a list of the requested length`() {
         // Given
         val n = 100
 
@@ -69,7 +69,7 @@ internal class RandomUtilsTest {
     }
 
     @Test
-    fun `sampleWithReplacementFromList with correct length`() {
+    fun `sampleWithReplacementFromList should return a list of the requested length`() {
         // Given
         val input = listOf("A", "B", "C")
         val n = 100
@@ -82,7 +82,7 @@ internal class RandomUtilsTest {
     }
 
     @Test
-    fun `weightedSampleWithReplacementFromList with correct length`() {
+    fun `weightedSampleWithReplacementFromList should return a list of the requested length`() {
         // Given
         val options = listOf("one", "two", "three")
         val distribution = listOf(0.3, 0.5, 0.2)

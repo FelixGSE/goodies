@@ -216,7 +216,7 @@ class PolygonTest {
     inner class InteriorAnglesTests {
         @Test
         @Disabled("known failure: expected List<Double>, got List<Float> in another order; VAL-3")
-        fun `should return correct angles for a triangle`() {
+        fun `interiorAngles should return correct angles for a triangle`() {
             // Given
             val polygon =
                 Polygon(
@@ -237,7 +237,7 @@ class PolygonTest {
         }
 
         @Test
-        fun `should return correct angles for a convex quadrilateral`() {
+        fun `interiorAngles should return correct angles for a convex quadrilateral`() {
             // Given
             val polygon =
                 Polygon(
@@ -263,7 +263,7 @@ class PolygonTest {
             "known failure: expected [2.36, 1.70, 2.26, 2.48, 1.98], " +
                 "got [0.79, 3.14, 2.36, 1.57, 1.57]; polygon triage",
         )
-        fun `should return correct angles for a non-convex pentagon`() {
+        fun `interiorAngles should return correct angles for a non-convex pentagon`() {
             // Given
             val polygon =
                 Polygon(

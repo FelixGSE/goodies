@@ -1,8 +1,8 @@
 package goodies.curves
 
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.Test
-import kotlin.test.assertFailsWith
 
 class SignCurveGeneratorTest {
     @Test
@@ -34,15 +34,19 @@ class SignCurveGeneratorTest {
     }
 
     @Test
-    fun `signCurve should create an empty list when xStart is greater than xEnd`() {
+    fun `signCurve should throw an IllegalArgumentException when xStart is greater than xEnd`() {
         // Given
         val xStart = 10.0
         val xEnd = 5.0
 
-        // When & Then
-        assertFailsWith<IllegalArgumentException> {
-            signCurve(xStart, xEnd)
-        }
+        // When
+        val thrown =
+            catchThrowable {
+                signCurve(xStart, xEnd)
+            }
+
+        // Then
+        assertThat(thrown).isInstanceOf(IllegalArgumentException::class.java)
     }
 
     @Test
@@ -56,17 +60,21 @@ class SignCurveGeneratorTest {
         val phase = 0.0
         val shift = 0.0
 
-        // When & Then
-        assertFailsWith<IllegalArgumentException> {
-            signCurve(
-                xStart = xStart,
-                xEnd = xEnd,
-                stepSize = stepSize,
-                amplitude = amplitude,
-                ordinaryFrequency = ordinaryFrequency,
-                phase = phase,
-                shift = shift,
-            )
-        }
+        // When
+        val thrown =
+            catchThrowable {
+                signCurve(
+                    xStart = xStart,
+                    xEnd = xEnd,
+                    stepSize = stepSize,
+                    amplitude = amplitude,
+                    ordinaryFrequency = ordinaryFrequency,
+                    phase = phase,
+                    shift = shift,
+                )
+            }
+
+        // Then
+        assertThat(thrown).isInstanceOf(IllegalArgumentException::class.java)
     }
 }
