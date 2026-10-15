@@ -12,6 +12,11 @@ TEST_FILTER := $(if $(T),--tests "*$(T)*",)
 # `make coverage MIN=0.6` fails when line coverage is below 60%.
 MIN ?= 0.0
 
+# Line coverage `make check` may not fall below. Raise it to the new total
+# (rounded down) whenever a change lifts coverage; lower it only when
+# deleting code takes covered lines with it.
+COVERAGE_FLOOR := 0.28
+
 ##@ Build
 
 .PHONY: build
@@ -31,10 +36,6 @@ coverage: ## Run the tests with coverage, fail below MIN (e.g. make coverage MIN
 	$(GRADLE) test jacocoTestReport jacocoTestCoverageVerification -PcoverageMinimum=$(MIN) $(TEST_FILTER)
 	@echo "Report: build/reports/jacoco/test/html/index.html"
 
-.PHONY: check
-check: ## Every gate Gradle knows: compile, tests, architecture tests
-	$(GRADLE) check
-
 .PHONY: clean
 clean: ## Delete build output
 	$(GRADLE) clean
@@ -52,8 +53,8 @@ lint: ## Check formatting with ktlint, lint with detekt, refuse a growing baseli
 	scripts/lint-detekt-baseline-test.sh
 
 .PHONY: check
-check: lint ## Done gate: lint, tests, coverage above MIN (e.g. make check MIN=0.6)
-	$(GRADLE) check jacocoTestReport jacocoTestCoverageVerification -PcoverageMinimum=$(MIN)
+check: lint ## Done gate: lint, tests, coverage at or above COVERAGE_FLOOR
+	$(GRADLE) check jacocoTestReport jacocoTestCoverageVerification -PcoverageMinimum=$(COVERAGE_FLOOR)
 
 .PHONY: baseline
 baseline: ## Rewrite the detekt baselines after fixing legacy findings; they may only shrink
