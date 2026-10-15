@@ -412,7 +412,7 @@ class Point(
         /**
          * Returns the 2D unit point at [angle] radians from the positive y axis towards positive x, unlike Processing.
          *
-         * Unlike [fromAngles], the angle is in radians until the ANG-3 story in E3.
+         * Unlike [fromAngles], the angle is in radians.
          *
          * DESIGN: ANG-3 asks for degrees.
          */
