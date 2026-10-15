@@ -1,5 +1,7 @@
 package goodies.geometry
 
+import goodies.support.FLOAT_EPSILON
+import goodies.support.assertThat
 import org.apache.commons.math3.exception.MathArithmeticException
 import org.apache.commons.math3.linear.MatrixUtils
 import org.assertj.core.api.Assertions.*
@@ -801,5 +803,147 @@ internal class PointTest {
         }
 
         private fun toPVectorInvalidDimensionsCases(): Stream<Point> = Stream.of(Point(1), Point(1, 2, 3, 4))
+    }
+
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    @Nested
+    inner class FromAngles {
+        private val r = 0.7071067811865476
+
+        @ParameterizedTest(name = "{0} -> {1}")
+        @MethodSource("oneAngleCases")
+        fun `fromAngles should return the point on the unit circle when given one angle`(
+            angle: Double,
+            expected: Point,
+        ) {
+            // Given
+            val precision = withPrecision(FLOAT_EPSILON)
+
+            // When
+            val result = Point.fromAngles(angle)
+
+            // Then
+            assertThat(result).isCloseTo(expected, precision)
+        }
+
+        @ParameterizedTest(name = "{0} -> {1}")
+        @MethodSource("twoAnglesCases")
+        fun `fromAngles should return the point on the unit sphere when given two angles`(
+            angles: List<Double>,
+            expected: Point,
+        ) {
+            // Given
+            val precision = withPrecision(FLOAT_EPSILON)
+
+            // When
+            val result = Point.fromAngles(*angles.toTypedArray())
+
+            // Then
+            assertThat(result).isCloseTo(expected, precision)
+        }
+
+        @ParameterizedTest(name = "{0} -> {1}")
+        @MethodSource("sixAnglesCases")
+        fun `fromAngles should return the point on the unit sphere in 7 dimensions when given six angles`(
+            angles: List<Double>,
+            expected: Point,
+        ) {
+            // Given
+            val precision = withPrecision(FLOAT_EPSILON)
+
+            // When
+            val result = Point.fromAngles(*angles.toTypedArray())
+
+            // Then
+            assertThat(result).isCloseTo(expected, precision)
+        }
+
+        @ParameterizedTest(name = "{0} -> {1}")
+        @MethodSource("dimensionCases")
+        fun `fromAngles should return a point with as many dimensions as angles plus one`(
+            angles: List<Double>,
+            expected: Int,
+        ) {
+            // Given
+            val input = angles.toTypedArray()
+
+            // When
+            val result = Point.fromAngles(*input)
+
+            // Then
+            assertThat(result.dimensions).isEqualTo(expected)
+        }
+
+        @ParameterizedTest(name = "{0} -> {1}")
+        @MethodSource("unitDistanceCases")
+        fun `fromAngles should return a point at distance one from the origin`(
+            angles: List<Double>,
+            expected: Double,
+        ) {
+            // Given
+            val input = angles.toTypedArray()
+
+            // When
+            val result = Point.fromAngles(*input)
+
+            // Then
+            assertThat(result.magnitude().toDouble()).isCloseTo(expected, withPrecision(FLOAT_EPSILON))
+        }
+
+        @Test
+        fun `fromAngles should throw IllegalArgumentException when no angle is given`() {
+            // Given
+            val expected = "at least one angle"
+
+            // When
+            val result = catchThrowable { Point.fromAngles() }
+
+            // Then
+            assertThat(result)
+                .isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessageContaining(expected)
+        }
+
+        private fun oneAngleCases(): Stream<Arguments> =
+            Stream.of(
+                Arguments.of(0.0, Point(0, 1)),
+                Arguments.of(45.0, Point(r, r)),
+                Arguments.of(90.0, Point(1, 0)),
+                Arguments.of(180.0, Point(0, -1)),
+                Arguments.of(270.0, Point(-1, 0)),
+                Arguments.of(-90.0, Point(-1, 0)),
+                Arguments.of(450.0, Point(1, 0)),
+            )
+
+        private fun twoAnglesCases(): Stream<Arguments> =
+            Stream.of(
+                Arguments.of(listOf(0.0, 0.0), Point(0, 0, 1)),
+                Arguments.of(listOf(0.0, 90.0), Point(0, 1, 0)),
+                Arguments.of(listOf(90.0, 90.0), Point(1, 0, 0)),
+                Arguments.of(listOf(45.0, 90.0), Point(r, r, 0)),
+                Arguments.of(listOf(90.0, 45.0), Point(r, 0, r)),
+            )
+
+        private fun sixAnglesCases(): Stream<Arguments> =
+            Stream.of(
+                Arguments.of(listOf(0.0, 0.0, 0.0, 0.0, 0.0, 0.0), Point(0, 0, 0, 0, 0, 0, 1)),
+                Arguments.of(listOf(90.0, 90.0, 90.0, 90.0, 90.0, 90.0), Point(1, 0, 0, 0, 0, 0, 0)),
+                Arguments.of(listOf(0.0, 0.0, 0.0, 0.0, 0.0, 90.0), Point(0, 0, 0, 0, 0, 1, 0)),
+                Arguments.of(listOf(90.0, 90.0, 90.0, 90.0, 90.0, 45.0), Point(r, 0, 0, 0, 0, 0, r)),
+            )
+
+        private fun dimensionCases(): Stream<Arguments> =
+            Stream.of(
+                Arguments.of(listOf(30.0), 2),
+                Arguments.of(listOf(30.0, 60.0), 3),
+                Arguments.of(listOf(10.0, 20.0, 30.0, 40.0, 50.0, 60.0), 7),
+            )
+
+        private fun unitDistanceCases(): Stream<Arguments> =
+            Stream.of(
+                Arguments.of(listOf(30.0), 1.0),
+                Arguments.of(listOf(30.0, 60.0), 1.0),
+                Arguments.of(listOf(10.0, 20.0, 30.0, 40.0, 50.0, 60.0), 1.0),
+            )
     }
 }
