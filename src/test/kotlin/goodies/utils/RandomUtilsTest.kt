@@ -1,6 +1,5 @@
 package goodies.utils
 
-import goodies.utils.weightedSample
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.withPrecision
 import org.junit.jupiter.api.Test
@@ -94,16 +93,5 @@ internal class RandomUtilsTest {
 
         // Then
         Assertions.assertThat(result).isEqualTo(n)
-    }
-
-    @Test
-    fun foo() {
-        for (i in 0..100) {
-            val a =
-                org.apache.commons.math3.distribution
-                    .ParetoDistribution()
-                    .sample()
-            println(a)
-        }
     }
 }

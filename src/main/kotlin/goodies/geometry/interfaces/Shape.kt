@@ -2,27 +2,16 @@ package goodies.geometry.interfaces
 
 import goodies.geometry.Point
 
+/** Base of every geometric shape. */
 interface Shape {
-    fun center(): Shape
-
-    fun centerAt(point: Point): Shape
-
-    fun normalize(): Shape
-
     val isClosed: Boolean
 
-//    fun shear
-//    fun rotate(angle : Float) : Geom
+    /** Returns this shape moved so that its centre is at the origin. */
+    fun center(): Shape
 
-//    fun randomPointIn(): Point
-//    fun randomPointOn(): Point
-//    fun contains(): Boolean
-//    fun area(): Float
-//    fun circumference(): Float
-//    fun deform(): Shape
-//    fun translateCenter(): Shape
-//    fun overlaps(): Boolean
-//    fun intersects(): Boolean
-//
-//
+    /** Returns this shape moved so that its centre is at [point]. */
+    fun centerAt(point: Point): Shape
+
+    /** Returns a normalised copy of this shape; each shape defines how. */
+    fun normalize(): Shape
 }

@@ -3,6 +3,11 @@ package goodies.algebra
 import org.apache.commons.math3.linear.MatrixUtils
 import org.apache.commons.math3.linear.RealMatrix
 
+/**
+ * Meant to project [dimensions] down to targetDimensions.
+ *
+ * Today the target is ignored and the result is the [dimensions] by [dimensions] identity matrix.
+ */
 class OrthogonalProjectionMatrix : GMatrix {
     constructor(dimensions: Int, targetDimensions: Int) : super(getOrthogonalProjectionMatrix(dimensions, dimensions))
 

@@ -17,10 +17,11 @@ fun cartesianProduct(
     val a = first.toList()
     val b = second.toList()
     val sets = next.map { it.toList() }
-    return (listOf(a, b).plus(sets))
-        .fold(listOf(listOf<Number>())) { acc, set ->
+    return listOf(a, b)
+        .plus(sets)
+        .fold(listOf(emptyList<Number>())) { acc, set ->
             acc.flatMap { list -> set.map { element -> list + element } }
-        }.toList()
+        }
 }
 
 fun floatRange(

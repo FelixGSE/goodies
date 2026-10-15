@@ -24,7 +24,7 @@ class ColorPaletteTest {
             val palette = PaletteA()
 
             // Then
-            assertThat(palette.colors).containsExactly(-661305, -1258318, -2181461, -5476216)
+            assertThat(palette.colors).containsExactly(-661_305, -1_258_318, -2_181_461, -5_476_216)
         }
 
         @Test
@@ -37,7 +37,7 @@ class ColorPaletteTest {
 
             // Then
             assertThat(colorList).hasSize(4)
-            assertThat(colorList).containsExactly(-661305, -1258318, -2181461, -5476216)
+            assertThat(colorList).containsExactly(-661_305, -1_258_318, -2_181_461, -5_476_216)
         }
 
         @Test

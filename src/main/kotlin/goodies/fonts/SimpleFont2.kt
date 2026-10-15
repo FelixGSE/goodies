@@ -17,11 +17,11 @@ class SimpleFont2(
             Line(PVector(1F, 0F), PVector(1F, 1F)),
             Line(PVector(0F, 1F), PVector(1F, 1F)),
             Line(PVector(0F, 0F), PVector(0F, 1F)),
-        ).map { scaleLines(it, baseScaleUpperX, baseScaleUpperY) }
+        ).map { scaleLines(line = it, scaleX = baseScaleUpperX, scaleY = baseScaleUpperY) }
 
-    val upperXMin = 0
-    val upperXMax = 1 * baseScaleUpperX.toFloat()
-    val upperYMin = 0
+    val upperXMin: Int = 0
+    val upperXMax: Float = 1 * baseScaleUpperX.toFloat()
+    val upperYMin: Int = 0
     private val upperYMax = 1 * baseScaleUpperY.toFloat()
 
     private val lowerLines =
@@ -30,7 +30,49 @@ class SimpleFont2(
             Line(PVector(1F, 0F), PVector(1F, 1F)),
             Line(PVector(0F, 1F), PVector(1F, 1F)),
             Line(PVector(0F, 0F), PVector(0F, 1F)),
-        ).map { scaleLines(it, baseScaleLowerX, baseScaleLowerY) }
+        ).map { scaleLines(line = it, scaleX = baseScaleLowerX, scaleY = baseScaleLowerY) }
+
+    private val glyphs: Map<String, (PGraphics, Point, Number) -> Unit> =
+        mapOf(
+            "-" to this::drawDash,
+            "/" to this::drawSlash,
+            "0" to this::drawZero,
+            "1" to this::drawOne,
+            "2" to this::drawTwo,
+            "3" to this::drawThree,
+            "4" to this::drawFour,
+            "5" to this::drawFive,
+            "6" to this::drawSix,
+            "7" to this::drawSeven,
+            "8" to this::drawEight,
+            "9" to this::drawNine,
+            "A" to this::drawA,
+            "B" to this::drawB,
+            "C" to this::drawC,
+            "D" to this::drawD,
+            "E" to this::drawE,
+            "F" to this::drawF,
+            "G" to this::drawG,
+            "H" to this::drawH,
+            "I" to this::drawI,
+            "J" to this::drawJ,
+            "K" to this::drawK,
+            "L" to this::drawL,
+            "M" to this::drawM,
+            "N" to this::drawN,
+            "O" to this::drawO,
+            "P" to this::drawP,
+            "Q" to this::drawQ,
+            "R" to this::drawR,
+            "S" to this::drawS,
+            "T" to this::drawT,
+            "U" to this::drawU,
+            "V" to this::drawV,
+            "W" to this::drawW,
+            "X" to this::drawX,
+            "Y" to this::drawY,
+            "Z" to this::drawZ,
+        )
 
     private fun scaleLines(
         line: Line,
@@ -51,15 +93,19 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[1], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).scaleFromEnd(0.65F).draw(sketch)
-        scaleLines(upperLines[3], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[RIGHT], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(
+            upperLines[BOTTOM],
+            scale,
+            scale,
+        ).getShifted(position.toPVector()).scaleFromEnd(PARTIAL_STROKE_LENGTH).draw(sketch)
+        scaleLines(upperLines[LEFT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
 
-        scaleLines(lowerLines[1], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[3], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[RIGHT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[LEFT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
     }
 
     fun drawB(
@@ -67,16 +113,20 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[1], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).scaleFromEnd(0.65F).draw(sketch)
-        scaleLines(upperLines[3], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[RIGHT], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(
+            upperLines[BOTTOM],
+            scale,
+            scale,
+        ).getShifted(position.toPVector()).scaleFromEnd(PARTIAL_STROKE_LENGTH).draw(sketch)
+        scaleLines(upperLines[LEFT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
 
-        scaleLines(lowerLines[1], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[2], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[3], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[RIGHT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[LEFT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
     }
 
     fun drawC(
@@ -84,19 +134,23 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[1], scale, scale).getShifted(position.toPVector()).scaleFromStart(0.65F).draw(sketch)
-        scaleLines(upperLines[3], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(
+            upperLines[RIGHT],
+            scale,
+            scale,
+        ).getShifted(position.toPVector()).scaleFromStart(PARTIAL_STROKE_LENGTH).draw(sketch)
+        scaleLines(upperLines[LEFT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
 
-        scaleLines(lowerLines[1], scale, scale)
+        scaleLines(lowerLines[RIGHT], scale, scale)
             .getShifted(position.toPVector())
             .getShifted(offSet)
-            .scaleFromEnd(0.65F)
+            .scaleFromEnd(PARTIAL_STROKE_LENGTH)
             .draw(sketch)
-        scaleLines(lowerLines[2], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[3], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[LEFT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
     }
 
     private fun drawD(
@@ -104,53 +158,39 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        val topLeft = scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).start
-        val topMid = scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).midPoint
-        val rightMid = scaleLines(upperLines[1], scale, scale).getShifted(position.toPVector()).midPoint
-        val topBottomRight = scaleLines(upperLines[1], scale, scale).getShifted(position.toPVector()).end
+        val topLeft = scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).start
+        val topMid = scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).midPoint
+        val rightMid = scaleLines(upperLines[RIGHT], scale, scale).getShifted(position.toPVector()).midPoint
+        val topBottomRight = scaleLines(upperLines[RIGHT], scale, scale).getShifted(position.toPVector()).end
 
-        scaleLines(upperLines[3], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[LEFT], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        Line(topLeft, topMid).draw(sketch)
+        Line(topMid, rightMid).draw(sketch)
+        Line(rightMid, topBottomRight).draw(sketch)
 
-        Line(
-            topLeft,
-            topMid,
-        ).draw(sketch)
+        drawLowerBowlOfD(sketch = sketch, position = position, scale = scale, topBottomRight = topBottomRight)
+    }
 
-        Line(
-            topMid,
-            rightMid,
-        ).draw(sketch)
-
-        Line(
-            rightMid,
-            topBottomRight,
-        ).draw(sketch)
-
+    private fun drawLowerBowlOfD(
+        sketch: PGraphics,
+        position: Point,
+        scale: Number,
+        topBottomRight: PVector,
+    ) {
         val offSet = PVector(0F, upperYMax * scale.toFloat())
 
         val bottomRightMid =
-            scaleLines(lowerLines[1], scale, scale).getShifted(position.toPVector()).getShifted(offSet).midPoint
+            scaleLines(lowerLines[RIGHT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).midPoint
         val bottomMid =
-            scaleLines(lowerLines[2], scale, scale).getShifted(position.toPVector()).getShifted(offSet).midPoint
+            scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).midPoint
         val bottomLeft =
-            scaleLines(lowerLines[2], scale, scale).getShifted(position.toPVector()).getShifted(offSet).start
+            scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).start
 
-        Line(
-            topBottomRight,
-            bottomRightMid,
-        ).draw(sketch)
+        Line(topBottomRight, bottomRightMid).draw(sketch)
+        Line(bottomRightMid, bottomMid).draw(sketch)
+        Line(bottomLeft, bottomMid).draw(sketch)
 
-        Line(
-            bottomRightMid,
-            bottomMid,
-        ).draw(sketch)
-
-        Line(
-            bottomLeft,
-            bottomMid,
-        ).draw(sketch)
-
-        scaleLines(lowerLines[3], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[LEFT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
     }
 
     private fun drawE(
@@ -158,20 +198,20 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[1], scale, scale).getShifted(position.toPVector()).scaleFromStart(0.0F).draw(sketch)
-        scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[3], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[RIGHT], scale, scale).getShifted(position.toPVector()).scaleFromStart(0.0F).draw(sketch)
+        scaleLines(upperLines[BOTTOM], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[LEFT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
 
-        scaleLines(lowerLines[1], scale, scale)
+        scaleLines(lowerLines[RIGHT], scale, scale)
             .getShifted(position.toPVector())
             .getShifted(offSet)
             .scaleFromEnd(0.0F)
             .draw(sketch)
-        scaleLines(lowerLines[2], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[3], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[LEFT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
     }
 
     private fun drawF(
@@ -179,13 +219,13 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[3], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[BOTTOM], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[LEFT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
 
-        scaleLines(lowerLines[3], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[LEFT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
     }
 
     private fun drawG(
@@ -193,15 +233,19 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).scaleFromEnd(0.65F).draw(sketch)
-        scaleLines(upperLines[3], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(
+            upperLines[BOTTOM],
+            scale,
+            scale,
+        ).getShifted(position.toPVector()).scaleFromEnd(PARTIAL_STROKE_LENGTH).draw(sketch)
+        scaleLines(upperLines[LEFT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
 
-        scaleLines(lowerLines[1], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[2], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[3], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[RIGHT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[LEFT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
     }
 
     fun drawH(
@@ -209,15 +253,15 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        scaleLines(upperLines[1], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[3], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[RIGHT], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[BOTTOM], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[LEFT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
 
-        scaleLines(lowerLines[0], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[1], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[3], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[TOP], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[RIGHT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[LEFT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
     }
 
     fun drawI(
@@ -225,19 +269,16 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-//        scaleLines(upperLines[3], scale, scale).getShifted(position.toPVector()).draw(sketch)
-//        val offSet = PVector(0F, upperYMax * scale.toFloat())
-//        scaleLines(lowerLines[3], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
         Line(
-            scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).midPoint,
-            scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).midPoint,
+            scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).midPoint,
+            scaleLines(upperLines[BOTTOM], scale, scale).getShifted(position.toPVector()).midPoint,
         ).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
 
         Line(
-            scaleLines(lowerLines[0], scale, scale).getShifted(position.toPVector()).getShifted(offSet).midPoint,
-            scaleLines(lowerLines[2], scale, scale).getShifted(position.toPVector()).getShifted(offSet).midPoint,
+            scaleLines(lowerLines[TOP], scale, scale).getShifted(position.toPVector()).getShifted(offSet).midPoint,
+            scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).midPoint,
         ).draw(sketch)
     }
 
@@ -246,17 +287,17 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[1], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[RIGHT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
 
-        scaleLines(lowerLines[1], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[2], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[3], scale, scale)
+        scaleLines(lowerLines[RIGHT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[LEFT], scale, scale)
             .getShifted(position.toPVector())
             .getShifted(offSet)
-            .scaleFromEnd(0.3F)
+            .scaleFromEnd(HOOK_LENGTH)
             .draw(sketch)
     }
 
@@ -265,16 +306,16 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        scaleLines(upperLines[3], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[LEFT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
 
-        scaleLines(lowerLines[3], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[LEFT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
 
-        val mid = scaleLines(upperLines[3], scale, scale).getShifted(position.toPVector()).end
-        val topRight = scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).end
+        val mid = scaleLines(upperLines[LEFT], scale, scale).getShifted(position.toPVector()).end
+        val topRight = scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).end
         val bottomRight =
-            scaleLines(lowerLines[2], scale, scale).getShifted(position.toPVector()).getShifted(offSet).end
+            scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).end
 
         Line(mid, topRight).draw(sketch)
         Line(mid, bottomRight).draw(sketch)
@@ -285,12 +326,12 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        scaleLines(upperLines[3], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[LEFT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
 
-        scaleLines(lowerLines[2], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[3], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[LEFT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
     }
 
     fun drawM(
@@ -298,24 +339,24 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        scaleLines(upperLines[1], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[RIGHT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         Line(
-            scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).start,
-            scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).midPoint,
+            scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).start,
+            scaleLines(upperLines[BOTTOM], scale, scale).getShifted(position.toPVector()).midPoint,
         ).draw(sketch)
 
         Line(
-            scaleLines(upperLines[1], scale, scale).getShifted(position.toPVector()).start,
-            scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).midPoint,
+            scaleLines(upperLines[RIGHT], scale, scale).getShifted(position.toPVector()).start,
+            scaleLines(upperLines[BOTTOM], scale, scale).getShifted(position.toPVector()).midPoint,
         ).draw(sketch)
 
-        scaleLines(upperLines[3], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[LEFT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
 
-        scaleLines(lowerLines[1], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[3], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[RIGHT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[LEFT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
     }
 
     fun drawN(
@@ -324,17 +365,17 @@ class SimpleFont2(
         scale: Number,
     ) {
         val offSet = PVector(0F, upperYMax * scale.toFloat())
-        scaleLines(upperLines[1], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[RIGHT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         Line(
-            scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).start,
-            scaleLines(lowerLines[1], scale, scale).getShifted(position.toPVector()).getShifted(offSet).end,
+            scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).start,
+            scaleLines(lowerLines[RIGHT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).end,
         ).draw(sketch)
 
-        scaleLines(upperLines[3], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[LEFT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
-        scaleLines(lowerLines[1], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[3], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[RIGHT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[LEFT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
     }
 
     fun drawO(
@@ -342,15 +383,15 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[1], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[3], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[RIGHT], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[LEFT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
 
-        scaleLines(lowerLines[1], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[2], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[3], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[RIGHT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[LEFT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
     }
 
     fun drawP(
@@ -358,14 +399,18 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[1], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).scaleFromEnd(0.8F).draw(sketch)
-        scaleLines(upperLines[3], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[RIGHT], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(
+            upperLines[BOTTOM],
+            scale,
+            scale,
+        ).getShifted(position.toPVector()).scaleFromEnd(BOWL_LENGTH).draw(sketch)
+        scaleLines(upperLines[LEFT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
 
-        scaleLines(lowerLines[3], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[LEFT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
     }
 
     fun drawQ(
@@ -373,19 +418,19 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[1], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[3], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[RIGHT], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[LEFT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
 
-        scaleLines(lowerLines[1], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[2], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[3], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[RIGHT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[LEFT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
 
         Line(
-            scaleLines(lowerLines[0], scale, scale).getShifted(position.toPVector()).getShifted(offSet).midPoint,
-            scaleLines(lowerLines[2], scale, scale).getShifted(position.toPVector()).getShifted(offSet).end,
+            scaleLines(lowerLines[TOP], scale, scale).getShifted(position.toPVector()).getShifted(offSet).midPoint,
+            scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).end,
         ).draw(sketch)
     }
 
@@ -394,17 +439,25 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[1], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).scaleFromEnd(0.8F).draw(sketch)
-        scaleLines(upperLines[3], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[RIGHT], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(
+            upperLines[BOTTOM],
+            scale,
+            scale,
+        ).getShifted(position.toPVector()).scaleFromEnd(BOWL_LENGTH).draw(sketch)
+        scaleLines(upperLines[LEFT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
 
-        scaleLines(lowerLines[3], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[LEFT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
         Line(
-            scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).scaleFromEnd(0.8F).start,
-            scaleLines(lowerLines[2], scale, scale).getShifted(position.toPVector()).getShifted(offSet).end,
+            scaleLines(
+                upperLines[BOTTOM],
+                scale,
+                scale,
+            ).getShifted(position.toPVector()).scaleFromEnd(BOWL_LENGTH).start,
+            scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).end,
         ).draw(sketch)
     }
 
@@ -413,14 +466,14 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[3], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[BOTTOM], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[LEFT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
 
-        scaleLines(lowerLines[1], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[2], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[RIGHT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
     }
 
     fun drawT(
@@ -428,7 +481,7 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).draw(sketch)
         drawI(sketch, position, scale)
     }
 
@@ -437,14 +490,14 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        scaleLines(upperLines[1], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[3], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[RIGHT], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[LEFT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
 
-        scaleLines(lowerLines[1], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[2], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[3], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[RIGHT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[LEFT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
     }
 
     fun drawV(
@@ -452,12 +505,12 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        val topLine = scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector())
+        val topLine = scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector())
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
 
         val bottom =
-            scaleLines(lowerLines[2], scale, scale).getShifted(position.toPVector()).getShifted(offSet).midPoint
+            scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).midPoint
 
         Line(topLine.start, bottom).draw(sketch)
         Line(topLine.end, bottom).draw(sketch)
@@ -468,23 +521,23 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        scaleLines(upperLines[1], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[3], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[RIGHT], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[LEFT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
-        val mid = scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).midPoint
+        val mid = scaleLines(upperLines[BOTTOM], scale, scale).getShifted(position.toPVector()).midPoint
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
 
-        scaleLines(lowerLines[1], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[3], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[RIGHT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[LEFT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
 
         Line(
-            scaleLines(lowerLines[1], scale, scale).getShifted(position.toPVector()).getShifted(offSet).end,
+            scaleLines(lowerLines[RIGHT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).end,
             mid,
         ).draw(sketch)
 
         Line(
-            scaleLines(lowerLines[3], scale, scale).getShifted(position.toPVector()).getShifted(offSet).end,
+            scaleLines(lowerLines[LEFT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).end,
             mid,
         ).draw(sketch)
     }
@@ -494,15 +547,15 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        val topLeft = scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).start
-        val topRight = scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).end
+        val topLeft = scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).start
+        val topRight = scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).end
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
 
         val bottomLeft =
-            scaleLines(lowerLines[2], scale, scale).getShifted(position.toPVector()).getShifted(offSet).start
+            scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).start
         val bottomRight =
-            scaleLines(lowerLines[2], scale, scale).getShifted(position.toPVector()).getShifted(offSet).end
+            scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).end
 
         Line(
             topLeft,
@@ -520,15 +573,15 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        val topLeft = scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).start
-        val topRight = scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).end
+        val topLeft = scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).start
+        val topRight = scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).end
 
-        val mid = scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).midPoint
+        val mid = scaleLines(upperLines[BOTTOM], scale, scale).getShifted(position.toPVector()).midPoint
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
 
         val bottom =
-            scaleLines(lowerLines[2], scale, scale).getShifted(position.toPVector()).getShifted(offSet).midPoint
+            scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).midPoint
 
         Line(
             topLeft,
@@ -549,17 +602,15 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        val topLeft = scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).start
-        val topRight = scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).end
-
-        val mid = scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).midPoint
+        val topLeft = scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).start
+        val topRight = scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).end
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
 
         val bottomLeft =
-            scaleLines(lowerLines[2], scale, scale).getShifted(position.toPVector()).getShifted(offSet).start
+            scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).start
         val bottomRight =
-            scaleLines(lowerLines[2], scale, scale).getShifted(position.toPVector()).getShifted(offSet).end
+            scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).end
 
         Line(
             topLeft,
@@ -582,7 +633,7 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[BOTTOM], scale, scale).getShifted(position.toPVector()).draw(sketch)
     }
 
     fun drawSlash(
@@ -590,10 +641,10 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        val topRight = scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).end
+        val topRight = scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).end
         val offSet = PVector(0F, upperYMax * scale.toFloat())
         val bottomLeft =
-            scaleLines(lowerLines[2], scale, scale).getShifted(position.toPVector()).getShifted(offSet).start
+            scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).start
         Line(bottomLeft, topRight).draw(sketch)
     }
 
@@ -610,13 +661,13 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        val topBottomLeft = scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).start
-        val topTopRight = scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).end
-        Line(topBottomLeft, topTopRight).scaleFromEnd(0.6F).draw(sketch)
-        scaleLines(upperLines[1], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        val topBottomLeft = scaleLines(upperLines[BOTTOM], scale, scale).getShifted(position.toPVector()).start
+        val topTopRight = scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).end
+        Line(topBottomLeft, topTopRight).scaleFromEnd(DIGIT_STROKE_LENGTH).draw(sketch)
+        scaleLines(upperLines[RIGHT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
-        scaleLines(lowerLines[1], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[RIGHT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
     }
 
     fun drawTwo(
@@ -624,13 +675,13 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[1], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[RIGHT], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[BOTTOM], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
-        scaleLines(lowerLines[3], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[2], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[LEFT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
     }
 
     fun drawThree(
@@ -638,13 +689,17 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[1], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).scaleFromEnd(0.6F).draw(sketch)
+        scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[RIGHT], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(
+            upperLines[BOTTOM],
+            scale,
+            scale,
+        ).getShifted(position.toPVector()).scaleFromEnd(DIGIT_STROKE_LENGTH).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
-        scaleLines(lowerLines[1], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[2], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[RIGHT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
     }
 
     fun drawFour(
@@ -652,12 +707,12 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        scaleLines(upperLines[1], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[3], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[RIGHT], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[BOTTOM], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[LEFT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
-        scaleLines(lowerLines[1], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[RIGHT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
     }
 
     fun drawFive(
@@ -665,13 +720,17 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[3], scale, scale).getShifted(position.toPVector()).scaleFromEnd(0.6F).draw(sketch)
+        scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[BOTTOM], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(
+            upperLines[LEFT],
+            scale,
+            scale,
+        ).getShifted(position.toPVector()).scaleFromEnd(DIGIT_STROKE_LENGTH).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
-        scaleLines(lowerLines[1], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[2], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[RIGHT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
     }
 
     fun drawSix(
@@ -679,13 +738,13 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        scaleLines(upperLines[3], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[LEFT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
-        scaleLines(lowerLines[0], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[1], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[2], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[3], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[TOP], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[RIGHT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[LEFT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
     }
 
     fun drawSeven(
@@ -693,7 +752,7 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         drawSlash(sketch, position, scale)
     }
@@ -703,16 +762,16 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[1], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[3], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[RIGHT], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[BOTTOM], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[LEFT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
-        scaleLines(lowerLines[0], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[1], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[2], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
-        scaleLines(lowerLines[3], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[TOP], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[RIGHT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[BOTTOM], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[LEFT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
     }
 
     fun drawNine(
@@ -720,35 +779,14 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        scaleLines(upperLines[0], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[1], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[2], scale, scale).getShifted(position.toPVector()).draw(sketch)
-        scaleLines(upperLines[3], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[TOP], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[RIGHT], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[BOTTOM], scale, scale).getShifted(position.toPVector()).draw(sketch)
+        scaleLines(upperLines[LEFT], scale, scale).getShifted(position.toPVector()).draw(sketch)
 
         val offSet = PVector(0F, upperYMax * scale.toFloat())
-        scaleLines(lowerLines[1], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
+        scaleLines(lowerLines[RIGHT], scale, scale).getShifted(position.toPVector()).getShifted(offSet).draw(sketch)
     }
-
-    /*
-    private val upperLines = listOf(
-            Line(PVector(0F,0F), PVector(1F,0F)),
-            Line(PVector(1F,0F), PVector(1F,1F)),
-            Line(PVector(0F,1F), PVector(1F,1F)),
-            Line(PVector(0F,0F), PVector(0F,1F)),
-        ).map { scaleLines(it, baseScaleUpperX,  baseScaleUpperY) }
-
-        val upperXMin = 0
-        val upperXMax = 1 * baseScaleUpperX.toFloat()
-        val upperYMin = 0
-        private val upperYMax = 1 * baseScaleUpperY.toFloat()
-
-        private val lowerLines = listOf(
-            Line(PVector(0F,0F), PVector(1F,0F)),
-            Line(PVector(1F,0F), PVector(1F,1F)),
-            Line(PVector(0F,1F), PVector(1F,1F)),
-            Line(PVector(0F,0F), PVector(0F,1F)),
-        ).map { scaleLines(it, baseScaleLowerX,  baseScaleLowerY) }
-     */
 
     fun drawLetter(
         sketch: PGraphics,
@@ -756,163 +794,7 @@ class SimpleFont2(
         position: Point,
         scale: Number,
     ) {
-        when (letter) {
-            "-" -> {
-                drawDash(sketch, position, scale)
-            }
-
-            "/" -> {
-                drawSlash(sketch, position, scale)
-            }
-
-            " " -> {
-                return
-            }
-
-            "0" -> {
-                drawZero(sketch, position, scale)
-            }
-
-            "1" -> {
-                drawOne(sketch, position, scale)
-            }
-
-            "2" -> {
-                drawTwo(sketch, position, scale)
-            }
-
-            "3" -> {
-                drawThree(sketch, position, scale)
-            }
-
-            "4" -> {
-                drawFour(sketch, position, scale)
-            }
-
-            "5" -> {
-                drawFive(sketch, position, scale)
-            }
-
-            "6" -> {
-                drawSix(sketch, position, scale)
-            }
-
-            "7" -> {
-                drawSeven(sketch, position, scale)
-            }
-
-            "8" -> {
-                drawEight(sketch, position, scale)
-            }
-
-            "9" -> {
-                drawNine(sketch, position, scale)
-            }
-
-            "A" -> {
-                drawA(sketch, position, scale)
-            }
-
-            "B" -> {
-                drawB(sketch, position, scale)
-            }
-
-            "C" -> {
-                drawC(sketch, position, scale)
-            }
-
-            "D" -> {
-                drawD(sketch, position, scale)
-            }
-
-            "E" -> {
-                drawE(sketch, position, scale)
-            }
-
-            "F" -> {
-                drawF(sketch, position, scale)
-            }
-
-            "G" -> {
-                drawG(sketch, position, scale)
-            }
-
-            "H" -> {
-                drawH(sketch, position, scale)
-            }
-
-            "I" -> {
-                drawI(sketch, position, scale)
-            }
-
-            "J" -> {
-                drawJ(sketch, position, scale)
-            }
-
-            "K" -> {
-                drawK(sketch, position, scale)
-            }
-
-            "L" -> {
-                drawL(sketch, position, scale)
-            }
-
-            "M" -> {
-                drawM(sketch, position, scale)
-            }
-
-            "N" -> {
-                drawN(sketch, position, scale)
-            }
-
-            "O" -> {
-                drawO(sketch, position, scale)
-            }
-
-            "P" -> {
-                drawP(sketch, position, scale)
-            }
-
-            "Q" -> {
-                drawQ(sketch, position, scale)
-            }
-
-            "R" -> {
-                drawR(sketch, position, scale)
-            }
-
-            "S" -> {
-                drawS(sketch, position, scale)
-            }
-
-            "T" -> {
-                drawT(sketch, position, scale)
-            }
-
-            "U" -> {
-                drawU(sketch, position, scale)
-            }
-
-            "V" -> {
-                drawV(sketch, position, scale)
-            }
-
-            "W" -> {
-                drawW(sketch, position, scale)
-            }
-
-            "X" -> {
-                drawX(sketch, position, scale)
-            }
-
-            "Y" -> {
-                drawY(sketch, position, scale)
-            }
-
-            "Z" -> {
-                drawZ(sketch, position, scale)
-            }
-        }
+        glyphs[letter]?.invoke(sketch, position, scale)
     }
 
     fun drawLetters(
@@ -923,10 +805,8 @@ class SimpleFont2(
         scale: Number,
     ) {
         for ((i, letter) in letters.withIndex()) {
-            if (letter == 'I') {
-            }
-            val pos = Point(position.x + (offset.toFloat() * i), position.y)
-            drawLetter(sketch, letter.toString(), pos, scale)
+            val pos = Point(position.x + offset.toFloat() * i, position.y)
+            drawLetter(sketch = sketch, letter = letter.toString(), position = pos, scale = scale)
         }
     }
 }

@@ -15,6 +15,7 @@ import kotlin.random.Random
  * selected from the input list. Sampling is done with replacement, meaning
  * the same element may appear more than once in the resulting sample.
  *
+ * @param T The type of the elements.
  * @param input The input list from which to sample.
  * @param n The size of the sample to generate.
  * @return A list containing the randomly sampled elements.
@@ -25,7 +26,7 @@ fun <T> sampleWithReplacementFromList(
 ): List<T> = List(n) { input.random() }
 
 /** Probabilities given as `Float` are off by up to ~1e-7 each; the tolerance admits them. */
-const val PROBABILITY_SUM_TOLERANCE = 1e-6
+const val PROBABILITY_SUM_TOLERANCE: Double = 1e-6
 
 /**
  * Draws one of [items], item `i` with probability `weights[i]`.
@@ -120,7 +121,7 @@ fun randomInteger(
     b: Int,
 ): Int {
     require(a <= b) { "Invalid range: a must be less than or equal to b" }
-    return Random.nextInt(a, b + 1)
+    return Random.nextInt(from = a, until = b + 1)
 }
 
 fun randomInteger(
@@ -134,7 +135,7 @@ fun randomFloat(
     b: Number = 1.0,
 ): Float {
     require(a.toFloat() <= b.toFloat()) { "Invalid range: a must be less than or equal to b" }
-    return a.toFloat() + (Random.nextFloat() * (b.toFloat() - a.toFloat()))
+    return a.toFloat() + Random.nextFloat() * (b.toFloat() - a.toFloat())
 }
 
 fun randomFloats(

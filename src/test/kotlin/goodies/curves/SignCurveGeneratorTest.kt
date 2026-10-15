@@ -17,7 +17,16 @@ class SignCurveGeneratorTest {
         val shift = 1.0
 
         // When
-        val result = signCurve(xStart, xEnd, stepSize, amplitude, ordinaryFrequency, phase, shift)
+        val result =
+            signCurve(
+                xStart = xStart,
+                xEnd = xEnd,
+                stepSize = stepSize,
+                amplitude = amplitude,
+                ordinaryFrequency = ordinaryFrequency,
+                phase = phase,
+                shift = shift,
+            )
 
         // Then
         val expectedSize = ((xEnd - xStart) / stepSize + 1).toInt()
@@ -49,7 +58,15 @@ class SignCurveGeneratorTest {
 
         // When & Then
         assertFailsWith<IllegalArgumentException> {
-            signCurve(xStart, xEnd, stepSize, amplitude, ordinaryFrequency, phase, shift)
+            signCurve(
+                xStart = xStart,
+                xEnd = xEnd,
+                stepSize = stepSize,
+                amplitude = amplitude,
+                ordinaryFrequency = ordinaryFrequency,
+                phase = phase,
+                shift = shift,
+            )
         }
     }
 }

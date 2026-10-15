@@ -4,42 +4,31 @@ import ShapeTree
 import goodies.containers.ShapeTreeNode
 import processing.core.PApplet
 
+/** Polygon with exactly four vertices a, b, c and d. */
 open class Quadrilateral(
     vertices: List<Point>,
 ) : Polygon(vertices) {
+    init {
+        require(vertices.size == QUADRILATERAL_VERTICES) { "Quadrilateral must have 4 vertices" }
+    }
+
+    val a: Point
+        get() = vertices[0]
+    val b: Point
+        get() = vertices[1]
+    val c: Point
+        get() = vertices[2]
+    val d: Point
+        get() = vertices[3]
+
     constructor(vararg vertices: Point) : this(vertices.toList())
 
     constructor(first: Point, second: Point, third: Point, fourth: Point) : this(listOf(first, second, third, fourth))
 
-    init {
-        require(vertices.size == 4) { "Quadrilateral must have 4 vertices" }
+    private fun oppositeSideIndex(side: Int): Int {
+        require(side in 0 until QUADRILATERAL_VERTICES) { "side must be in 0..3, got $side" }
+        return (side + 2) % QUADRILATERAL_VERTICES
     }
-
-    val a: Point
-        get() {
-            return vertices[0]
-        }
-    val b: Point
-        get() {
-            return vertices[1]
-        }
-    val c: Point
-        get() {
-            return vertices[2]
-        }
-    val d: Point
-        get() {
-            return vertices[3]
-        }
-
-    private fun oppositeSideIndex(side: Int): Int =
-        when (side) {
-            0 -> 2
-            1 -> 3
-            2 -> 0
-            3 -> 1
-            else -> throw IllegalArgumentException("Invalid side")
-        }
 
     private fun goldenRationSplit(quadrilateral: Quadrilateral): Triple<Int, Point, Point> {
         val longestSideIndex = quadrilateral.longestEdgeIndex()
@@ -55,9 +44,16 @@ open class Quadrilateral(
                 .goldenRatioSplit()
                 .first()
                 .end
-        return Triple(longestSideIndex, pointOnSide, pointOnOppositeSite)
+        return Triple(first = longestSideIndex, second = pointOnSide, third = pointOnOppositeSite)
     }
 
+    /**
+     * Splits this quadrilateral [depth] times, each time across its longest edge and the opposite edge at their
+     * [Line.goldenRatioSplit] points.
+     *
+     * Returns the tree of all pieces; the leaves are the final ones. Costs O(2^depth) time and memory: the tree has
+     * 2^(depth + 1) - 1 nodes.
+     */
     fun goldenRatioSubdivide(depth: Int): ShapeTree<Quadrilateral> =
         ShapeTree(quadSubdivide(this, depth, ::goldenRationSplit))
 
@@ -73,83 +69,55 @@ open class Quadrilateral(
         val (longestSideIndex, pointOnSide, pointOnOppositeSite) = splitFunction(quadrilateral)
 
         val (left, right) =
-            when (longestSideIndex) {
-                0 -> {
-                    Pair(
-                        Quadrilateral(
-                            pointOnSide,
-                            quadrilateral.b,
-                            quadrilateral.c,
-                            pointOnOppositeSite,
-                        ),
-                        Quadrilateral(
-                            quadrilateral.a,
-                            pointOnSide,
-                            pointOnOppositeSite,
-                            quadrilateral.d,
-                        ),
-                    )
-                }
-
-                1 -> {
-                    Pair(
-                        Quadrilateral(
-                            pointOnOppositeSite,
-                            pointOnSide,
-                            quadrilateral.c,
-                            quadrilateral.d,
-                        ),
-                        Quadrilateral(
-                            quadrilateral.a,
-                            quadrilateral.b,
-                            pointOnSide,
-                            pointOnOppositeSite,
-                        ),
-                    )
-                }
-
-                2 -> {
-                    Pair(
-                        Quadrilateral(
-                            quadrilateral.a,
-                            pointOnOppositeSite,
-                            pointOnSide,
-                            quadrilateral.d,
-                        ),
-                        Quadrilateral(
-                            pointOnOppositeSite,
-                            quadrilateral.b,
-                            quadrilateral.c,
-                            pointOnSide,
-                        ),
-                    )
-                }
-
-                else -> {
-                    Pair(
-                        Quadrilateral(
-                            quadrilateral.a,
-                            quadrilateral.b,
-                            pointOnOppositeSite,
-                            pointOnSide,
-                        ),
-                        Quadrilateral(
-                            pointOnSide,
-                            pointOnOppositeSite,
-                            quadrilateral.c,
-                            quadrilateral.d,
-                        ),
-                    )
-                }
-            }
+            splitAt(
+                quadrilateral = quadrilateral,
+                longestSideIndex = longestSideIndex,
+                onSide = pointOnSide,
+                onOppositeSide = pointOnOppositeSite,
+            )
 
         val leftChild = quadSubdivide(left, depth - 1, splitFunction)
         val rightChild = quadSubdivide(right, depth - 1, splitFunction)
 
-        return ShapeTreeNode(quadrilateral, leftChild, rightChild)
+        return ShapeTreeNode(value = quadrilateral, left = leftChild, right = rightChild)
     }
 
+    private fun splitAt(
+        quadrilateral: Quadrilateral,
+        longestSideIndex: Int,
+        onSide: Point,
+        onOppositeSide: Point,
+    ): Pair<Quadrilateral, Quadrilateral> {
+        val a = quadrilateral.a
+        val b = quadrilateral.b
+        val c = quadrilateral.c
+        val d = quadrilateral.d
+        return when (longestSideIndex) {
+            0 -> {
+                Quadrilateral(listOf(onSide, b, c, onOppositeSide)) to
+                    Quadrilateral(listOf(a, onSide, onOppositeSide, d))
+            }
+
+            1 -> {
+                Quadrilateral(listOf(onOppositeSide, onSide, c, d)) to
+                    Quadrilateral(listOf(a, b, onSide, onOppositeSide))
+            }
+
+            2 -> {
+                Quadrilateral(listOf(a, onOppositeSide, onSide, d)) to
+                    Quadrilateral(listOf(onOppositeSide, b, c, onSide))
+            }
+
+            else -> {
+                Quadrilateral(listOf(a, b, onOppositeSide, onSide)) to
+                    Quadrilateral(listOf(onSide, onOppositeSide, c, d))
+            }
+        }
+    }
+
+    /** Builders for quadrilaterals. */
     companion object {
+        /** Returns the rectangle that covers [sketch]. */
         fun fromSketch(sketch: PApplet): Quadrilateral =
             Quadrilateral(
                 listOf(
@@ -161,3 +129,5 @@ open class Quadrilateral(
             )
     }
 }
+
+private const val QUADRILATERAL_VERTICES = 4

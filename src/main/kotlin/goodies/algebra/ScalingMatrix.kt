@@ -3,6 +3,7 @@ package goodies.algebra
 import org.apache.commons.math3.linear.MatrixUtils
 import org.apache.commons.math3.linear.RealMatrix
 
+/** Diagonal matrix with one scaling factor per axis. */
 class ScalingMatrix : GMatrix {
     constructor(vararg scalingFactors: Number) : super(
         createScalingMatrix(scalingFactors.toList()),

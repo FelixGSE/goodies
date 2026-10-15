@@ -10,39 +10,34 @@ import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
 
+/** Axis-aligned ellipsoid around [centerPoint] with one semi-axis per dimension, in at least two dimensions. */
 open class NEllipsoid(
     private val centerPoint: Point,
     private val axes: List<Number>,
 ) : ParametricShape,
     EllipsoidLike,
     ClosedShape {
-    val dimensions = centerPoint.dimensions
+    val dimensions: Int = centerPoint.dimensions
 
     val center: Point
-        get() {
-            return centerPoint.copy()
-        }
+        get() = centerPoint.copy()
 
     init {
-        if (dimensions < 2) {
-            throw IllegalArgumentException("Can only construct ellipse like objects with at least two dimensions")
-        }
-        if (dimensions != axes.size) {
-            throw IllegalArgumentException("Provided list of radia does not match the point dimensions")
-        }
+        require(dimensions >= 2) { "NEllipsoid needs 2 or more dimensions, got $dimensions" }
+        require(dimensions == axes.size) { "Need $dimensions semi-axes, got ${axes.size}" }
     }
 
     override val centroid: Point
         get() = center
+
+    override val isConvex: Boolean
+        get() = true
 
     override fun center(): NEllipsoid = NEllipsoid(Point.zeros(dimensions), axes)
 
     override fun centerAt(point: Point): Shape = NEllipsoid(point, axes)
 
     override fun normalize(): NEllipsoid = NEllipsoid(centerPoint, Point(axes).normalize().toList())
-
-    override val isConvex: Boolean
-        get() = true
 
     override fun addDimensions(
         vararg dimension: Number,
@@ -54,12 +49,19 @@ open class NEllipsoid(
 
     override fun contains(point: Point): Boolean = (point - center / Point(axes)).pow(2).sum() <= 1.0
 
+    /** Returns [pointOnSurface] for the given angles. */
     fun pointOnSurface(vararg angles: Number): Point = pointOnSurface(angles.map { it.toDouble() }.toList())
 
+    /**
+     * Returns the surface point for n - 1 hyperspherical [angles] in radians, scaled by the semi-axes.
+     *
+     * The centre is ignored: the point is relative to the origin. In 2D the angle runs from the positive y axis towards
+     * the positive x axis. Throws IllegalArgumentException for a wrong number of angles.
+     */
     fun pointOnSurface(angles: List<Number>): Point {
         val angleAsListOfDoubles = angles.map { it.toDouble() }
-        if (angles.size != dimensions - 1) {
-            throw IllegalArgumentException("Number of angles must have be equal to dimensions - 1")
+        require(angles.size == dimensions - 1) {
+            "Need ${dimensions - 1} angles for $dimensions dimensions, got ${angles.size}"
         }
         var result = Point(axes)
         val numberOfAngles = angles.size
@@ -80,18 +82,17 @@ open class NEllipsoid(
         return result
     }
 
+    /**
+     * Returns the n - 1 hyperspherical angles in radians of [point] seen from the origin, the inverse of
+     * [pointOnSurface] on the unit sphere.
+     */
     fun anglesForPointOnSurface(point: Point): List<Float> {
         val angles = mutableListOf<Float>()
         for (i in 0 until dimensions - 1) {
-            val ssqDenominator = point.slice(0, i + 2).map { it * it }.sum()
+            val ssqDenominator = point.slice(from = 0, to = i + 2).map { it * it }.sum()
             if (ssqDenominator == 0.0F) {
                 val angle = 0.0F
                 angles.add(angle)
-//            } else if (point.slice(0, i).map { it * it }.sum() == 0.0F && point[i + 1] > 0) {
-//                val angle = 0.0F
-//                angles.add(angle)
-//            } else if (point.slice(0, i).map { it * it }.sum() == 0.0F && point[i + 1] < 0) {
-//                angles.add(PI.toFloat())
             } else {
                 val numerator = point[i + 1]
                 val denominator = sqrt(ssqDenominator)

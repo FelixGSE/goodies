@@ -4,6 +4,7 @@ import goodies.geometry.Line
 import goodies.geometry.Point
 import goodies.geometry.Polygon
 import processing.core.PApplet
+import java.util.Random
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
@@ -17,7 +18,7 @@ class WaterColorBlob(
         n: Int,
         depth: Int,
     ) {
-        for (i in 0 until n) {
+        repeat(n) {
             deformedPolygons.add(deform(basePolygon, depth))
         }
     }
@@ -29,56 +30,85 @@ class WaterColorBlob(
     }
 
     companion object {
-        private val rng = java.util.Random()
+        private val rng = Random()
 
         fun deform(
             polygon: Polygon,
             depth: Int,
+        ): Polygon = deform(polygon = polygon, depth = depth, random = rng)
+
+        internal fun deform(
+            polygon: Polygon,
+            depth: Int,
+            random: Random,
         ): Polygon {
-            val points = mutableListOf<Point>()
+            val subdivider = EdgeSubdivider(random)
+            val initialVariance = BASE_VARIANCE / (depth + 1)
+            val variance = SubdivisionVariance(length = initialVariance, angle = initialVariance)
             for (edge in polygon.edges) {
-                points.add(edge.start)
-                subdivide(points, edge, depth - 1, 100f / (depth + 1), 100f / (depth + 1))
+                subdivider.points.add(edge.start)
+                subdivider.subdivide(line = edge, depth = depth - 1, variance = variance)
             }
-            return Polygon(points)
+            return Polygon(subdivider.points)
         }
 
-        private fun subdivide(
-            points: MutableList<Point>,
-            line: Line,
-            depth: Int,
-            lengthVariance: Float,
-            angleVariance: Float,
+        private class EdgeSubdivider(
+            private val random: Random,
         ) {
-            if (depth < 0) return
+            val points = mutableListOf<Point>()
 
-            val midFactor = 0.3 + rng.nextDouble() * 0.4
-            val midPoint = line.scaleFromStart(midFactor).end
+            fun subdivide(
+                line: Line,
+                depth: Int,
+                variance: SubdivisionVariance,
+            ) {
+                if (depth < 0) return
 
-            val displacement = (rng.nextGaussian() * lengthVariance).toFloat()
-            val baseAngle =
-                atan2(
-                    (line.end.y - line.start.y).toDouble(),
-                    (line.end.x - line.start.x).toDouble(),
-                ).toFloat()
-            val perpAngle =
-                baseAngle + Math.PI.toFloat() / 2f +
-                    (rng.nextGaussian() * angleVariance * Math.PI / 180.0).toFloat()
+                val splitPoint = displacedSplitPoint(line = line, variance = variance)
+                val left = Line(a = line.start, b = splitPoint)
+                val right = Line(a = splitPoint, b = line.end)
+                val next =
+                    SubdivisionVariance(
+                        length = BASE_VARIANCE / (2 * depth.coerceAtLeast(1) + 1),
+                        angle = BASE_VARIANCE / (depth.coerceAtLeast(1) + 1),
+                    )
 
-            val splitPoint =
-                Point(
+                subdivide(line = left, depth = depth - 1, variance = next)
+                points.add(splitPoint)
+                subdivide(line = right, depth = depth - 1, variance = next)
+            }
+
+            private fun displacedSplitPoint(
+                line: Line,
+                variance: SubdivisionVariance,
+            ): Point {
+                val midFactor = MIN_SPLIT_FRACTION + random.nextDouble() * SPLIT_FRACTION_SPREAD
+                val midPoint = line.scaleFromStart(midFactor).end
+
+                val displacement = (random.nextGaussian() * variance.length).toFloat()
+                val baseAngle =
+                    atan2(
+                        y = (line.end.y - line.start.y).toDouble(),
+                        x = (line.end.x - line.start.x).toDouble(),
+                    ).toFloat()
+                val perpAngle =
+                    baseAngle + Math.PI.toFloat() / 2f +
+                        (random.nextGaussian() * variance.angle * Math.PI / 180.0).toFloat()
+
+                return Point(
                     midPoint.x + cos(perpAngle.toDouble()).toFloat() * displacement,
                     midPoint.y + sin(perpAngle.toDouble()).toFloat() * displacement,
                 )
-
-            val left = Line(line.start, splitPoint)
-            val right = Line(splitPoint, line.end)
-            val nextLengthVariance = 100f / (2 * (depth.coerceAtLeast(1)) + 1)
-            val nextAngleVariance = 100f / (depth.coerceAtLeast(1) + 1)
-
-            subdivide(points, left, depth - 1, nextLengthVariance, nextAngleVariance)
-            points.add(splitPoint)
-            subdivide(points, right, depth - 1, nextLengthVariance, nextAngleVariance)
+            }
         }
+
+        private data class SubdivisionVariance(
+            val length: Float,
+            val angle: Float,
+        )
     }
 }
+
+private const val BASE_VARIANCE = 100f
+private const val MIN_SPLIT_FRACTION = 0.3
+private const val SPLIT_FRACTION_SPREAD = 0.4

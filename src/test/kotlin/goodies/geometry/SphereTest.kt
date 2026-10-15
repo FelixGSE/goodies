@@ -1,5 +1,6 @@
 package goodies.geometry
 
+import goodies.support.assertThat
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.TestInstance
@@ -16,8 +17,8 @@ internal class SphereTest {
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     @Nested
     inner class Construction {
-        @ParameterizedTest
-        @MethodSource("getCentersForInvalidSphereConstructions")
+        @ParameterizedTest(name = "{displayName} [{index}] {0}")
+        @MethodSource("constructorInvalidDimensionsCases")
         fun `Initialization of a Sphere should throw IllegalArgumentException when dimension is not equal to three`(
             center: Point,
         ) {
@@ -29,10 +30,10 @@ internal class SphereTest {
             // Then
             assertThat(result)
                 .isInstanceOf(IllegalArgumentException().javaClass)
-                .hasMessageContaining("A sphere can only have three dimensions")
+                .hasMessageContaining("Sphere needs a 3D center")
         }
 
-        private fun getCentersForInvalidSphereConstructions(): Stream<Point> =
+        private fun constructorInvalidDimensionsCases(): Stream<Point> =
             Stream.of(
                 Point(1, 1),
                 Point(1, 2, 3, 4),
@@ -42,69 +43,133 @@ internal class SphereTest {
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     @Nested
     inner class Basics {
-        @ParameterizedTest
-        @MethodSource("getParametersForComputationOfPolarCoordinatesToCartesianCoordinates")
-        fun `pointOnSurface should compute a defined sample of points on a unit sphere`(
+        @ParameterizedTest(name = "{displayName} [{index}] {0}")
+        @MethodSource("pointOnSurfaceZeroAzimuthCases")
+        fun `pointOnSurface should compute the point on a unit sphere when azimuth is zero`(
             angles: List<Double>,
             expected: Point,
         ) {
             // Given
             val unitSphere = Sphere.unitSphere()
             val anglesAsRadians = angles.map { toRadians(it) }
+
             // When
             val result = unitSphere.pointOnSurface(anglesAsRadians)
 
             // Then
-            assertThat(result.toDoubleArray()).containsSequence(expected.toDoubleArray(), withPrecision(0.01))
+            assertThat(result).isCloseTo(expected, withPrecision(0.01))
         }
 
-        private fun getParametersForComputationOfPolarCoordinatesToCartesianCoordinates(): Stream<Arguments> =
+        private fun pointOnSurfaceZeroAzimuthCases(): Stream<Arguments> =
             Stream.of(
                 Arguments.of(listOf(0.0, 0.0), Point(0, 0, 1)),
                 Arguments.of(listOf(0.0, 45.0), Point(0, piQuarter, piQuarter)),
                 Arguments.of(listOf(0.0, 90.0), Point(0, 1, 0)),
                 Arguments.of(listOf(0.0, 135.0), Point(0, piQuarter, -piQuarter)),
-//                Arguments.of(listOf(0.0, 180.0), Point(0, 0, -1)),
-//                Arguments.of(listOf(45.0, 0.0), Point(0, 0, 1)),
+            )
+
+        @ParameterizedTest(name = "{displayName} [{index}] {0}")
+        @MethodSource("pointOnSurfaceEasternAzimuthCases")
+        fun `pointOnSurface should compute the point on a unit sphere when azimuth is 45 to 135 degrees`(
+            angles: List<Double>,
+            expected: Point,
+        ) {
+            // Given
+            val unitSphere = Sphere.unitSphere()
+            val anglesAsRadians = angles.map { toRadians(it) }
+
+            // When
+            val result = unitSphere.pointOnSurface(anglesAsRadians)
+
+            // Then
+            assertThat(result).isCloseTo(expected, withPrecision(0.01))
+        }
+
+        private fun pointOnSurfaceEasternAzimuthCases(): Stream<Arguments> =
+            Stream.of(
                 Arguments.of(listOf(45.0, 45.0), Point(0.5, 0.5, piQuarter)),
                 Arguments.of(listOf(45.0, 90.0), Point(piQuarter, piQuarter, 0)),
                 Arguments.of(listOf(45.0, 135.0), Point(0.5, 0.5, -piQuarter)),
-//                Arguments.of(listOf(45.0, 180.0), Point(0, 0, -1)),
-//                Arguments.of(listOf(90.0, 0.0), Point(0, 0, 1)),
                 Arguments.of(listOf(90.0, 45.0), Point(piQuarter, 0, piQuarter)),
                 Arguments.of(listOf(90.0, 90.0), Point(1, 0, 0)),
                 Arguments.of(listOf(90.0, 135.0), Point(piQuarter, 0, -piQuarter)),
-//                Arguments.of(listOf(90.0, 180.0), Point(0, 0, -1)),
-//                Arguments.of(listOf(135.0, 0.0), Point(0, 0, 1)),
                 Arguments.of(listOf(135.0, 45.0), Point(0.5, -0.5, piQuarter)),
                 Arguments.of(listOf(135.0, 90.0), Point(piQuarter, -piQuarter, 0)),
                 Arguments.of(listOf(135.0, 135.0), Point(0.5, -0.5, -piQuarter)),
-//                Arguments.of(listOf(135.0, 180.0), Point(0, 0, -1)),
-//                Arguments.of(listOf(180.0, 0.0), Point(0, 0, 1)),
+            )
+
+        @ParameterizedTest(name = "{displayName} [{index}] {0}")
+        @MethodSource("pointOnSurfaceWesternAzimuthCases")
+        fun `pointOnSurface should compute the point on a unit sphere when azimuth is 180 to 315 degrees`(
+            angles: List<Double>,
+            expected: Point,
+        ) {
+            // Given
+            val unitSphere = Sphere.unitSphere()
+            val anglesAsRadians = angles.map { toRadians(it) }
+
+            // When
+            val result = unitSphere.pointOnSurface(anglesAsRadians)
+
+            // Then
+            assertThat(result).isCloseTo(expected, withPrecision(0.01))
+        }
+
+        private fun pointOnSurfaceWesternAzimuthCases(): Stream<Arguments> =
+            Stream.of(
                 Arguments.of(listOf(180.0, 45.0), Point(0, -piQuarter, piQuarter)),
                 Arguments.of(listOf(180.0, 90.0), Point(0, -1, 0)),
                 Arguments.of(listOf(180.0, 135.0), Point(0, -piQuarter, -piQuarter)),
-//                Arguments.of(listOf(180.0, 180.0), Point(0, 0, -1)),
-//                Arguments.of(listOf(225.0, 0.0), Point(0, 0, 1)),
                 Arguments.of(listOf(225.0, 45.0), Point(-0.5, -0.5, piQuarter)),
                 Arguments.of(listOf(225.0, 90.0), Point(-piQuarter, -piQuarter, 0)),
                 Arguments.of(listOf(225.0, 135.0), Point(-0.5, -0.5, -piQuarter)),
-//                Arguments.of(listOf(225.0, 180.0), Point(0, 0, -1)),
-//                Arguments.of(listOf(270.0, 0.0), Point(0, 0, 1)),
                 Arguments.of(listOf(270.0, 45.0), Point(-piQuarter, 0, piQuarter)),
                 Arguments.of(listOf(270.0, 90.0), Point(-1, 0, 0)),
                 Arguments.of(listOf(270.0, 135.0), Point(-piQuarter, 0, -piQuarter)),
-//                Arguments.of(listOf(270.0, 180.0), Point(0, 0, -1)),
-//                Arguments.of(listOf(315.0, 0.0), Point(0, 0, 1)),
                 Arguments.of(listOf(315.0, 45.0), Point(-0.5, 0.5, piQuarter)),
                 Arguments.of(listOf(315.0, 90.0), Point(-piQuarter, piQuarter, 0)),
                 Arguments.of(listOf(315.0, 135.0), Point(-0.5, 0.5, -piQuarter)),
-//                Arguments.of(listOf(315.0, 180.0), Point(0, 0, -1)),
             )
 
-        @ParameterizedTest
-        @MethodSource("getParametersForComputationCartesianCoordinatesToPolarCoordinates")
-        fun `anglesForPointOnSurface should compute the angles for a point on a unit sphere`(
+        @ParameterizedTest(name = "{displayName} [{index}] {0}")
+        @MethodSource("pointOnSurfacePoleCases")
+        fun `pointOnSurface should return a pole for any azimuth when polar angle is 0 or 180 degrees`(
+            angles: List<Double>,
+            expected: Point,
+        ) {
+            // Given
+            val unitSphere = Sphere.unitSphere()
+            val anglesAsRadians = angles.map { toRadians(it) }
+
+            // When
+            val result = unitSphere.pointOnSurface(anglesAsRadians)
+
+            // Then
+            assertThat(result).isCloseTo(expected, withPrecision(0.01))
+        }
+
+        private fun pointOnSurfacePoleCases(): Stream<Arguments> =
+            Stream.of(
+                Arguments.of(listOf(0.0, 180.0), Point(0, 0, -1)),
+                Arguments.of(listOf(45.0, 0.0), Point(0, 0, 1)),
+                Arguments.of(listOf(45.0, 180.0), Point(0, 0, -1)),
+                Arguments.of(listOf(90.0, 0.0), Point(0, 0, 1)),
+                Arguments.of(listOf(90.0, 180.0), Point(0, 0, -1)),
+                Arguments.of(listOf(135.0, 0.0), Point(0, 0, 1)),
+                Arguments.of(listOf(135.0, 180.0), Point(0, 0, -1)),
+                Arguments.of(listOf(180.0, 0.0), Point(0, 0, 1)),
+                Arguments.of(listOf(180.0, 180.0), Point(0, 0, -1)),
+                Arguments.of(listOf(225.0, 0.0), Point(0, 0, 1)),
+                Arguments.of(listOf(225.0, 180.0), Point(0, 0, -1)),
+                Arguments.of(listOf(270.0, 0.0), Point(0, 0, 1)),
+                Arguments.of(listOf(270.0, 180.0), Point(0, 0, -1)),
+                Arguments.of(listOf(315.0, 0.0), Point(0, 0, 1)),
+                Arguments.of(listOf(315.0, 180.0), Point(0, 0, -1)),
+            )
+
+        @ParameterizedTest(name = "{displayName} [{index}] {0}")
+        @MethodSource("anglesForPointOnSurfaceZeroAzimuthCases")
+        fun `anglesForPointOnSurface should compute the angles on a unit sphere when azimuth is zero`(
             angle: List<Double>,
             point: Point,
         ) {
@@ -122,13 +187,37 @@ internal class SphereTest {
             )
         }
 
-        private fun getParametersForComputationCartesianCoordinatesToPolarCoordinates(): Stream<Arguments> =
+        private fun anglesForPointOnSurfaceZeroAzimuthCases(): Stream<Arguments> =
             Stream.of(
                 Arguments.of(listOf(0.0, 0.0), Point(0, 0, 1)),
                 Arguments.of(listOf(0.0, 45.0), Point(0, piQuarter, piQuarter)),
                 Arguments.of(listOf(0.0, 90.0), Point(0, 1, 0)),
                 Arguments.of(listOf(0.0, 135.0), Point(0, piQuarter, -piQuarter)),
                 Arguments.of(listOf(0.0, 180.0), Point(0, 0, -1)),
+            )
+
+        @ParameterizedTest(name = "{displayName} [{index}] {0}")
+        @MethodSource("anglesForPointOnSurfaceEasternAzimuthCases")
+        fun `anglesForPointOnSurface should compute the angles on a unit sphere when azimuth is 45 to 135 degrees`(
+            angle: List<Double>,
+            point: Point,
+        ) {
+            // Given
+            val unitCircle = Sphere.unitSphere()
+            val angleAsRadians = angle.map { toRadians(it).toDouble() }.toDoubleArray()
+
+            // When
+            val result = unitCircle.anglesForPointOnSurface(point)
+
+            // Then
+            assertThat(result.map { it.toDouble() }.toDoubleArray()).containsSequence(
+                angleAsRadians,
+                withPrecision(0.01),
+            )
+        }
+
+        private fun anglesForPointOnSurfaceEasternAzimuthCases(): Stream<Arguments> =
+            Stream.of(
                 Arguments.of(listOf(45.0, 45.0), Point(0.5, 0.5, piQuarter)),
                 Arguments.of(listOf(45.0, 90.0), Point(piQuarter, piQuarter, 0)),
                 Arguments.of(listOf(45.0, 135.0), Point(0.5, 0.5, -piQuarter)),
@@ -138,6 +227,30 @@ internal class SphereTest {
                 Arguments.of(listOf(135.0, 45.0), Point(0.5, -0.5, piQuarter)),
                 Arguments.of(listOf(135.0, 90.0), Point(piQuarter, -piQuarter, 0)),
                 Arguments.of(listOf(135.0, 135.0), Point(0.5, -0.5, -piQuarter)),
+            )
+
+        @ParameterizedTest(name = "{displayName} [{index}] {0}")
+        @MethodSource("anglesForPointOnSurfaceWesternAzimuthCases")
+        fun `anglesForPointOnSurface should compute the angles on a unit sphere when azimuth is 180 to 315 degrees`(
+            angle: List<Double>,
+            point: Point,
+        ) {
+            // Given
+            val unitCircle = Sphere.unitSphere()
+            val angleAsRadians = angle.map { toRadians(it).toDouble() }.toDoubleArray()
+
+            // When
+            val result = unitCircle.anglesForPointOnSurface(point)
+
+            // Then
+            assertThat(result.map { it.toDouble() }.toDoubleArray()).containsSequence(
+                angleAsRadians,
+                withPrecision(0.01),
+            )
+        }
+
+        private fun anglesForPointOnSurfaceWesternAzimuthCases(): Stream<Arguments> =
+            Stream.of(
                 Arguments.of(listOf(180.0, 45.0), Point(0, -piQuarter, piQuarter)),
                 Arguments.of(listOf(180.0, 90.0), Point(0, -1, 0)),
                 Arguments.of(listOf(180.0, 135.0), Point(0, -piQuarter, -piQuarter)),

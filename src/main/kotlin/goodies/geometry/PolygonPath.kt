@@ -5,32 +5,17 @@ import goodies.geometry.interfaces.PolygonLikeShape
 import goodies.geometry.interfaces.Shape
 import processing.core.PApplet
 
+/** Open polyline through [vertices] in order. */
 class PolygonPath(
     override val vertices: List<Point>,
 ) : PolygonLikeShape,
     OpenShape,
     Iterable<Point> {
-    constructor(vararg vertices: Point) : this(vertices.toList())
-
-    override fun center(): PolygonPath = PolygonPath(vertexMatrix.center().rows)
-
-    fun translate(translation: Point): PolygonPath = PolygonPath(vertices.map { it + translation })
-
-    override fun centerAt(point: Point): Shape = center().translate(point)
-
-    override fun normalize(): PolygonPath = PolygonPath(vertexMatrix.normalize().rows)
-
     val start: Point
-        get() {
-            return vertices.first()
-        }
+        get() = vertices.first()
 
     val end: Point
-        get() {
-            return vertices.last()
-        }
-
-    override fun get(index: Int): Point = super.get(index)
+        get() = vertices.last()
 
     val directions: PolygonPath
         get() {
@@ -42,8 +27,20 @@ class PolygonPath(
             return PolygonPath(diffs)
         }
 
+    constructor(vararg vertices: Point) : this(vertices.toList())
+
+    override fun center(): PolygonPath = PolygonPath(vertexMatrix.center().rows)
+
+    /** Returns this path moved by [translation]. */
+    fun translate(translation: Point): PolygonPath = PolygonPath(vertices.map { it + translation })
+
+    override fun centerAt(point: Point): Shape = center().translate(point)
+
+    override fun normalize(): PolygonPath = PolygonPath(vertexMatrix.normalize().rows)
+
     override fun iterator(): Iterator<Point> = vertices.iterator()
 
+    /** Draws every edge on [sketch]. */
     fun draw(sketch: PApplet) {
         for (line in edges) {
             line.draw(sketch)
