@@ -412,12 +412,25 @@ class Point(
         /**
          * Returns the 2D unit point at [angle] radians from the positive y axis towards positive x, unlike Processing.
          *
+         * Unlike [fromAngles], the angle is in radians.
+         *
          * DESIGN: ANG-3 asks for degrees.
          */
         fun fromAngle(angle: Number): Point = NSphere.unitNSphere(2).pointOnSurface(angle)
 
-        /** Always throws IllegalArgumentException today: the sphere has as many dimensions as angles, one too many. */
-        fun fromAngles(vararg angles: Number): Point = NSphere.unitNSphere(angles.size).pointOnSurface(*angles)
+        /**
+         * Returns the point on the unit sphere S^k in k + 1 dimensions for k hyperspherical [angles] in degrees.
+         *
+         * Convention: x0 = sin(t0) * ... * sin(t(k-1)) and xj = cos(t(j-1)) * sin(tj) * ... * sin(t(k-1)), so one angle
+         * runs from the positive y axis towards positive x, as in [fromAngle] and [NEllipsoid.pointOnSurface].
+         * Hyperspherical to Cartesian coordinates (Blumenson 1960), delegated to [NSphere], O(n^2) in the dimension n.
+         * Unlike [fromAngle], the angles are in degrees. Throws IllegalArgumentException when no angle is given.
+         */
+        fun fromAngles(vararg angles: Number): Point {
+            require(angles.isNotEmpty()) { "fromAngles needs at least one angle" }
+
+            return NSphere.unitNSphere(angles.size + 1).pointOnSurface(angles.map { Math.toRadians(it.toDouble()) })
+        }
 
         /** Returns the 2D point at the x and y of [pVector]. */
         fun fromPVector2D(pVector: PVector): Point = Point(pVector.x, pVector.y)
