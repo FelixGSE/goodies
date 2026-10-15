@@ -1,7 +1,8 @@
 # Run by prek (https://github.com/j178/prek), a drop-in for pre-commit.
 # Install once per clone or worktree: `make hooks`. CI runs the same hooks on
 # every pull request, so skipping them locally only moves the failure.
-# Every hook is a shell script in scripts/ or a ./gradlew task: no Python, no venvs.
+# Local hooks are shell scripts in scripts/ or ./gradlew tasks; the workflow
+# linters are remote hooks pinned to a commit, their toolchains managed by prek.
 default_install_hook_types: [pre-commit, commit-msg]
 
 repos:
@@ -43,3 +44,17 @@ repos:
         language: script
         stages: [pre-commit]
         files: ^config/detekt/baseline-(main|test)\.xml$
+
+  - repo: https://github.com/rhysd/actionlint
+    rev: 914e7df21a07ef503a81201c76d2b11c789d3fca # v1.7.12
+    hooks:
+      - id: actionlint
+        stages: [pre-commit]
+        files: ^\.github/workflows/
+
+  - repo: https://github.com/zizmorcore/zizmor-pre-commit
+    rev: d25b2b1dc80689fb633f21f6978bba69871181d3 # v1.31.0
+    hooks:
+      - id: zizmor
+        stages: [pre-commit]
+        files: ^\.github/workflows/
