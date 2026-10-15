@@ -33,40 +33,6 @@ internal class ArchitectureTest {
     // owner: shape layering
     private val coreImportingProcessing = setOf("Line", "Point", "Polygon", "PolygonPath", "Quadrilateral", "Sphere")
 
-    // owner: legacy test naming
-    private val testsNamedWithoutShould =
-        setOf(
-            "AgentTest",
-            "ChaikinCurveTest",
-            "ColorPaletteTest",
-            "ConversionsTest",
-            "DeJongAttractorTest",
-            "GeneralUtilsKtTest",
-            "PointTest",
-            "PolygonTest",
-            "RandomUtilsKtTest",
-            "RandomUtilsTest",
-            "SphereSamplerTest",
-            "StereographicProjectionTest",
-            "WaterColorBlobTest",
-        )
-
-    // owner: legacy test naming
-    private val testsWithoutGivenWhenThen =
-        setOf(
-            "AgentTest",
-            "ColorPaletteTest",
-            "ConversionsTest",
-            "CosineCurveTest",
-            "DeJongAttractorTest",
-            "PointTest",
-            "RandomUtilsKtTest",
-            "RandomUtilsTest",
-            "SignCurveGeneratorTest",
-            "SphereSamplerTest",
-            "WaterColorBlobTest",
-        )
-
     @Test
     fun `algebra should not import other goodies packages`() {
         // Given
@@ -118,7 +84,7 @@ internal class ArchitectureTest {
     @Test
     fun `test names should contain should`() {
         // Given
-        val functions = tests.without(testsNamedWithoutShould).testFunctions()
+        val functions = tests.testFunctions()
 
         // When
         val result = functions.filterNot { it.name.contains(" should ") }.described()
@@ -130,7 +96,7 @@ internal class ArchitectureTest {
     @Test
     fun `test bodies should have given when then in order`() {
         // Given
-        val functions = tests.without(testsWithoutGivenWhenThen).testFunctions()
+        val functions = tests.testFunctions()
 
         // When
         val result = functions.filterNot { it.hasGivenWhenThen() }.described()

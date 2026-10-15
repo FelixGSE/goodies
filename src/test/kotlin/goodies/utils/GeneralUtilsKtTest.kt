@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 
 class GeneralUtilsKtTest {
     @Test
-    fun sha512_string() {
+    fun `sha512 should hash a string`() {
         // Given
         val input = "Some string"
         val expectedResult =
@@ -20,7 +20,7 @@ class GeneralUtilsKtTest {
     }
 
     @Test
-    fun sha512_number() {
+    fun `sha512 should hash a number`() {
         // Given
 
         // When
@@ -29,7 +29,7 @@ class GeneralUtilsKtTest {
     }
 
     @Test
-    fun sha512_byte_array() {
+    fun `sha512 should hash a byte array`() {
         // Given
 
         // When
@@ -38,7 +38,7 @@ class GeneralUtilsKtTest {
     }
 
     @Test
-    fun sha512_list() {
+    fun `sha512 should hash a list`() {
         // Given
 
         // When
@@ -47,7 +47,7 @@ class GeneralUtilsKtTest {
     }
 
     @Test
-    fun sha512_illegal_argument() {
+    fun `sha512 should throw IllegalArgumentException when the argument is illegal`() {
         // Given
 
         // When

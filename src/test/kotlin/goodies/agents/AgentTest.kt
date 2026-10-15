@@ -20,8 +20,10 @@ class AgentTest {
     @Nested
     inner class Construction {
         @Test
-        fun `should create agent with boundary`() {
-            // Given / When
+        fun `Agent should hold the boundary when created with one`() {
+            // Given
+
+            // When
             val agent = Agent(boundary)
 
             // Then
@@ -30,8 +32,10 @@ class AgentTest {
         }
 
         @Test
-        fun `should start inside the boundary`() {
-            // Given / When
+        fun `Agent should start inside the boundary`() {
+            // Given
+
+            // When
             val agent = Agent(boundary)
 
             // Then - the random point should be somewhere near the polygon
@@ -39,8 +43,10 @@ class AgentTest {
         }
 
         @Test
-        fun `should create agent with explicit position`() {
-            // Given / When
+        fun `Agent should take the explicit position when one is given`() {
+            // Given
+
+            // When
             val agent = Agent(pos = Point(50f, 50f), boundary = boundary)
 
             // Then
@@ -49,8 +55,10 @@ class AgentTest {
         }
 
         @Test
-        fun `should have default size and speed`() {
-            // Given / When
+        fun `Agent should have a default size and speed`() {
+            // Given
+
+            // When
             val agent = Agent(boundary)
 
             // Then

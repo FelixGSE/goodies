@@ -1,7 +1,7 @@
 package goodies.curves
 
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.Test
 
 class CosineCurveTest {
@@ -33,13 +33,16 @@ class CosineCurveTest {
     }
 
     @Test
-    fun `cosineCurve should create an empty list when xStart is greater than xEnd`() {
+    fun `cosineCurve should throw an IllegalArgumentException when xStart is greater than xEnd`() {
         // Given
         val xStart = 10.0
         val xEnd = 5.0
 
-        // When & Then
-        assertThatThrownBy { cosineCurve(xStart, xEnd) }
+        // When
+        val thrown = catchThrowable { cosineCurve(xStart, xEnd) }
+
+        // Then
+        assertThat(thrown)
             .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("xStart must be less than xEnd")
     }
@@ -55,18 +58,23 @@ class CosineCurveTest {
         val phase = 0.0
         val shift = 0.0
 
-        // When & Then
-        assertThatThrownBy {
-            cosineCurve(
-                xStart = xStart,
-                xEnd = xEnd,
-                stepSize = stepSize,
-                amplitude = amplitude,
-                ordinaryFrequency = ordinaryFrequency,
-                phase = phase,
-                shift = shift,
-            )
-        }.isInstanceOf(IllegalArgumentException::class.java)
+        // When
+        val thrown =
+            catchThrowable {
+                cosineCurve(
+                    xStart = xStart,
+                    xEnd = xEnd,
+                    stepSize = stepSize,
+                    amplitude = amplitude,
+                    ordinaryFrequency = ordinaryFrequency,
+                    phase = phase,
+                    shift = shift,
+                )
+            }
+
+        // Then
+        assertThat(thrown)
+            .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("stepSize must be greater than 0")
     }
 }

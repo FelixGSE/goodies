@@ -14,7 +14,7 @@ class ConversionsTest {
     @Nested
     inner class RealVectorConversions {
         @Test
-        fun `should convert RealVector to list of floats`() {
+        fun `realVectorToListOfFloats should convert a RealVector to a list of floats`() {
             // Given
             val realVector = MatrixUtils.createRealVector(doubleArrayOf(1.5, 2.5, 3.5))
 
@@ -26,7 +26,7 @@ class ConversionsTest {
         }
 
         @Test
-        fun `should convert list of floats to RealVector`() {
+        fun `listOfFloatsToRealArray should convert a list of floats to a RealVector`() {
             // Given
             val listOfFloats = listOf(1.0f, 2.0f, 3.0f)
 
@@ -38,7 +38,7 @@ class ConversionsTest {
         }
 
         @Test
-        fun `should convert 2D RealVector to PVector`() {
+        fun `realVectorToPVector should convert a 2D RealVector to a PVector`() {
             // Given
             val realVector = MatrixUtils.createRealVector(doubleArrayOf(3.0, 4.0))
 
@@ -51,7 +51,7 @@ class ConversionsTest {
         }
 
         @Test
-        fun `should convert 3D RealVector to PVector`() {
+        fun `realVectorToPVector should convert a 3D RealVector to a PVector`() {
             // Given
             val realVector = MatrixUtils.createRealVector(doubleArrayOf(1.0, 2.0, 3.0))
 
@@ -65,7 +65,7 @@ class ConversionsTest {
         }
 
         @Test
-        fun `should throw for RealVector with invalid dimensions`() {
+        fun `realVectorToPVector should throw IllegalArgumentException when the RealVector has invalid dimensions`() {
             // Given
             val realVector = MatrixUtils.createRealVector(doubleArrayOf(1.0))
 
@@ -82,7 +82,7 @@ class ConversionsTest {
     @Nested
     inner class PVectorConversions {
         @Test
-        fun `should convert 2D PVector to RealVector`() {
+        fun `PVector2DToRealVector should convert a 2D PVector to a RealVector`() {
             // Given
             val pVector = PVector(5.0f, 6.0f)
 
@@ -94,7 +94,7 @@ class ConversionsTest {
         }
 
         @Test
-        fun `should convert 3D PVector to RealVector`() {
+        fun `PVector3DToRealVector should convert a 3D PVector to a RealVector`() {
             // Given
             val pVector = PVector(5.0f, 6.0f, 7.0f)
 
@@ -106,7 +106,7 @@ class ConversionsTest {
         }
 
         @Test
-        fun `should convert PVector to 2D double array`() {
+        fun `PVectorToDoubleArray should convert a PVector to a 2D double array`() {
             // Given
             val pVector = PVector(1.0f, 2.0f)
 
@@ -118,7 +118,7 @@ class ConversionsTest {
         }
 
         @Test
-        fun `should convert PVector to 3D double array`() {
+        fun `PVectorToDoubleArray should convert a PVector to a 3D double array`() {
             // Given
             val pVector = PVector(1.0f, 2.0f, 3.0f)
 
@@ -130,7 +130,7 @@ class ConversionsTest {
         }
 
         @Test
-        fun `should throw for invalid dimensions in PVectorToDoubleArray`() {
+        fun `PVectorToDoubleArray should throw IllegalArgumentException when dimensions are invalid`() {
             // Given
             val pVector = PVector(1.0f, 2.0f)
 
@@ -147,7 +147,7 @@ class ConversionsTest {
     @Nested
     inner class ListAndArrayConversions {
         @Test
-        fun `should convert list of floats to PVector 2D`() {
+        fun `listOfFloatsToPVector should convert a list of two floats to a 2D PVector`() {
             // Given
             val list = listOf(1.0f, 2.0f)
 
@@ -160,7 +160,7 @@ class ConversionsTest {
         }
 
         @Test
-        fun `should convert list of floats to PVector 3D`() {
+        fun `listOfFloatsToPVector should convert a list of three floats to a 3D PVector`() {
             // Given
             val list = listOf(1.0f, 2.0f, 3.0f)
 
@@ -174,7 +174,7 @@ class ConversionsTest {
         }
 
         @Test
-        fun `should convert list of floats to double array`() {
+        fun `listOfFloatsToDoubleArray should convert a list of floats to a double array`() {
             // Given
             val list = listOf(1.5f, 2.5f)
 
@@ -188,7 +188,7 @@ class ConversionsTest {
         }
 
         @Test
-        fun `should convert double array to list of floats`() {
+        fun `doubleArrayToListOfFloats should convert a double array to a list of floats`() {
             // Given
             val arr = doubleArrayOf(1.5, 2.5, 3.5)
 
@@ -200,7 +200,7 @@ class ConversionsTest {
         }
 
         @Test
-        fun `should convert double array to PVector 2D`() {
+        fun `doubleArrayToPVector should convert a double array to a 2D PVector`() {
             // Given
             val arr = doubleArrayOf(4.0, 5.0)
 
@@ -213,7 +213,7 @@ class ConversionsTest {
         }
 
         @Test
-        fun `should convert list of list of floats to double arrays`() {
+        fun `listOfListOfFloatsToDoubleArrays should convert a list of lists of floats to double arrays`() {
             // Given
             val lists = listOf(listOf(1.0f, 2.0f), listOf(3.0f, 4.0f))
 
@@ -230,13 +230,27 @@ class ConversionsTest {
     @Nested
     inner class TypeConversions {
         @Test
-        fun `should convert double to float`() {
-            assertThat(Conversions.doubleToFloat(3.14)).isCloseTo(3.14f, offset(0.001f))
+        fun `doubleToFloat should convert a double to a float`() {
+            // Given
+            val input = 3.14
+
+            // When
+            val result = Conversions.doubleToFloat(input)
+
+            // Then
+            assertThat(result).isCloseTo(3.14f, offset(0.001f))
         }
 
         @Test
-        fun `should convert float to double`() {
-            assertThat(Conversions.floatToDouble(3.14f)).isCloseTo(3.14, offset(0.001))
+        fun `floatToDouble should convert a float to a double`() {
+            // Given
+            val input = 3.14f
+
+            // When
+            val result = Conversions.floatToDouble(input)
+
+            // Then
+            assertThat(result).isCloseTo(3.14, offset(0.001))
         }
     }
 }

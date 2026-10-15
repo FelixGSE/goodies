@@ -24,8 +24,10 @@ class WaterColorBlobTest {
     @Nested
     inner class Construction {
         @Test
-        fun `should create blob with base polygon`() {
-            // Given / When
+        fun `WaterColorBlob should hold the base polygon and no deformed polygons when created`() {
+            // Given
+
+            // When
             val blob = WaterColorBlob(square)
 
             // Then
@@ -37,7 +39,7 @@ class WaterColorBlobTest {
     @Nested
     inner class Deformation {
         @Test
-        fun `should create deformed polygons`() {
+        fun `createDeformedPolygons should create the requested number of polygons`() {
             // Given
             val blob = WaterColorBlob(square)
 
@@ -49,7 +51,7 @@ class WaterColorBlobTest {
         }
 
         @Test
-        fun `deformed polygons should have more vertices than base`() {
+        fun `createDeformedPolygons should produce polygons with more vertices than the base`() {
             // Given
             val blob = WaterColorBlob(square)
 
@@ -62,8 +64,10 @@ class WaterColorBlobTest {
         }
 
         @Test
-        fun `deform with higher depth should produce more vertices`() {
-            // Given / When
+        fun `deform should produce more vertices when depth is higher`() {
+            // Given
+
+            // When
             val low = WaterColorBlob.deform(square, 1)
             val high = WaterColorBlob.deform(square, 4)
 
@@ -148,8 +152,10 @@ class WaterColorBlobTest {
         }
 
         @Test
-        fun `deformed polygon should not equal base polygon`() {
-            // Given / When
+        fun `deform should produce a polygon that differs from the base`() {
+            // Given
+
+            // When
             val deformed = WaterColorBlob.deform(square, 2)
 
             // Then

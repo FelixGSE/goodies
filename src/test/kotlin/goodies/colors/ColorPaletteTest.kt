@@ -10,8 +10,10 @@ class ColorPaletteTest {
     @Nested
     inner class PaletteATests {
         @Test
-        fun `should have four colors`() {
-            // Given / When
+        fun `PaletteA should have four colors`() {
+            // Given
+
+            // When
             val palette = PaletteA()
 
             // Then
@@ -19,8 +21,10 @@ class ColorPaletteTest {
         }
 
         @Test
-        fun `should contain expected color values`() {
-            // Given / When
+        fun `PaletteA should contain the expected color values`() {
+            // Given
+
+            // When
             val palette = PaletteA()
 
             // Then
@@ -28,7 +32,7 @@ class ColorPaletteTest {
         }
 
         @Test
-        fun `should be iterable`() {
+        fun `PaletteA should be iterable`() {
             // Given
             val palette = PaletteA()
 
@@ -59,16 +63,19 @@ class ColorPaletteTest {
     @Nested
     inner class CustomPaletteTests {
         @Test
-        fun `should support custom palette creation`() {
+        fun `ColorPalette should support custom palette creation`() {
             // Given
             val customPalette =
                 object : ColorPalette {
                     override val colors = listOf(-1, -2, -3)
                 }
 
-            // When / Then
+            // When
+            val result = customPalette.toList()
+
+            // Then
             assertThat(customPalette.colors).hasSize(3)
-            assertThat(customPalette.toList()).containsExactly(-1, -2, -3)
+            assertThat(result).containsExactly(-1, -2, -3)
         }
     }
 }

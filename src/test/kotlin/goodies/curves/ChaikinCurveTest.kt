@@ -13,7 +13,7 @@ class ChaikinCurveTest {
     @Nested
     inner class ClosedPolygon {
         @Test
-        fun `should produce a polygon with more vertices than input`() {
+        fun `ChaikinCurve should produce a polygon with more vertices than a closed input`() {
             // Given
             val square =
                 Polygon(
@@ -31,7 +31,7 @@ class ChaikinCurveTest {
         }
 
         @Test
-        fun `should produce more vertices with more iterations`() {
+        fun `ChaikinCurve should produce more vertices when given more iterations`() {
             // Given
             val triangle =
                 Polygon(
@@ -50,7 +50,7 @@ class ChaikinCurveTest {
         }
 
         @Test
-        fun `fitted polygon should be closed for closed input`() {
+        fun `fittedPolygon should be closed when the input is closed`() {
             // Given
             val square =
                 Polygon(
@@ -68,7 +68,7 @@ class ChaikinCurveTest {
         }
 
         @Test
-        fun `zero iterations should still produce a valid polygon`() {
+        fun `ChaikinCurve should still produce a valid polygon when iterations are zero`() {
             // Given
             val triangle =
                 Polygon(
@@ -88,7 +88,7 @@ class ChaikinCurveTest {
     @Nested
     inner class OpenPath {
         @Test
-        fun `should produce an open path for open input`() {
+        fun `ChaikinCurve should produce an open path when the input is open`() {
             // Given
             val path =
                 PolygonPath(
@@ -103,7 +103,7 @@ class ChaikinCurveTest {
         }
 
         @Test
-        fun `should produce more vertices than input for open path`() {
+        fun `ChaikinCurve should produce more vertices than an open input path`() {
             // Given
             val path =
                 PolygonPath(

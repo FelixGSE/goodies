@@ -13,7 +13,7 @@ class StereographicProjectionTest {
     @Nested
     inner class Project3Dto2D {
         @Test
-        fun `should project 3D point to 2D`() {
+        fun `project3Dto2D should project a 3D point to 2D`() {
             // Given
             val point = PVector(100f, 100f, 100f)
 
@@ -27,7 +27,7 @@ class StereographicProjectionTest {
         }
 
         @Test
-        fun `should project negative 3D point to 2D`() {
+        fun `project3Dto2D should project a negative 3D point to 2D`() {
             // Given
             val point = PVector(-100f, -100f, -100f)
 
@@ -41,7 +41,7 @@ class StereographicProjectionTest {
         }
 
         @Test
-        fun `should project origin to origin`() {
+        fun `project3Dto2D should project the origin to the origin`() {
             // Given
             val point = PVector(0f, 0f, 0f)
 
@@ -57,7 +57,7 @@ class StereographicProjectionTest {
     @Nested
     inner class ProjectDownOneDimension {
         @Test
-        fun `should reduce dimensionality by one for RealVector`() {
+        fun `projectDownOneDimension should reduce dimensionality by one for a RealVector`() {
             // Given
             val vectorData = doubleArrayOf(110.0, 110.0, 101.0, 110.0)
             val vectorToProject = MatrixUtils.createRealVector(vectorData)
@@ -70,7 +70,7 @@ class StereographicProjectionTest {
         }
 
         @Test
-        fun `should correctly project 3D RealVector to 2D`() {
+        fun `projectDownOneDimension should correctly project a 3D RealVector to 2D`() {
             // Given
             val vector = MatrixUtils.createRealVector(doubleArrayOf(-1.0, -1.0, 1.0))
 
@@ -84,7 +84,7 @@ class StereographicProjectionTest {
         }
 
         @Test
-        fun `should reduce dimensionality by one for List of Floats`() {
+        fun `projectDownOneDimension should reduce dimensionality by one for a List of Floats`() {
             // Given
             val point = listOf(1.0f, 2.0f, 3.0f, 4.0f)
 
@@ -96,7 +96,7 @@ class StereographicProjectionTest {
         }
 
         @Test
-        fun `should correctly project List of Floats`() {
+        fun `projectDownOneDimension should correctly project a List of Floats`() {
             // Given
             val point = listOf(6.0f, 8.0f, 0.0f)
 
