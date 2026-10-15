@@ -10,7 +10,7 @@ import processing.core.PVector;
 
 public class CircleFlowFieldInABoxSphereTest {
 
-    @Disabled("known failure: expected count in [1129, 1331], got 846; E1.2/E1.3")
+    @Disabled("known failure: expected count in [1129, 1331], got 846; grid and shape port")
     @Test
     public void shouldClipSphere(){
 

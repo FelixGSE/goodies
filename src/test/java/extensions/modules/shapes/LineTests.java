@@ -35,7 +35,7 @@ public class LineTests {
 
     }
 
-    @Disabled("known failure: expected 5, got 3 (assertEquals arguments swapped); E1.4")
+    @Disabled("known failure: expected 5, got 3 (assertEquals arguments swapped); shape port")
     @Test
     public void testDivideLineInRandomParts() {
 
@@ -78,7 +78,7 @@ public class LineTests {
 
     }
 
-    @Disabled("known failure: expected 0, got 2; E1.4")
+    @Disabled("known failure: expected 0, got 2; shape port")
     @Test
     public void shouldReturnZeroSplitPointsWhenDepthIsZeroWhenSubdivide() {
 
@@ -92,7 +92,7 @@ public class LineTests {
 
     }
 
-    @Disabled("known failure: expected 1, got 3; E1.4")
+    @Disabled("known failure: expected 1, got 3; shape port")
     @Test
     public void shouldReturnOneSplitPointsWhenDepthIsOneWhenSubdivide() {
 
@@ -106,7 +106,7 @@ public class LineTests {
 
     }
 
-    @Disabled("known failure: expected 0, got 2; E1.4")
+    @Disabled("known failure: expected 0, got 2; shape port")
     @Test
     public void shouldReturnTwoToThePowerOfDepthMinusOneSplitPointsWhenInputIsGreaterThanZero() {
 

@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import processing.core.PVector;
 
 public class CircleTests {
-    @Disabled("known failure: expected double PI, got float PI at 1e-10; E1.4")
+    @Disabled("known failure: expected double PI, got float PI at 1e-10; shape port")
     @Test
     public void testGCircle() {
 

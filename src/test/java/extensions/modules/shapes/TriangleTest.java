@@ -130,7 +130,7 @@ public class TriangleTest {
 
     }
 
-    @Disabled("known failure: expected IllegalArgumentException, got none; E1.4")
+    @Disabled("known failure: expected IllegalArgumentException, got none; shape port")
     @Test
     public void randomCirclePackShouldThrowIllegalArgumentExceptionWhenPercentageIsInvalid() {
 
